@@ -122,7 +122,7 @@ local PALETTE_MIK_SAUL =  {
     [EMBLEM] = { r = 0xE8, g = 0x22, b = 0x84 }, -- E82284
 }
 if _G.charSelectExists then
-    CT_BEEF_SAUL = _G.charSelect.character_add("Beef Saul", {"Saul has Finally been Beefified"}, "Saul (Player Icon By Chrrli On The Discord)", {r = 136, g = 213, b = 73}, E_MODEL_BEEF_SAUL, CT_MARIO, TEX_BEEF_SAUL_PIC, 1, 0)
+    CT_BEEF_SAUL = _G.charSelect.character_add("Beef Saul", {"Saul has Finally been Beefified"}, "Saul (Player Icon By Chrrli On The Discord)", {r = 136, g = 213, b = 73}, E_MODEL_BEEF_SAUL, CT_TOAD, TEX_BEEF_SAUL_PIC, 1, 0)
     _G.charSelect.character_add_animations(E_MODEL_BEEF_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_CAC_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_OLD_SAUL, ANIMTABLE_BEEF_SAUL)
