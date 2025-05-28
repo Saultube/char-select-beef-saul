@@ -1,4 +1,4 @@
--- name: [CS] Beef Saul [WIP]
+-- name: [CS] \\#88D549\\Beef Saul
 -- description: Have you Ever Became Beefified
 
 local jumpcountvar = 0
@@ -21,6 +21,7 @@ local TEX_OLD_METER_BACK = get_texture_info("oldmeterbg")
 local TEX_SAULTV = get_texture_info("saultv")
 local TEX_HOLYSHIT = get_texture_info("healthred")
 local TEX_SAUL_MENU_PIC = get_texture_info("saulchar")
+local TEX_MIK_MENU_PIC = get_texture_info("mikchar")
 local TEX_SAUL_MENU_BG = get_texture_info("thebg")
 local TEXT_MOD_NAME = ("[CS] Beef Saul")
 local ANIMTABLE_BEEF_SAUL = {
@@ -163,12 +164,13 @@ uses = djui_hud_get_screen_width() / 64
     theopacityvar = 0.01
     end
     if m.playerIndex == 0 then
-    if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
-    if movingvar >= djui_hud_get_screen_width() / 64 then
+            if movingvar >= djui_hud_get_screen_width() / 64 then
     movingvar = 0
     end
+                        djui_hud_set_color(255, 255, 255, 180 * theopacityvar)
+        djui_hud_render_texture(TEX_SAUL_MENU_BG, -5 + movingvar, -5 + movingvar, (djui_hud_get_screen_width() + 8) / 64, (djui_hud_get_screen_width() + 8) / 64)
+    if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
     if _G.charSelect.is_menu_open() == true then
-        if _G.charSelect.character_get_current_costume() == 1 then
             theopacityvar = theopacityvar * 1.4
                 if theopacityvar > 1 then
     theopacityvar = 1
@@ -176,11 +178,16 @@ uses = djui_hud_get_screen_width() / 64
         else
             theopacityvar = theopacityvar * 0.6
         end
-                djui_hud_set_color(255, 255, 255, 180 * theopacityvar)
-        djui_hud_render_texture(TEX_SAUL_MENU_BG, -5 + movingvar, -5 + movingvar, (djui_hud_get_screen_width() + 8) / 64, (djui_hud_get_screen_width() + 8) / 64)
         djui_hud_set_color(255, 255, 255, 255 * theopacityvar)
+        if _G.charSelect.character_get_current_costume() == 1 then
         djui_hud_render_texture(TEX_SAUL_MENU_PIC, (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
-end
+        elseif _G.charSelect.character_get_current_costume() == 4 then
+        djui_hud_render_texture(TEX_MIK_MENU_PIC, (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
+        end
+    else
+    theopacityvar = theopacityvar * 0.6
+    end
+    if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
     saultvtimer = saultvtimer + 1
     if saultvtimer == 15 then
     saultvtimer = 1
@@ -244,8 +251,10 @@ end
     end
     djui_hud_render_texture(TEX_HOLYSHIT, 0, 0, djui_hud_get_screen_width() / 32, djui_hud_get_screen_height() / 32)
     return
-        end
-    end
+else
+theopacityvar = theopacityvar * 0.6
+end
+end
 end
 
 hook_event(HOOK_ON_HUD_RENDER_BEHIND, hud)
