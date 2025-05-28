@@ -165,7 +165,9 @@ uses = djui_hud_get_screen_width() / 64
             if movingvar >= djui_hud_get_screen_width() / 64 then
             movingvar = 0
             end
+        djui_hud_set_color(255, 255, 255, 180)
         djui_hud_render_texture(TEX_SAUL_MENU_BG, -5 + movingvar, -5 + movingvar, (djui_hud_get_screen_width() + 8) / 64, (djui_hud_get_screen_width() + 8) / 64)
+        djui_hud_set_color(255, 255, 255, 255)
         djui_hud_render_texture(TEX_SAUL_MENU_PIC, (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
     end
 end
