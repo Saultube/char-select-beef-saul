@@ -20,6 +20,8 @@ local TEX_OLD_METER = get_texture_info("oldmeter")
 local TEX_OLD_METER_BACK = get_texture_info("oldmeterbg")
 local TEX_SAULTV = get_texture_info("saultv")
 local TEX_HOLYSHIT = get_texture_info("healthred")
+local TEX_SAUL_MENU_PIC = get_texture_info("saulchar")
+local TEX_SAUL_MENU_BG = get_texture_info("thebg")
 local TEXT_MOD_NAME = ("[CS] Beef Saul")
 local ANIMTABLE_BEEF_SAUL = {
 [CHAR_ANIM_SINGLE_JUMP] = "saul_jum",
@@ -121,6 +123,10 @@ local PALETTE_MIK_SAUL =  {
     [CAP]    = { r = 0x6D, g = 0xD4, b = 0xA3 }, -- 6DD4A3
     [EMBLEM] = { r = 0xE8, g = 0x22, b = 0x84 }, -- E82284
 }
+local COURSE_BEEF_SAUL = {
+    top = get_texture_info("thetopcourse"),
+    bottom = get_texture_info("thebottomcourse"),
+}
 if _G.charSelectExists then
     CT_BEEF_SAUL = _G.charSelect.character_add("Beef Saul", {"Saul has Finally been Beefified"}, "Saul (Player Icon By Chrrli On The Discord)", {r = 136, g = 213, b = 73}, E_MODEL_BEEF_SAUL, CT_TOAD, TEX_BEEF_SAUL_PIC, 1, 0)
     _G.charSelect.character_add_animations(E_MODEL_BEEF_SAUL, ANIMTABLE_BEEF_SAUL)
@@ -144,21 +150,37 @@ saultvtimer = 0
 
 xletter = ">"
 
+movingvar = 0
+
+
 function hud()
+djui_hud_set_resolution(RESOLUTION_N64)
+uses = djui_hud_get_screen_width() / 64
     local m = gMarioStates[0]
+    movingvar = movingvar + 0.1
     if m.playerIndex == 0 then
-        if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
+    if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
+    if _G.charSelect.is_menu_open() == true then
+        if _G.charSelect.character_get_current_costume() == 1 then
+            if movingvar >= djui_hud_get_screen_width() / 64 then
+            movingvar = 0
+            end
+        djui_hud_render_texture(TEX_SAUL_MENU_BG, -5 + movingvar, -5 + movingvar, (djui_hud_get_screen_width() + 8) / 64, (djui_hud_get_screen_width() + 8) / 64)
+        djui_hud_render_texture(TEX_SAUL_MENU_PIC, (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
+    end
+end
     saultvtimer = saultvtimer + 1
     if saultvtimer == 15 then
     saultvtimer = 1
     end
     djui_hud_set_color(255, 255, 255, 255)
     djui_hud_set_font(FONT_HUD)
-    djui_hud_set_resolution(RESOLUTION_N64)
     if _G.charSelect.character_get_current_costume() == 1 then
+        if _G.charSelect.is_menu_open() == false then
     djui_hud_render_texture(TEX_BEEF_SAUL_METER_BACK, 29, 202, 3.5, 0.5)
     djui_hud_render_texture(TEX_BEEF_SAUL_METER_BACK2, 146 - ((2326 - (m.health)) / 17.45), 202, ((2176 - m.health)) / 535, 0.5)
     djui_hud_render_texture(TEX_BEEF_SAUL_METER, 19, 192, 1, 1)
+        end
     end
     thecactustimer = (math.floor(saultvtimer / 8)) * 64
     if _G.charSelect.character_get_current_costume() == 2 then
@@ -194,12 +216,14 @@ if _G.charSelect.character_get_current_costume() == 4 then
 djui_hud_render_texture_tile(TEX_MIKAUL_METER, 5, 176, 1, 1, 0, 0, math.floor(((m.health - 255) / 1921) * 64), 64)
 end
     if _G.charSelect.character_get_current_costume() == 1 then
+        if _G.charSelect.is_menu_open() == false then
     if saultvtimer <= 7 then
     djui_hud_render_texture_tile(TEX_SAULTV, 25, 128, 1, 1, 0, 0, 64, 64)
     end
     if saultvtimer > 7 then
     djui_hud_render_texture_tile(TEX_SAULTV, 25, 128, 1, 1, 64, 0, 64, 64)
     end
+end
 end
     if (255 - ((m.health - 255) / 4)) >= 0 then
     djui_hud_set_color(255, 255, 255, (255 - ((m.health - 255) / 4)))
