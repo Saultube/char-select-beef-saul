@@ -152,24 +152,34 @@ xletter = ">"
 
 movingvar = 0
 
+theopacityvar = 0
 
 function hud()
 djui_hud_set_resolution(RESOLUTION_N64)
 uses = djui_hud_get_screen_width() / 64
     local m = gMarioStates[0]
     movingvar = movingvar + 0.1
+    if theopacityvar < 0.01 then
+    theopacityvar = 0.01
+    end
     if m.playerIndex == 0 then
     if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
+    if movingvar >= djui_hud_get_screen_width() / 64 then
+    movingvar = 0
+    end
     if _G.charSelect.is_menu_open() == true then
         if _G.charSelect.character_get_current_costume() == 1 then
-            if movingvar >= djui_hud_get_screen_width() / 64 then
-            movingvar = 0
-            end
-        djui_hud_set_color(255, 255, 255, 180)
-        djui_hud_render_texture(TEX_SAUL_MENU_BG, -5 + movingvar, -5 + movingvar, (djui_hud_get_screen_width() + 8) / 64, (djui_hud_get_screen_width() + 8) / 64)
-        djui_hud_set_color(255, 255, 255, 255)
-        djui_hud_render_texture(TEX_SAUL_MENU_PIC, (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
+            theopacityvar = theopacityvar * 1.4
+                if theopacityvar > 1 then
+    theopacityvar = 1
     end
+        else
+            theopacityvar = theopacityvar * 0.6
+        end
+                djui_hud_set_color(255, 255, 255, 180 * theopacityvar)
+        djui_hud_render_texture(TEX_SAUL_MENU_BG, -5 + movingvar, -5 + movingvar, (djui_hud_get_screen_width() + 8) / 64, (djui_hud_get_screen_width() + 8) / 64)
+        djui_hud_set_color(255, 255, 255, 255 * theopacityvar)
+        djui_hud_render_texture(TEX_SAUL_MENU_PIC, (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
 end
     saultvtimer = saultvtimer + 1
     if saultvtimer == 15 then
