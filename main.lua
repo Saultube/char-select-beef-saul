@@ -64,14 +64,25 @@ return false
 end
 end
 hook_event(HOOK_ALLOW_FORCE_WATER_ACTION, antiswim)
+theopav = 0
 local function saulthings(m)
 if m.playerIndex == 0 then
     if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
         set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
-if (m.controller.buttonDown & X_BUTTON) ~= 0 then
-m.pos.y = m.pos.y + 1
-m.vel.y = 200
-end
+        if m.pos.y ~= m.floorHeight then
+        m.marioObj.header.gfx.scale.y = 1 + (math.abs(m.vel.y) / 100)
+        else
+        m.marioObj.header.gfx.scale.y = 1
+        end
+        m.marioObj.header.gfx.scale.x = 1 - (math.abs(m.vel.y) / 150)
+        m.marioObj.header.gfx.scale.z = 1 - ((math.abs(m.vel.y) / 150) - math.abs(m.forwardVel) / 250)
+        if (m.health >> 8) < 1 then
+            if theopav < 25 then
+            theopav = theopav + 1
+            end
+        else
+        theopav = 0
+        end
 m.marioBodyState.torsoAngle.x = 0
 if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_RUNNING then
     if (m.controller.buttonDown & Y_BUTTON) ~= 0 then
@@ -172,6 +183,11 @@ uses = djui_hud_get_screen_width() / 64
                         djui_hud_set_color(255, 255, 255, 180 * theopacityvar)
         djui_hud_render_texture(TEX_SAUL_MENU_BG, -5 + movingvar, -5 + movingvar, (djui_hud_get_screen_width() + 8) / 64, (djui_hud_get_screen_width() + 8) / 64)
     if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
+    if (m.health >> 8) < 1 then
+    djui_hud_set_color(255, 255, 255, theopav * 10.2)
+    djui_hud_set_font(FONT_CUSTOM_HUD)
+    djui_hud_print_text("aw man, you died", djui_hud_get_screen_width()/2 - (djui_hud_measure_text("aw man, you died") * 1)/2, djui_hud_get_screen_height() / 2, 1)
+    end
     if _G.charSelect.is_menu_open() == true then
             theopacityvar = theopacityvar * 1.4
                 if theopacityvar > 1 then
@@ -246,27 +262,29 @@ djui_hud_render_texture_tile(TEX_MIKAUL_METER, 5, 176, 1, 1, 0, 0, math.floor(((
 end
     if _G.charSelect.character_get_current_costume() == 1 then
         if _G.charSelect.is_menu_open() == false then
+    djui_hud_set_color(255, 255, 255, 255 - (theopav * 10.2))
     if saultvtimer <= 7 then
     djui_hud_render_texture_tile(TEX_SAULTV, 25, 128, 1, 1, 0, 0, 64, 64)
     end
     if saultvtimer > 7 then
     djui_hud_render_texture_tile(TEX_SAULTV, 25, 128, 1, 1, 64, 0, 64, 64)
     end
+    djui_hud_set_color(255, 255, 255, 255)
 end
     if (m.flags & (MARIO_WING_CAP | MARIO_METAL_CAP | MARIO_VANISH_CAP)) ~= 0 then
     djui_hud_print_text(tostring(math.ceil(m.capTimer/30)), 41, 198, 0.75)
     end
 end
-    if (255 - ((m.health - 255) / 4)) >= 0 then
-    djui_hud_set_color(255, 255, 255, (255 - ((m.health - 255) / 2)))
+    if (255 - ((m.health - 255) / 1)) >= 0 then
+    djui_hud_set_color(255, 255, 255, (255 - ((m.health - 255) / 1)))
     else
     djui_hud_set_color(255, 255, 255, 0)
     end
     djui_hud_render_texture(TEX_HOLYSHIT, 0, 0, djui_hud_get_screen_width() / 32, djui_hud_get_screen_height() / 32)
     return
+end
 else
 theopacityvar = theopacityvar * 0.6
-end
 end
 end
 
