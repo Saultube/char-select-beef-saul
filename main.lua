@@ -21,6 +21,7 @@ local TEX_OLD_METER_BACK = get_texture_info("oldmeterbg")
 local TEX_SAULTV = get_texture_info("saultv")
 local TEX_HOLYSHIT = get_texture_info("healthred")
 local TEX_SAUL_MENU_PIC = get_texture_info("saulchar")
+local TEX_CAC_MENU_PIC = get_texture_info("cacchar")
 local TEX_MIK_MENU_PIC = get_texture_info("mikchar")
 local TEX_SAUL_MENU_BG = get_texture_info("thebg")
 local TEXT_MOD_NAME = ("[CS] Beef Saul")
@@ -67,12 +68,13 @@ local function saulthings(m)
 if m.playerIndex == 0 then
     if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
         set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
-        if m.action == ACT_CREDITS_CUTSCENE then
-            m.health = m.health + 1
-        end
+if (m.controller.buttonDown & X_BUTTON) ~= 0 then
+m.pos.y = m.pos.y + 1
+m.vel.y = 200
+end
 m.marioBodyState.torsoAngle.x = 0
 if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_RUNNING then
-    if (m.controller.buttonDown & X_BUTTON) ~= 0 then
+    if (m.controller.buttonDown & Y_BUTTON) ~= 0 then
         if m.forwardVel >= 0 then
         m.forwardVel = m.forwardVel + (m.forwardVel * 0.255)
         smlua_anim_util_set_animation(m.marioObj, "saul_cust_sprint")
@@ -178,11 +180,13 @@ uses = djui_hud_get_screen_width() / 64
         else
             theopacityvar = theopacityvar * 0.6
         end
-        djui_hud_set_color(255, 255, 255, 255 * theopacityvar)
+        djui_hud_set_color(255, 255, 255, 225 * theopacityvar)
         if _G.charSelect.character_get_current_costume() == 1 then
         djui_hud_render_texture(TEX_SAUL_MENU_PIC, (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
         elseif _G.charSelect.character_get_current_costume() == 4 then
         djui_hud_render_texture(TEX_MIK_MENU_PIC, (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
+        elseif _G.charSelect.character_get_current_costume() == 2 then
+        djui_hud_render_texture(TEX_CAC_MENU_PIC, (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
         end
     else
     theopacityvar = theopacityvar * 0.6
@@ -202,6 +206,7 @@ uses = djui_hud_get_screen_width() / 64
         end
     end
     thecactustimer = (math.floor(saultvtimer / 8)) * 64
+    if _G.charSelect.is_menu_open() == false then
     if _G.charSelect.character_get_current_costume() == 2 then
     if (m.health >> 8) == 8 then
     djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 0, 64, 64)
@@ -225,14 +230,19 @@ uses = djui_hud_get_screen_width() / 64
     djui_hud_print_text(tostring(xletter), 69, 192, 2)
     djui_hud_print_text(tostring(m.health >> 8), 99, 192, 2)
 end
+end
+if _G.charSelect.is_menu_open() == false then
 if _G.charSelect.character_get_current_costume() == 3 then
 djui_hud_render_texture(TEX_OLD_METER_BACK, 5, 176, 1, 1)
     if m.health >> 8 > 0 then
 djui_hud_render_texture_tile(TEX_OLD_METER, 22, 192, 1, 1, ((m.health >> 8) - 1) * 32, 0, 32, 32)
     end
 end
+end
 if _G.charSelect.character_get_current_costume() == 4 then
+    if _G.charSelect.is_menu_open() == false then
 djui_hud_render_texture_tile(TEX_MIKAUL_METER, 5, 176, 1, 1, 0, 0, math.floor(((m.health - 255) / 1921) * 64), 64)
+    end
 end
     if _G.charSelect.character_get_current_costume() == 1 then
         if _G.charSelect.is_menu_open() == false then
@@ -243,9 +253,12 @@ end
     djui_hud_render_texture_tile(TEX_SAULTV, 25, 128, 1, 1, 64, 0, 64, 64)
     end
 end
+    if (m.flags & (MARIO_WING_CAP | MARIO_METAL_CAP | MARIO_VANISH_CAP)) ~= 0 then
+    djui_hud_print_text(tostring(math.ceil(m.capTimer/30)), 41, 198, 0.75)
+    end
 end
     if (255 - ((m.health - 255) / 4)) >= 0 then
-    djui_hud_set_color(255, 255, 255, (255 - ((m.health - 255) / 4)))
+    djui_hud_set_color(255, 255, 255, (255 - ((m.health - 255) / 2)))
     else
     djui_hud_set_color(255, 255, 255, 0)
     end
