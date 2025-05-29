@@ -69,13 +69,21 @@ local function saulthings(m)
 if m.playerIndex == 0 then
     if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
         set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
+        if m.action == ACT_FLYING then
+        m.marioObj.header.gfx.angle.x = math.floor(m.marioObj.header.gfx.angle.x / 1024) * 1024
+        m.marioObj.header.gfx.angle.z = math.floor(m.marioObj.header.gfx.angle.z / 1024) * 1024
+        end
+        if m.action ~= ACT_FLYING then
         if m.pos.y ~= m.floorHeight then
         m.marioObj.header.gfx.scale.y = 1 + (math.abs(m.vel.y) / 100)
+        end
         else
         m.marioObj.header.gfx.scale.y = 1
         end
+        if m.action ~= ACT_IDLE and m.action ~= ACT_FLYING then
         m.marioObj.header.gfx.scale.x = 1 - (math.abs(m.vel.y) / 150)
-        m.marioObj.header.gfx.scale.z = 1 - ((math.abs(m.vel.y) / 150) - math.abs(m.forwardVel) / 250)
+        m.marioObj.header.gfx.scale.z = 1 - ((math.abs(m.vel.y) / 150) - math.abs(m.forwardVel) / 325)
+        end
         if (m.health >> 8) < 1 then
             if theopav < 25 then
             theopav = theopav + 1
@@ -83,8 +91,10 @@ if m.playerIndex == 0 then
         else
         theopav = 0
         end
-m.marioBodyState.torsoAngle.x = 0
 if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_RUNNING then
+m.marioBodyState.torsoAngle.x = 0
+m.marioBodyState.torsoAngle.z = 0
+m.marioBodyState.torsoAngle.y = 0
     if (m.controller.buttonDown & Y_BUTTON) ~= 0 then
         if m.forwardVel >= 0 then
         m.forwardVel = m.forwardVel + (m.forwardVel * 0.255)
