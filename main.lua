@@ -1,7 +1,6 @@
 -- name: [CS] \\#88D549\\Beef Saul
 -- description: Have you Ever Became Beefified
 
-local jumpcountvar = 0
 local velroy = 0
 local E_MODEL_BEEF_SAUL = smlua_model_util_get_id("beef_saul_geo")
 local E_MODEL_MIK_SAUL = smlua_model_util_get_id("mik_saul_geo")
@@ -53,21 +52,14 @@ local HM_BSAL= {
     }
 }
 function antiswim(m)
-if m.playerIndex == 0 then
-    if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
         if _G.charSelect.character_get_current_costume() ~= 3 then
 return false
         else
             return true
         end
-    end
 end
-end
-hook_event(HOOK_ALLOW_FORCE_WATER_ACTION, antiswim)
 theopav = 0
 local function saulthings(m)
-if m.playerIndex == 0 then
-    if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
         set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
         if m.action == ACT_FLYING then
         m.marioObj.header.gfx.angle.x = math.floor(m.marioObj.header.gfx.angle.x / 1024) * 1024
@@ -111,12 +103,7 @@ if _G.charSelect.character_get_current_costume() == 2 then
         m.action = ACT_THROWN_BACKWARD
     end
 end
-else
-reset_dialog_override_color()
 end
-end
-end
-hook_event(HOOK_MARIO_UPDATE, saulthings)
 local PALETTE_OLD_SAUL =  {
     [PANTS]  = { r = 0x47, g = 0x27, b = 0x69 }, -- 472769
     [SHIRT]  = { r = 0xb2, g = 0xcc, b = 0x66 }, -- B2CC66
@@ -157,6 +144,8 @@ if _G.charSelectExists then
     _G.charSelect.character_add_animations(E_MODEL_CAC_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_OLD_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_MIK_SAUL, ANIMTABLE_BEEF_SAUL)
+    _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_MARIO_UPDATE, saulthings)
+    _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_ALLOW_FORCE_WATER_ACTION, antiswim)
     _G.charSelect.character_add_health_meter(CT_BEEF_SAUL, HM_BSAL)
     _G.charSelect.character_add_palette_preset(E_MODEL_BEEF_SAUL, PALETTE_BEEF_SAUL)
     _G.charSelect.character_set_category(CT_BEEF_SAUL, "DXA")
@@ -181,7 +170,7 @@ theopacityvar = 0
 function hud()
 djui_hud_set_resolution(RESOLUTION_N64)
 uses = djui_hud_get_screen_width() / 64
-    local m = gMarioStates[0]
+    m = gMarioStates[0]
     movingvar = movingvar + 0.1
     if theopacityvar < 0.01 then
     theopacityvar = 0.01
@@ -196,7 +185,9 @@ uses = djui_hud_get_screen_width() / 64
     if (m.health >> 8) < 1 then
     djui_hud_set_color(255, 255, 255, theopav * 10.2)
     djui_hud_set_font(FONT_CUSTOM_HUD)
+    if _G.charSelect.is_menu_open() == false then
     djui_hud_print_text("aw man, you died", djui_hud_get_screen_width()/2 - (djui_hud_measure_text("aw man, you died") * 1)/2, djui_hud_get_screen_height() / 2, 1)
+    end
     end
     if _G.charSelect.is_menu_open() == true then
             theopacityvar = theopacityvar * 1.4
