@@ -33,6 +33,7 @@ local ANIMTABLE_BEEF_SAUL = {
 [CHAR_ANIM_CROUCHING] = "saul_crouch",
 [CHAR_ANIM_STOP_CROUCHING] = "saul_crouch_stop",
 [CHAR_ANIM_BACKWARD_AIR_KB] = "saul_flung",
+[CHAR_ANIM_RUNNING] = "saulrun",
 [_G.charSelect.CS_ANIM_MENU] = "sauls_completely_new_menu_pose",
 }
 local HM_BSAL= {
@@ -69,13 +70,12 @@ local function saulthings(m)
         if m.pos.y ~= m.floorHeight then
         m.marioObj.header.gfx.scale.y = 1 + (math.abs(m.vel.y) / 100)
         end
-        else
-        m.marioObj.header.gfx.scale.y = 1
+        if m.pos.y == m.floorHeight then
+        m.vel.y = m.vel.y * 0.85
         end
-        if m.action ~= ACT_IDLE and m.action ~= ACT_FLYING then
+    end
         m.marioObj.header.gfx.scale.x = 1 - (math.abs(m.vel.y) / 150)
         m.marioObj.header.gfx.scale.z = 1 - ((math.abs(m.vel.y) / 150) - math.abs(m.forwardVel) / 325)
-        end
         if (m.health >> 8) < 1 then
             if theopav < 25 then
             theopav = theopav + 1
@@ -149,6 +149,7 @@ if _G.charSelectExists then
     _G.charSelect.character_add_health_meter(CT_BEEF_SAUL, HM_BSAL)
     _G.charSelect.character_add_palette_preset(E_MODEL_BEEF_SAUL, PALETTE_BEEF_SAUL)
     _G.charSelect.character_set_category(CT_BEEF_SAUL, "DXA")
+    _G.charSelect.character_set_category(CT_BEEF_SAUL, "Squishy Workshop")
     _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Cactus Saul", {"ouch"}, "Saul", {r = 0, g = 178, b = 0}, E_MODEL_CAC_SAUL, CT_BEEF_SAUL, TEX_CAC_SAUL_PIC, 1, 0)
     _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Old Saul", {"hey uh the thigny"}, "Saul, icon by kaktus", {r = 178, g = 204, b = 102}, E_MODEL_OLD_SAUL, CT_BEEF_SAUL, TEX_OLD_SAUL_PIC, 1, 0)
     _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Hatsaulne Miku", {"これはすごい"}, "Saul, Miku?!?", {r = 155, g = 213, b = 225}, E_MODEL_MIK_SAUL, CT_BEEF_SAUL, TEX_MIK_SAUL_PIC, 1, 0)
