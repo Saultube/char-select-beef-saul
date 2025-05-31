@@ -23,6 +23,7 @@ local TEX_SAUL_MENU_PIC = get_texture_info("saulchar")
 local TEX_CAC_MENU_PIC = get_texture_info("cacchar")
 local TEX_MIK_MENU_PIC = get_texture_info("mikchar")
 local TEX_SAUL_MENU_BG = get_texture_info("thebg")
+local TEX_THESHIT = get_texture_info("saulpicon")
 local TEXT_MOD_NAME = ("[CS] Beef Saul")
 local ANIMTABLE_BEEF_SAUL = {
 [CHAR_ANIM_SINGLE_JUMP] = "saul_jum",
@@ -52,17 +53,11 @@ local HM_BSAL= {
         [8] = get_texture_info("transparentfulll"),
     }
 }
-function antiswim(m)
-        if _G.charSelect.character_get_current_costume() ~= 3 then
-return false
-        else
-            return true
-        end
-end
 theopav = 0
 local function saulthings(m)
         set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
         if m.action == ACT_FLYING then
+        m.marioBodyState.eyeState = 9
         m.marioObj.header.gfx.angle.x = math.floor(m.marioObj.header.gfx.angle.x / 1024) * 1024
         m.marioObj.header.gfx.angle.z = math.floor(m.marioObj.header.gfx.angle.z / 1024) * 1024
         end
@@ -71,7 +66,7 @@ local function saulthings(m)
         m.marioObj.header.gfx.scale.y = 1 + (math.abs(m.vel.y) / 100)
         end
         if m.pos.y == m.floorHeight then
-        m.vel.y = m.vel.y * 0.85
+        m.vel.y = m.vel.y * 0.92
         end
     end
         m.marioObj.header.gfx.scale.x = 1 - (math.abs(m.vel.y) / 150)
@@ -82,6 +77,11 @@ local function saulthings(m)
             end
         else
         theopav = 0
+        end
+        if m.action == ACT_STAR_DANCE_EXIT or m.action == ACT_STAR_DANCE_NO_EXIT or m.action == ACT_STAR_DANCE_WATER then
+        if _G.charSelect.character_get_current_costume() == 1 then
+        m.marioBodyState.eyeState = 9
+        end
         end
 if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_RUNNING then
 m.marioBodyState.torsoAngle.x = 0
@@ -145,7 +145,6 @@ if _G.charSelectExists then
     _G.charSelect.character_add_animations(E_MODEL_OLD_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_MIK_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_MARIO_UPDATE, saulthings)
-    _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_ALLOW_FORCE_WATER_ACTION, antiswim)
     _G.charSelect.character_add_health_meter(CT_BEEF_SAUL, HM_BSAL)
     _G.charSelect.character_add_palette_preset(E_MODEL_BEEF_SAUL, PALETTE_BEEF_SAUL)
     _G.charSelect.character_set_category(CT_BEEF_SAUL, "DXA")
@@ -274,7 +273,14 @@ end
     djui_hud_set_color(255, 255, 255, 255)
 end
     if (m.flags & (MARIO_WING_CAP | MARIO_METAL_CAP | MARIO_VANISH_CAP)) ~= 0 then
-    djui_hud_print_text(tostring(math.ceil(m.capTimer/30)), 41, 198, 0.75)
+    djui_hud_set_color(255, 255, 255, 255)
+    djui_hud_render_texture_tile(TEX_THESHIT, 8, 32, 1, 1, 0, 0, 64, 64)
+    djui_hud_set_color(network_player_get_override_palette_color_channel(gNetworkPlayers[m.playerIndex], CAP, 0), network_player_get_override_palette_color_channel(gNetworkPlayers[m.playerIndex], CAP, 1), network_player_get_override_palette_color_channel(gNetworkPlayers[m.playerIndex], CAP, 2), 255)
+    djui_hud_render_texture_tile(TEX_THESHIT, 8, 32, 1, 1, 64, 0, 64, 64)
+    djui_hud_set_color(network_player_get_override_palette_color_channel(gNetworkPlayers[m.playerIndex], GLOVES, 0), network_player_get_override_palette_color_channel(gNetworkPlayers[m.playerIndex], GLOVES, 1), network_player_get_override_palette_color_channel(gNetworkPlayers[m.playerIndex], GLOVES, 2), 255)
+    djui_hud_render_texture_tile(TEX_THESHIT, 8, 32, 1, 1, 0, 64, 64, 64)
+    djui_hud_set_color(255, 255, 255, 255)
+    djui_hud_print_text(tostring(math.ceil(m.capTimer/30)), 29, 67, 1)
     end
 end
     if (255 - ((m.health - 255) / 1)) >= 0 then
