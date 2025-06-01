@@ -24,6 +24,7 @@ local TEX_CAC_MENU_PIC = get_texture_info("cacchar")
 local TEX_MIK_MENU_PIC = get_texture_info("mikchar")
 local TEX_SAUL_MENU_BG = get_texture_info("thebg")
 local TEX_THESHIT = get_texture_info("saulpicon")
+local SAUL_EYES_SMILE = 9
 local TEXT_MOD_NAME = ("[CS] Beef Saul")
 local ANIMTABLE_BEEF_SAUL = {
 [CHAR_ANIM_SINGLE_JUMP] = "saul_jum",
@@ -57,7 +58,7 @@ theopav = 0
 local function saulthings(m)
         set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
         if m.action == ACT_FLYING then
-        m.marioBodyState.eyeState = 9
+        m.marioBodyState.eyeState = SAUL_EYES_SMILE
         m.marioObj.header.gfx.angle.x = math.floor(m.marioObj.header.gfx.angle.x / 1024) * 1024
         m.marioObj.header.gfx.angle.z = math.floor(m.marioObj.header.gfx.angle.z / 1024) * 1024
         end
@@ -80,7 +81,7 @@ local function saulthings(m)
         end
         if m.action == ACT_STAR_DANCE_EXIT or m.action == ACT_STAR_DANCE_NO_EXIT or m.action == ACT_STAR_DANCE_WATER then
         if _G.charSelect.character_get_current_costume() == 1 then
-        m.marioBodyState.eyeState = 9
+        m.marioBodyState.eyeState = SAUL_EYES_SMILE
         end
         end
 if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_RUNNING then
