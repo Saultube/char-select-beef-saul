@@ -36,6 +36,7 @@ local ANIMTABLE_BEEF_SAUL = {
 [CHAR_ANIM_STOP_CROUCHING] = "saul_crouch_stop",
 [CHAR_ANIM_BACKWARD_AIR_KB] = "saul_flung",
 [CHAR_ANIM_RUNNING] = "saulrun",
+[CHAR_ANIM_HANG_ON_OWL] = "saul_hang",
 [_G.charSelect.CS_ANIM_MENU] = "sauls_completely_new_menu_pose",
 }
 local HM_BSAL= {
@@ -66,6 +67,9 @@ local function saulthings(m)
         if m.pos.y ~= m.floorHeight then
         m.marioObj.header.gfx.scale.y = 1 + (math.abs(m.vel.y) / 100)
         end
+        if m.action == ACT_RIDING_HOOT then
+        smlua_anim_util_set_animation(m.marioObj, "saul_hang")
+        end
         if m.pos.y == m.floorHeight then
         m.vel.y = m.vel.y * 0.92
         end
@@ -84,6 +88,12 @@ local function saulthings(m)
         m.marioBodyState.eyeState = SAUL_EYES_SMILE
         end
         end
+if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_IDLE_HEAD_LEFT then
+m.marioBodyState.eyeState = MARIO_EYES_LOOK_LEFT
+end
+if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_IDLE_HEAD_RIGHT then
+m.marioBodyState.eyeState = MARIO_EYES_LOOK_RIGHT
+end
 if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_RUNNING then
 m.marioBodyState.torsoAngle.x = 0
 m.marioBodyState.torsoAngle.z = 0
