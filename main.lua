@@ -89,10 +89,18 @@ local function saulthings(m)
         end
         end
 if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_IDLE_HEAD_LEFT then
-m.marioBodyState.eyeState = MARIO_EYES_LOOK_LEFT
+m.marioBodyState.eyeState = MARIO_EYES_LOOK_RIGHT
+end
+if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_GENERAL_FALL then
+if m.vel.y < -10 then
+m.marioBodyState.eyeState = MARIO_EYES_LOOK_DOWN
+end
 end
 if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_IDLE_HEAD_RIGHT then
-m.marioBodyState.eyeState = MARIO_EYES_LOOK_RIGHT
+m.marioBodyState.eyeState = MARIO_EYES_LOOK_LEFT
+end
+if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_FIRE_LAVA_BURN then
+m.marioBodyState.eyeState = MARIO_EYES_DEAD
 end
 if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_RUNNING then
 m.marioBodyState.torsoAngle.x = 0
