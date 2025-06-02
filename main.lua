@@ -69,6 +69,7 @@ local function saulthings(m)
         end
         if m.action == ACT_RIDING_HOOT then
         smlua_anim_util_set_animation(m.marioObj, "saul_hang")
+        m.marioObj.header.gfx.pos.y = m.pos.y + 90
         end
         if m.pos.y == m.floorHeight then
         m.vel.y = m.vel.y * 0.92
