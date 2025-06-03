@@ -162,12 +162,67 @@ local COURSE_BEEF_SAUL = {
     top = get_texture_info("thetopcourse"),
     bottom = get_texture_info("thebottomcourse"),
 }
+VOICETABLE_BEEF_SAUL = { -- Voices from the Islander from Lego Racers (1999)
+    [CHAR_SOUND_ATTACKED] = {'bsouch.aiff', 'bshurt2.aiff'},
+    [CHAR_SOUND_COUGHING1] = nil,
+    [CHAR_SOUND_COUGHING2] = nil,
+    [CHAR_SOUND_COUGHING3] = nil,
+    [CHAR_SOUND_DOH] = 'bsouch.aiff', -- long jump bump
+    [CHAR_SOUND_DROWNING] = nil,
+    [CHAR_SOUND_DYING] = 'bsouch.aiff',
+    [CHAR_SOUND_EEUH] = nil, -- climbing ledge
+    [CHAR_SOUND_GROUND_POUND_WAH] = 'bswoh.aiff',
+    [CHAR_SOUND_HAHA] = 'bshey.aiff',
+    [CHAR_SOUND_HAHA_2] = 'bshey.aiff',
+    [CHAR_SOUND_HERE_WE_GO] = 'bswoohoo.aiff', -- getting star/power up
+    [CHAR_SOUND_HOOHOO] = 'bshey.aiff',
+    [CHAR_SOUND_HRMM] = nil, -- lifting
+    [CHAR_SOUND_IMA_TIRED] = nil,
+    [CHAR_SOUND_MAMA_MIA] = 'bshurt2.aiff',
+    [CHAR_SOUND_LETS_A_GO] = 'bswoohoo.aiff', -- starting level
+    [CHAR_SOUND_ON_FIRE] = 'bsfall.aiff',
+    [CHAR_SOUND_OOOF] = 'bshurt2.aiff',
+    [CHAR_SOUND_OOOF2] = 'bshurt2.aiff', -- thrown out of painting
+    [CHAR_SOUND_PANTING] = nil,
+    [CHAR_SOUND_PANTING_COLD] = nil,
+    [CHAR_SOUND_PUNCH_HOO] = 'bswoh.aiff', -- kick
+    [CHAR_SOUND_PUNCH_WAH] = 'bswoh.aiff', -- punch 2
+    [CHAR_SOUND_PUNCH_YAH] = 'bswoh.aiff', -- punch 1
+    [CHAR_SOUND_SO_LONGA_BOWSER] = 'bsfall.aiff',
+    [CHAR_SOUND_SNORING1] = nil,
+    [CHAR_SOUND_SNORING2] = nil,
+    [CHAR_SOUND_SNORING3] = nil,
+    [CHAR_SOUND_TWIRL_BOUNCE] = 'bswoh.aiff',
+    [CHAR_SOUND_UH] = 'bshurt2.aiff', -- wall bonk
+    [CHAR_SOUND_UH2] = nil, -- landing long jump
+    [CHAR_SOUND_UH2_2] = nil, -- same as uh2 maybe??
+    [CHAR_SOUND_WAAAOOOW] = 'bsfall.aiff',
+    [CHAR_SOUND_WAH2] = 'bswoh.aiff', -- throw
+    [CHAR_SOUND_WHOA] = nil,
+    [CHAR_SOUND_YAHOO] = {'bswoohoo.aiff', 'bslj.aiff'},
+    [CHAR_SOUND_YAWNING] = nil,
+    [CHAR_SOUND_YAHOO_WAHA_YIPPEE] = {'bswoohoo.aiff', 'bslj.aiff'},
+    [CHAR_SOUND_YAH_WAH_HOO] = {'bswoohoo.aiff', 'bslj.aiff'},
+    [CHAR_SOUND_HELLO] = nil,
+    [CHAR_SOUND_PRESS_START_TO_PLAY] = nil,
+    [CHAR_SOUND_OKEY_DOKEY] = nil
+}
 if _G.charSelectExists then
     CT_BEEF_SAUL = _G.charSelect.character_add("Beef Saul", {"Saul has Finally been Beefified"}, "Saul (Player Icon By Chrrli On The Discord)", {r = 136, g = 213, b = 73}, E_MODEL_BEEF_SAUL, CT_TOAD, TEX_BEEF_SAUL_PIC, 1, 0)
     _G.charSelect.character_add_animations(E_MODEL_BEEF_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_CAC_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_OLD_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_MIK_SAUL, ANIMTABLE_BEEF_SAUL)
+    _G.charSelect.character_add_voice(E_MODEL_BEEF_SAUL, VOICETABLE_BEEF_SAUL)
+    _G.charSelect.character_add_voice(E_MODEL_CAC_SAUL, VOICETABLE_BEEF_SAUL)
+    _G.charSelect.character_add_voice(E_MODEL_OLD_SAUL, VOICETABLE_BEEF_SAUL)
+    _G.charSelect.character_add_voice(E_MODEL_MIK_SAUL, VOICETABLE_BEEF_SAUL)
+    hook_event(HOOK_CHARACTER_SOUND, function (m, sound)
+        if _G.charSelect.character_get_voice(m) == VOICETABLE_BEEF_SAUL then return _G.charSelect.voice.sound(m, sound) end
+    end)
+    hook_event(HOOK_MARIO_UPDATE, function (m)
+        if _G.charSelect.character_get_voice(m) == VOICETABLE_BEEF_SAUL then return _G.charSelect.voice.snore(m) end
+    end)
     _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_MARIO_UPDATE, saulthings)
     _G.charSelect.character_add_health_meter(CT_BEEF_SAUL, HM_BSAL)
     _G.charSelect.character_add_palette_preset(E_MODEL_BEEF_SAUL, PALETTE_BEEF_SAUL)
