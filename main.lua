@@ -26,7 +26,8 @@ local TEX_SAUL_MENU_BG = get_texture_info("thebg")
 local TEX_THESHIT = get_texture_info("saulpicon")
 local SAUL_EYES_SMILE = 9
 local TEXT_MOD_NAME = ("[CS] Beef Saul")
-local ANIMTABLE_BEEF_SAUL = {
+if _G.charSelectExists then
+ANIMTABLE_BEEF_SAUL = {
 [CHAR_ANIM_SINGLE_JUMP] = "saul_jum",
 [CHAR_ANIM_WALKING] = "saul_anim_waklslowowo",
 [CHAR_ANIM_START_CRAWLING] = "saul_crawl_start",
@@ -39,6 +40,7 @@ local ANIMTABLE_BEEF_SAUL = {
 [CHAR_ANIM_HANG_ON_OWL] = "saul_hang",
 [_G.charSelect.CS_ANIM_MENU] = "sauls_completely_new_menu_pose",
 }
+end
 local HM_BSAL= {
     label = {
         left = get_texture_info("transparentfulll"),
@@ -57,6 +59,7 @@ local HM_BSAL= {
 }
 theopav = 0
 local function saulthings(m)
+    if _G.charSelectExists then
         set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
         if m.action == ACT_FLYING then
         m.marioBodyState.eyeState = SAUL_EYES_SMILE
@@ -69,7 +72,7 @@ local function saulthings(m)
         end
         if m.action == ACT_RIDING_HOOT then
         smlua_anim_util_set_animation(m.marioObj, "saul_hang")
-        m.marioObj.header.gfx.pos.y = m.pos.y + 90
+        m.marioObj.header.gfx.pos.y = m.pos.y + 85
         end
         if m.pos.y == m.floorHeight then
         m.vel.y = m.vel.y * 0.92
@@ -122,6 +125,7 @@ if _G.charSelect.character_get_current_costume() == 2 then
         m.forwardVel = -85
         m.action = ACT_THROWN_BACKWARD
     end
+end
 end
 end
 local PALETTE_OLD_SAUL =  {
@@ -188,6 +192,7 @@ movingvar = 0
 theopacityvar = 0
 
 function hud()
+if _G.charSelectExists then
 djui_hud_set_resolution(RESOLUTION_N64)
 uses = djui_hud_get_screen_width() / 64
     m = gMarioStates[0]
@@ -313,6 +318,7 @@ end
 end
 else
 theopacityvar = theopacityvar * 0.6
+end
 end
 end
 
