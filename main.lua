@@ -1,31 +1,31 @@
 -- name: [CS] \\#88D549\\Beef Saul
 -- description: Have you Ever Became Beefified
 
-local velroy = 0
-local E_MODEL_BEEF_SAUL = smlua_model_util_get_id("beef_saul_geo")
-local E_MODEL_MIK_SAUL = smlua_model_util_get_id("mik_saul_geo")
-local E_MODEL_CAC_SAUL = smlua_model_util_get_id("cactus_saul_geo")
-local E_MODEL_OLD_SAUL = smlua_model_util_get_id("old_saul_geo")
-local TEX_BEEF_SAUL_PIC = get_texture_info("beefsaulicon")
-local TEX_MIK_SAUL_PIC = get_texture_info("saulkuicon")
-local TEX_CAC_SAUL_PIC = get_texture_info("cactaulicon")
-local TEX_OLD_SAUL_PIC = get_texture_info("saulpfpimg")
-local TEX_BEEF_SAUL_METER = get_texture_info("saulmeter")
-local TEX_BEEF_SAUL_METER_BACK = get_texture_info("saulmeterback")
-local TEX_BEEF_SAUL_METER_BACK2 = get_texture_info("saulmeterbg2")
-local TEX_CACTUS_METER = get_texture_info("cactussaulmeter")
-local TEX_MIKAUL_METER = get_texture_info("mikaulmeter")
-local TEX_OLD_METER = get_texture_info("oldmeter")
-local TEX_OLD_METER_BACK = get_texture_info("oldmeterbg")
-local TEX_SAULTV = get_texture_info("saultv")
-local TEX_HOLYSHIT = get_texture_info("healthred")
-local TEX_SAUL_MENU_PIC = get_texture_info("saulchar")
-local TEX_CAC_MENU_PIC = get_texture_info("cacchar")
-local TEX_MIK_MENU_PIC = get_texture_info("mikchar")
-local TEX_SAUL_MENU_BG = get_texture_info("thebg")
-local TEX_THESHIT = get_texture_info("saulpicon")
-local SAUL_EYES_SMILE = 9
-local TEXT_MOD_NAME = ("[CS] Beef Saul")
+velroy = 0
+E_MODEL_BEEF_SAUL = smlua_model_util_get_id("beef_saul_geo")
+E_MODEL_MIK_SAUL = smlua_model_util_get_id("mik_saul_geo")
+E_MODEL_CAC_SAUL = smlua_model_util_get_id("cactus_saul_geo")
+E_MODEL_OLD_SAUL = smlua_model_util_get_id("old_saul_geo")
+TEX_BEEF_SAUL_PIC = get_texture_info("beefsaulicon")
+TEX_MIK_SAUL_PIC = get_texture_info("saulkuicon")
+TEX_CAC_SAUL_PIC = get_texture_info("cactaulicon")
+TEX_OLD_SAUL_PIC = get_texture_info("saulpfpimg")
+TEX_BEEF_SAUL_METER = get_texture_info("saulmeter")
+TEX_BEEF_SAUL_METER_BACK = get_texture_info("saulmeterback")
+TEX_BEEF_SAUL_METER_BACK2 = get_texture_info("saulmeterbg2")
+TEX_CACTUS_METER = get_texture_info("cactussaulmeter")
+TEX_MIKAUL_METER = get_texture_info("mikaulmeter")
+TEX_OLD_METER = get_texture_info("oldmeter")
+TEX_OLD_METER_BACK = get_texture_info("oldmeterbg")
+TEX_SAULTV = get_texture_info("saultv")
+TEX_HOLYSHIT = get_texture_info("healthred")
+TEX_SAUL_MENU_PIC = get_texture_info("saulchar")
+TEX_CAC_MENU_PIC = get_texture_info("cacchar")
+TEX_MIK_MENU_PIC = get_texture_info("mikchar")
+TEX_SAUL_MENU_BG = get_texture_info("thebg")
+TEX_THESHIT = get_texture_info("saulpicon")
+SAUL_EYES_SMILE = 9
+TEXT_MOD_NAME = ("[CS] Beef Saul")
 if _G.charSelectExists then
 ANIMTABLE_BEEF_SAUL = {
 [CHAR_ANIM_SINGLE_JUMP] = "saul_jum",
@@ -41,7 +41,7 @@ ANIMTABLE_BEEF_SAUL = {
 [_G.charSelect.CS_ANIM_MENU] = "sauls_completely_new_menu_pose",
 }
 end
-local HM_BSAL= {
+HM_BSAL= {
     label = {
         left = get_texture_info("transparentfulll"),
         right = get_texture_info("transparentfulll"),
@@ -58,7 +58,7 @@ local HM_BSAL= {
     }
 }
 theopav = 0
-local function saulthings(m)
+function saulthings(m)
     if _G.charSelectExists then
         set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
         if m.action == ACT_FLYING then
@@ -128,7 +128,7 @@ if _G.charSelect.character_get_current_costume() == 2 then
 end
 end
 end
-local PALETTE_OLD_SAUL =  {
+PALETTE_OLD_SAUL =  {
     [PANTS]  = { r = 0x47, g = 0x27, b = 0x69 }, -- 472769
     [SHIRT]  = { r = 0xb2, g = 0xcc, b = 0x66 }, -- B2CC66
     [GLOVES] = { r = 0xff, g = 0xff, b = 0xff }, -- FFFFFF
@@ -138,7 +138,7 @@ local PALETTE_OLD_SAUL =  {
     [CAP]    = { r = 0xb2, g = 0xcc, b = 0x66 }, -- B2CC66
     [EMBLEM] = { r = 0xff, g = 0xff, b = 0xff }, -- FFFFFF
 }
-local PALETTE_BEEF_SAUL =  {
+PALETTE_BEEF_SAUL =  {
     [PANTS]  = { r = 0x88, g = 0x2A, b = 0x40 }, -- 882A40
     [SHIRT]  = { r = 0x88, g = 0xd5, b = 0x49 }, -- 88D549
     [GLOVES] = { r = 0xff, g = 0xff, b = 0xff }, -- FFFFFF
@@ -148,7 +148,7 @@ local PALETTE_BEEF_SAUL =  {
     [CAP]    = { r = 0x88, g = 0xd5, b = 0x49 }, -- 88D549
     [EMBLEM] = { r = 0xff, g = 0xff, b = 0xff }, -- FFFFFF
 }
-local PALETTE_MIK_SAUL =  {
+PALETTE_MIK_SAUL =  {
     [PANTS]  = { r = 0x88, g = 0x2A, b = 0x40 }, -- 882A40
     [SHIRT]  = { r = 0xC3, g = 0xCD, b = 0xD6 }, -- C3CDD6
     [GLOVES] = { r = 0xff, g = 0xff, b = 0xff }, -- FFFFFF
@@ -158,7 +158,7 @@ local PALETTE_MIK_SAUL =  {
     [CAP]    = { r = 0x6D, g = 0xD4, b = 0xA3 }, -- 6DD4A3
     [EMBLEM] = { r = 0xE8, g = 0x22, b = 0x84 }, -- E82284
 }
-local COURSE_BEEF_SAUL = {
+COURSE_BEEF_SAUL = {
     top = get_texture_info("thetopcourse"),
     bottom = get_texture_info("thebottomcourse"),
 }
@@ -237,144 +237,3 @@ if _G.charSelectExists then
 else
     djui_popup_create("\\#ffffdc\\\n"..TEXT_MOD_NAME.."\nRequires the Character Select Mod\nto use as a Library!\n\nPlease turn on the Character Select Mod\nand Restart the Room!", 6)
 end
-
-saultvtimer = 0
-
-xletter = ">"
-
-movingvar = 0
-
-theopacityvar = 0
-
-function hud()
-if _G.charSelectExists then
-djui_hud_set_resolution(RESOLUTION_N64)
-uses = djui_hud_get_screen_width() / 64
-    m = gMarioStates[0]
-    movingvar = movingvar + 0.1
-    if theopacityvar < 0.01 then
-    theopacityvar = 0.01
-    end
-    if m.playerIndex == 0 then
-            if movingvar >= djui_hud_get_screen_width() / 64 then
-    movingvar = 0
-    end
-                        djui_hud_set_color(255, 255, 255, 180 * theopacityvar)
-        djui_hud_render_texture(TEX_SAUL_MENU_BG, -5 + movingvar, -5 + movingvar, (djui_hud_get_screen_width() + 8) / 64, (djui_hud_get_screen_width() + 8) / 64)
-    if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
-    if (m.health >> 8) < 1 then
-    djui_hud_set_color(255, 255, 255, theopav * 10.2)
-    djui_hud_set_font(FONT_CUSTOM_HUD)
-    if _G.charSelect.is_menu_open() == false then
-    djui_hud_print_text("aw man, you died", djui_hud_get_screen_width()/2 - (djui_hud_measure_text("aw man, you died") * 1)/2, djui_hud_get_screen_height() / 2, 1)
-    end
-    end
-    if _G.charSelect.is_menu_open() == true then
-            theopacityvar = theopacityvar * 1.4
-                if theopacityvar > 1 then
-    theopacityvar = 1
-    end
-        else
-            theopacityvar = theopacityvar * 0.6
-        end
-        djui_hud_set_color(255, 255, 255, 225 * theopacityvar)
-        if _G.charSelect.character_get_current_costume() == 1 then
-        djui_hud_render_texture(TEX_SAUL_MENU_PIC, (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
-        elseif _G.charSelect.character_get_current_costume() == 4 then
-        djui_hud_render_texture(TEX_MIK_MENU_PIC, (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
-        elseif _G.charSelect.character_get_current_costume() == 2 then
-        djui_hud_render_texture(TEX_CAC_MENU_PIC, (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
-        end
-    else
-    theopacityvar = theopacityvar * 0.6
-    end
-    if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
-    saultvtimer = saultvtimer + 1
-    if saultvtimer == 15 then
-    saultvtimer = 1
-    end
-    djui_hud_set_color(255, 255, 255, 255)
-    djui_hud_set_font(FONT_HUD)
-    if _G.charSelect.character_get_current_costume() == 1 then
-        if _G.charSelect.is_menu_open() == false then
-    djui_hud_render_texture(TEX_BEEF_SAUL_METER_BACK, 29, 202, 3.5, 0.5)
-    djui_hud_render_texture(TEX_BEEF_SAUL_METER_BACK2, 146 - ((2326 - (m.health)) / 17.45), 202, ((2176 - m.health)) / 535, 0.5)
-    djui_hud_render_texture(TEX_BEEF_SAUL_METER, 19, 192, 1, 1)
-        end
-    end
-    thecactustimer = (math.floor(saultvtimer / 8)) * 64
-    if _G.charSelect.is_menu_open() == false then
-    if _G.charSelect.character_get_current_costume() == 2 then
-    if (m.health >> 8) == 8 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 0, 64, 64)
-    elseif (m.health >> 8) == 7 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 0, 64, 64)
-    elseif (m.health >> 8) == 6 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 64, 64, 64)
-    elseif (m.health >> 8) == 5 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 64, 64, 64)
-    elseif (m.health >> 8) == 4 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 128, 64, 64)
-    elseif (m.health >> 8) == 3 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 128, 64, 64)
-    elseif (m.health >> 8) == 2 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 192, 64, 64)
-    elseif (m.health >> 8) == 1 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 192, 64, 64)
-    elseif (m.health >> 8) < 1 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 192, 64, 64)
-    end
-    djui_hud_print_text(tostring(xletter), 69, 192, 2)
-    djui_hud_print_text(tostring(m.health >> 8), 99, 192, 2)
-end
-end
-if _G.charSelect.is_menu_open() == false then
-if _G.charSelect.character_get_current_costume() == 3 then
-djui_hud_render_texture(TEX_OLD_METER_BACK, 5, 176, 1, 1)
-    if m.health >> 8 > 0 then
-djui_hud_render_texture_tile(TEX_OLD_METER, 22, 192, 1, 1, ((m.health >> 8) - 1) * 32, 0, 32, 32)
-    end
-end
-end
-if _G.charSelect.character_get_current_costume() == 4 then
-    if _G.charSelect.is_menu_open() == false then
-djui_hud_render_texture_tile(TEX_MIKAUL_METER, 5, 176, 1, 1, 0, 0, math.floor(((m.health - 255) / 1921) * 64), 64)
-    end
-end
-    if _G.charSelect.character_get_current_costume() == 1 then
-        if _G.charSelect.is_menu_open() == false then
-    djui_hud_set_color(255, 255, 255, 255 - (theopav * 10.2))
-    if saultvtimer <= 7 then
-    djui_hud_render_texture_tile(TEX_SAULTV, 25, 128, 1, 1, 0, 0, 64, 64)
-    end
-    if saultvtimer > 7 then
-    djui_hud_render_texture_tile(TEX_SAULTV, 25, 128, 1, 1, 64, 0, 64, 64)
-    end
-    djui_hud_set_color(255, 255, 255, 255)
-end
-    if (m.flags & (MARIO_WING_CAP | MARIO_METAL_CAP | MARIO_VANISH_CAP)) ~= 0 then
-    djui_hud_set_color(255, 255, 255, 255)
-    djui_hud_render_texture_tile(TEX_THESHIT, 8, 32, 1, 1, 0, 0, 64, 64)
-    djui_hud_set_color(network_player_get_override_palette_color_channel(gNetworkPlayers[m.playerIndex], CAP, 0), network_player_get_override_palette_color_channel(gNetworkPlayers[m.playerIndex], CAP, 1), network_player_get_override_palette_color_channel(gNetworkPlayers[m.playerIndex], CAP, 2), 255)
-    djui_hud_render_texture_tile(TEX_THESHIT, 8, 32, 1, 1, 64, 0, 64, 64)
-    djui_hud_set_color(network_player_get_override_palette_color_channel(gNetworkPlayers[m.playerIndex], GLOVES, 0), network_player_get_override_palette_color_channel(gNetworkPlayers[m.playerIndex], GLOVES, 1), network_player_get_override_palette_color_channel(gNetworkPlayers[m.playerIndex], GLOVES, 2), 255)
-    djui_hud_render_texture_tile(TEX_THESHIT, 8, 32, 1, 1, 0, 64, 64, 64)
-    djui_hud_set_color(255, 255, 255, 255)
-    djui_hud_print_text(tostring(math.ceil(m.capTimer/30)), 29, 67, 1)
-    end
-end
-    if (255 - ((m.health - 255) / 1)) >= 0 then
-    djui_hud_set_color(255, 255, 255, (255 - ((m.health - 255) / 1)))
-    else
-    djui_hud_set_color(255, 255, 255, 0)
-    end
-    djui_hud_render_texture(TEX_HOLYSHIT, 0, 0, djui_hud_get_screen_width() / 32, djui_hud_get_screen_height() / 32)
-    return
-end
-else
-theopacityvar = theopacityvar * 0.6
-end
-end
-end
-
-hook_event(HOOK_ON_HUD_RENDER_BEHIND, hud)
