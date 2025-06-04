@@ -19,9 +19,6 @@ TEX_OLD_METER = get_texture_info("oldmeter")
 TEX_OLD_METER_BACK = get_texture_info("oldmeterbg")
 TEX_SAULTV = get_texture_info("saultv")
 TEX_HOLYSHIT = get_texture_info("healthred")
-TEX_SAUL_MENU_PIC = get_texture_info("saulchar")
-TEX_CAC_MENU_PIC = get_texture_info("cacchar")
-TEX_MIK_MENU_PIC = get_texture_info("mikchar")
 TEX_SAUL_MENU_BG = get_texture_info("thebg")
 TEX_THESHIT = get_texture_info("saulpicon")
 SAUL_EYES_SMILE = 9
@@ -29,19 +26,19 @@ SAUL_EYES_SMILE = 9
 TEXT_MOD_NAME = ("[CS] Beef Saul")
 
 if _G.charSelectExists then
-ANIMTABLE_BEEF_SAUL = {
-[CHAR_ANIM_SINGLE_JUMP] = "saul_jum",
-[CHAR_ANIM_WALKING] = "saul_anim_waklslowowo",
-[CHAR_ANIM_START_CRAWLING] = "saul_crawl_start",
-[CHAR_ANIM_STOP_CRAWLING] = "saul_crawl_stop",
-[CHAR_ANIM_START_CROUCHING] = "saul_crouch_start",
-[CHAR_ANIM_CROUCHING] = "saul_crouch",
-[CHAR_ANIM_STOP_CROUCHING] = "saul_crouch_stop",
-[CHAR_ANIM_BACKWARD_AIR_KB] = "saul_flung",
-[CHAR_ANIM_RUNNING] = "saulrun",
-[CHAR_ANIM_HANG_ON_OWL] = "saul_hang",
-[_G.charSelect.CS_ANIM_MENU] = "sauls_completely_new_menu_pose",
-}
+    ANIMTABLE_BEEF_SAUL = {
+        [CHAR_ANIM_SINGLE_JUMP] = "saul_jum",
+        [CHAR_ANIM_WALKING] = "saul_anim_waklslowowo",
+        [CHAR_ANIM_START_CRAWLING] = "saul_crawl_start",
+        [CHAR_ANIM_STOP_CRAWLING] = "saul_crawl_stop",
+        [CHAR_ANIM_START_CROUCHING] = "saul_crouch_start",
+        [CHAR_ANIM_CROUCHING] = "saul_crouch",
+        [CHAR_ANIM_STOP_CROUCHING] = "saul_crouch_stop",
+        [CHAR_ANIM_BACKWARD_AIR_KB] = "saul_flung",
+        [CHAR_ANIM_RUNNING] = "saulrun",
+        [CHAR_ANIM_HANG_ON_OWL] = "saul_hang",
+        [_G.charSelect.CS_ANIM_MENU] = "sauls_completely_new_menu_pose",
+    }
 end
 
 HM_BSAL= {
@@ -85,41 +82,50 @@ function saulthings(m)
         m.marioObj.header.gfx.scale.z = 1 - ((math.abs(m.vel.y) / 150) - math.abs(m.forwardVel) / 325)
         if (m.health >> 8) < 1 then
             if theopav < 25 then
-            theopav = theopav + 1
+                theopav = theopav + 1
             end
         else
-        theopav = 0
+            theopav = 0
         end
         if m.action == ACT_STAR_DANCE_EXIT or m.action == ACT_STAR_DANCE_NO_EXIT or m.action == ACT_STAR_DANCE_WATER then
-        if _G.charSelect.character_get_current_costume() == 1 then
-        m.marioBodyState.eyeState = SAUL_EYES_SMILE
+            if _G.charSelect.character_get_current_costume() == 1 then
+                m.marioBodyState.eyeState = SAUL_EYES_SMILE
+            end
         end
+        if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_IDLE_HEAD_LEFT then
+            m.marioBodyState.eyeState = MARIO_EYES_LOOK_RIGHT
         end
-if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_IDLE_HEAD_LEFT then
-m.marioBodyState.eyeState = MARIO_EYES_LOOK_RIGHT
-end
-if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_GENERAL_FALL then
-if m.vel.y < -10 then
-m.marioBodyState.eyeState = MARIO_EYES_LOOK_DOWN
-end
-end
-if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_IDLE_HEAD_RIGHT then
-m.marioBodyState.eyeState = MARIO_EYES_LOOK_LEFT
-end
-if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_FIRE_LAVA_BURN then
-m.marioBodyState.eyeState = MARIO_EYES_DEAD
-end
-if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_RUNNING then
-m.marioBodyState.torsoAngle.x = 0
-m.marioBodyState.torsoAngle.z = 0
-m.marioBodyState.torsoAngle.y = 0
-    if (m.controller.buttonDown & Y_BUTTON) ~= 0 then
-        if m.forwardVel >= 0 then
-        m.forwardVel = m.forwardVel + (m.forwardVel * 0.255)
-        smlua_anim_util_set_animation(m.marioObj, "saul_cust_sprint")
+        if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_GENERAL_FALL then
+            if m.vel.y < -10 then
+                m.marioBodyState.eyeState = MARIO_EYES_LOOK_DOWN
+            end
         end
-    else
-        smlua_anim_util_set_animation(m.marioObj, "saulrun")
+        if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_IDLE_HEAD_RIGHT then
+            m.marioBodyState.eyeState = MARIO_EYES_LOOK_LEFT
+        end
+        if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_FIRE_LAVA_BURN then
+            m.marioBodyState.eyeState = MARIO_EYES_DEAD
+        end
+        if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_RUNNING then
+            m.marioBodyState.torsoAngle.x = 0
+            m.marioBodyState.torsoAngle.z = 0
+            m.marioBodyState.torsoAngle.y = 0
+            if (m.controller.buttonDown & Y_BUTTON) ~= 0 then
+                if m.forwardVel >= 0 then
+                    m.forwardVel = m.forwardVel + (m.forwardVel * 0.255)
+                    smlua_anim_util_set_animation(m.marioObj, "saul_cust_sprint")
+                end
+            else
+                smlua_anim_util_set_animation(m.marioObj, "saulrun")
+            end
+        end
+        if _G.charSelect.character_get_current_costume() == 2 then
+            if m.pos.y < m.waterLevel then
+                m.vel.y = 100
+                m.forwardVel = -85
+                m.action = ACT_THROWN_BACKWARD
+            end
+        end
     end
 end
 if _G.charSelect.character_get_current_costume() == 2 then
@@ -128,8 +134,6 @@ if _G.charSelect.character_get_current_costume() == 2 then
         m.forwardVel = -85
         m.action = ACT_THROWN_BACKWARD
     end
-end
-end
 end
 
 PALETTE_OLD_SAUL =  {
@@ -226,20 +230,15 @@ if _G.charSelectExists then
     _G.charSelect.character_add_voice(E_MODEL_CAC_SAUL, VOICETABLE_BEEF_SAUL)
     _G.charSelect.character_add_voice(E_MODEL_OLD_SAUL, VOICETABLE_BEEF_SAUL)
     _G.charSelect.character_add_voice(E_MODEL_MIK_SAUL, VOICETABLE_BEEF_SAUL)
-    hook_event(HOOK_CHARACTER_SOUND, function (m, sound)
-        if _G.charSelect.character_get_voice(m) == VOICETABLE_BEEF_SAUL then return _G.charSelect.voice.sound(m, sound) end
-    end)
-    hook_event(HOOK_MARIO_UPDATE, function (m)
-        if _G.charSelect.character_get_voice(m) == VOICETABLE_BEEF_SAUL then return _G.charSelect.voice.snore(m) end
-    end)
+    _G.charSelect.config_character_sounds()
     _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_MARIO_UPDATE, saulthings)
     _G.charSelect.character_add_health_meter(CT_BEEF_SAUL, HM_BSAL)
     _G.charSelect.character_add_palette_preset(E_MODEL_BEEF_SAUL, PALETTE_BEEF_SAUL)
     _G.charSelect.character_set_category(CT_BEEF_SAUL, "DXA")
     _G.charSelect.character_set_category(CT_BEEF_SAUL, "Squishy Workshop")
-    _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Cactus Saul", {"ouch"}, "Saul", {r = 0, g = 178, b = 0}, E_MODEL_CAC_SAUL, CT_BEEF_SAUL, TEX_CAC_SAUL_PIC, 1, 0)
-    _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Old Saul", {"hey uh the thigny"}, "Saul, icon by kaktus", {r = 178, g = 204, b = 102}, E_MODEL_OLD_SAUL, CT_BEEF_SAUL, TEX_OLD_SAUL_PIC, 1, 0)
-    _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Hatsaulne Miku", {"これはすごい"}, "Saul, Miku?!?", {r = 155, g = 213, b = 225}, E_MODEL_MIK_SAUL, CT_BEEF_SAUL, TEX_MIK_SAUL_PIC, 1, 0)
+    ALT_CACTUS_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Cactus Saul", {"ouch"}, "Saul", {r = 0, g = 178, b = 0}, E_MODEL_CAC_SAUL, CT_BEEF_SAUL, TEX_CAC_SAUL_PIC, 1, 0)
+    ALT_OLD_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Old Saul", {"hey uh the thigny"}, "Saul, icon by kaktus", {r = 178, g = 204, b = 102}, E_MODEL_OLD_SAUL, CT_BEEF_SAUL, TEX_OLD_SAUL_PIC, 1, 0)
+    ALT_MIKU_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Hatsaulne Miku", {"これはすごい"}, "Saul, Miku?!?", {r = 155, g = 213, b = 225}, E_MODEL_MIK_SAUL, CT_BEEF_SAUL, TEX_MIK_SAUL_PIC, 1, 0)
     _G.charSelect.character_add_palette_preset(E_MODEL_CAC_SAUL, PALETTE_BEEF_SAUL)
     _G.charSelect.character_add_palette_preset(E_MODEL_OLD_SAUL, PALETTE_OLD_SAUL)
     _G.charSelect.character_add_palette_preset(E_MODEL_MIK_SAUL, PALETTE_MIK_SAUL)
