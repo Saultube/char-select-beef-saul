@@ -70,8 +70,7 @@ function saulthings(m)
         m.marioBodyState.eyeState = SAUL_EYES_SMILE
         m.marioObj.header.gfx.angle.x = math.floor(m.marioObj.header.gfx.angle.x / 1024) * 1024
         m.marioObj.header.gfx.angle.z = math.floor(m.marioObj.header.gfx.angle.z / 1024) * 1024
-        end
-        if m.action ~= ACT_FLYING then
+        else
         if m.pos.y ~= m.floorHeight then
         m.marioObj.header.gfx.scale.y = 1 + (math.abs(m.vel.y) / 100)
         else
