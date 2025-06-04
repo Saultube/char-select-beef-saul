@@ -63,6 +63,14 @@ theopav = 0
 function saulthings(m)
     if _G.charSelectExists then
         set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
+        if m.action == ACT_SLEEPING then
+        velroy = velroy + 1/30
+        m.marioObj.header.gfx.pos.y = m.marioObj.header.gfx.pos.y + (velroy * 5) + (5 * (math.sin(velroy * 180)))
+        m.marioObj.header.gfx.angle.z = m.marioObj.header.gfx.angle.z + (0x0 + (velroy * (300000 * (velroy / 800))))
+        m.marioObj.header.gfx.angle.x = m.marioObj.header.gfx.angle.z + (0x0 + (velroy * (150000 * (velroy / 800))))
+        else
+            velroy = 0
+        end
         if m.action == ACT_FLYING then
         m.marioBodyState.eyeState = SAUL_EYES_SMILE
         m.marioObj.header.gfx.angle.x = math.floor(m.marioObj.header.gfx.angle.x / 1024) * 1024
@@ -127,13 +135,13 @@ function saulthings(m)
             end
         end
     end
-end
-if _G.charSelect.character_get_current_costume() == 2 then
+    if _G.charSelect.character_get_current_costume() == 2 then
     if m.pos.y < m.waterLevel then
         m.vel.y = 100
         m.forwardVel = -85
         m.action = ACT_THROWN_BACKWARD
     end
+end
 end
 
 PALETTE_OLD_SAUL =  {
@@ -230,6 +238,7 @@ if _G.charSelectExists then
     _G.charSelect.character_add_voice(E_MODEL_CAC_SAUL, VOICETABLE_BEEF_SAUL)
     _G.charSelect.character_add_voice(E_MODEL_OLD_SAUL, VOICETABLE_BEEF_SAUL)
     _G.charSelect.character_add_voice(E_MODEL_MIK_SAUL, VOICETABLE_BEEF_SAUL)
+    theoptionvar = _G.charSelect.add_option("Hide Menu Art", 0, 1, {"Off", "On"}, {"This toggle hides Saul's Menu Art."}, true)
     _G.charSelect.config_character_sounds()
     _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_MARIO_UPDATE, saulthings)
     _G.charSelect.character_add_health_meter(CT_BEEF_SAUL, HM_BSAL)

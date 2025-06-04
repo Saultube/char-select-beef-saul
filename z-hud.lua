@@ -121,6 +121,9 @@ local function menu_render()
         else
             theopacityvar = theopacityvar * 0.6
         end
+        if _G.charSelect.get_options_status(theoptionvar) == 1 then
+        theopacityvar = theopacityvar * 0.6
+        end
         djui_hud_set_color(255, 255, 255, 225 * theopacityvar)
         if saulMenuTextures[currCostume] then
             djui_hud_render_texture(saulMenuTextures[currCostume], (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
