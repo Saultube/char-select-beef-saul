@@ -65,27 +65,9 @@ uses = djui_hud_get_screen_width() / 64
     thecactustimer = (math.floor(saultvtimer / 8)) * 64
     if _G.charSelect.is_menu_open() == false then
     if _G.charSelect.character_get_current_costume() == 2 then
-    if (m.health >> 8) == 8 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 0, 64, 64)
-    elseif (m.health >> 8) == 7 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 0, 64, 64)
-    elseif (m.health >> 8) == 6 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 64, 64, 64)
-    elseif (m.health >> 8) == 5 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 64, 64, 64)
-    elseif (m.health >> 8) == 4 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 128, 64, 64)
-    elseif (m.health >> 8) == 3 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 128, 64, 64)
-    elseif (m.health >> 8) == 2 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 192, 64, 64)
-    elseif (m.health >> 8) == 1 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 192, 64, 64)
-    elseif (m.health >> 8) < 1 then
-    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, 192, 64, 64)
-    end
-    djui_hud_print_text(tostring(xletter), 69, 192, 2)
-    djui_hud_print_text(tostring(m.health >> 8), 99, 192, 2)
+    djui_hud_render_texture_tile(TEX_CACTUS_METER, 10, 176, 1, 1, thecactustimer, (4 - (m.health >> 9)) * 64, 64, 64)
+    djui_hud_print_text(tostring(xletter), 69, 212, 1)
+    djui_hud_print_text(tostring(m.health >> 8), 84, 212, 1)
 end
 end
 if _G.charSelect.is_menu_open() == false then

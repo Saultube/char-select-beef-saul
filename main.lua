@@ -25,7 +25,9 @@ TEX_MIK_MENU_PIC = get_texture_info("mikchar")
 TEX_SAUL_MENU_BG = get_texture_info("thebg")
 TEX_THESHIT = get_texture_info("saulpicon")
 SAUL_EYES_SMILE = 9
+
 TEXT_MOD_NAME = ("[CS] Beef Saul")
+
 if _G.charSelectExists then
 ANIMTABLE_BEEF_SAUL = {
 [CHAR_ANIM_SINGLE_JUMP] = "saul_jum",
@@ -41,6 +43,7 @@ ANIMTABLE_BEEF_SAUL = {
 [_G.charSelect.CS_ANIM_MENU] = "sauls_completely_new_menu_pose",
 }
 end
+
 HM_BSAL= {
     label = {
         left = get_texture_info("transparentfulll"),
@@ -57,7 +60,9 @@ HM_BSAL= {
         [8] = get_texture_info("transparentfulll"),
     }
 }
+
 theopav = 0
+
 function saulthings(m)
     if _G.charSelectExists then
         set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
@@ -69,13 +74,12 @@ function saulthings(m)
         if m.action ~= ACT_FLYING then
         if m.pos.y ~= m.floorHeight then
         m.marioObj.header.gfx.scale.y = 1 + (math.abs(m.vel.y) / 100)
+        else
+        m.vel.y = m.vel.y * 0.92
         end
         if m.action == ACT_RIDING_HOOT then
         smlua_anim_util_set_animation(m.marioObj, "saul_hang")
         m.marioObj.header.gfx.pos.y = m.pos.y + 85
-        end
-        if m.pos.y == m.floorHeight then
-        m.vel.y = m.vel.y * 0.92
         end
     end
         m.marioObj.header.gfx.scale.x = 1 - (math.abs(m.vel.y) / 150)
@@ -128,6 +132,7 @@ if _G.charSelect.character_get_current_costume() == 2 then
 end
 end
 end
+
 PALETTE_OLD_SAUL =  {
     [PANTS]  = { r = 0x47, g = 0x27, b = 0x69 }, -- 472769
     [SHIRT]  = { r = 0xb2, g = 0xcc, b = 0x66 }, -- B2CC66
@@ -138,6 +143,7 @@ PALETTE_OLD_SAUL =  {
     [CAP]    = { r = 0xb2, g = 0xcc, b = 0x66 }, -- B2CC66
     [EMBLEM] = { r = 0xff, g = 0xff, b = 0xff }, -- FFFFFF
 }
+
 PALETTE_BEEF_SAUL =  {
     [PANTS]  = { r = 0x88, g = 0x2A, b = 0x40 }, -- 882A40
     [SHIRT]  = { r = 0x88, g = 0xd5, b = 0x49 }, -- 88D549
@@ -148,6 +154,7 @@ PALETTE_BEEF_SAUL =  {
     [CAP]    = { r = 0x88, g = 0xd5, b = 0x49 }, -- 88D549
     [EMBLEM] = { r = 0xff, g = 0xff, b = 0xff }, -- FFFFFF
 }
+
 PALETTE_MIK_SAUL =  {
     [PANTS]  = { r = 0x88, g = 0x2A, b = 0x40 }, -- 882A40
     [SHIRT]  = { r = 0xC3, g = 0xCD, b = 0xD6 }, -- C3CDD6
@@ -158,10 +165,12 @@ PALETTE_MIK_SAUL =  {
     [CAP]    = { r = 0x6D, g = 0xD4, b = 0xA3 }, -- 6DD4A3
     [EMBLEM] = { r = 0xE8, g = 0x22, b = 0x84 }, -- E82284
 }
+
 COURSE_BEEF_SAUL = {
     top = get_texture_info("thetopcourse"),
     bottom = get_texture_info("thebottomcourse"),
 }
+
 VOICETABLE_BEEF_SAUL = { -- Voices from the Islander from Lego Racers (1999)
     [CHAR_SOUND_ATTACKED] = {'bsouch.aiff', 'bshurt2.aiff'},
     [CHAR_SOUND_COUGHING1] = nil,
@@ -207,6 +216,7 @@ VOICETABLE_BEEF_SAUL = { -- Voices from the Islander from Lego Racers (1999)
     [CHAR_SOUND_PRESS_START_TO_PLAY] = nil,
     [CHAR_SOUND_OKEY_DOKEY] = 'bswoohoo.aiff'
 }
+
 if _G.charSelectExists then
     CT_BEEF_SAUL = _G.charSelect.character_add("Beef Saul", {"Saul has Finally been Beefified"}, "Saul (Player Icon By Chrrli On The Discord)", {r = 136, g = 213, b = 73}, E_MODEL_BEEF_SAUL, CT_TOAD, TEX_BEEF_SAUL_PIC, 1, 0)
     _G.charSelect.character_add_animations(E_MODEL_BEEF_SAUL, ANIMTABLE_BEEF_SAUL)
