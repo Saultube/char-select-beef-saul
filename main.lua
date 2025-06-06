@@ -69,7 +69,7 @@ function saulthings(m)
         m.marioObj.header.gfx.angle.z = m.marioObj.header.gfx.angle.z + (0x0 + (velroy * (300000 * (velroy / 800))))
         m.marioObj.header.gfx.angle.x = m.marioObj.header.gfx.angle.z + (0x0 + (velroy * (150000 * (velroy / 800))))
         else
-            velroy = 0
+        velroy = 0
         end
         if m.action == ACT_FLYING then
         m.marioBodyState.eyeState = SAUL_EYES_SMILE
