@@ -6,10 +6,13 @@ E_MODEL_BEEF_SAUL = smlua_model_util_get_id("beef_saul_geo")
 E_MODEL_MIK_SAUL = smlua_model_util_get_id("mik_saul_geo")
 E_MODEL_CAC_SAUL = smlua_model_util_get_id("cactus_saul_geo")
 E_MODEL_OLD_SAUL = smlua_model_util_get_id("old_saul_geo")
+E_MODEL_EVIL_FUCKED_UP = smlua_model_util_get_id("evilfuckedup_geo")
 TEX_BEEF_SAUL_PIC = get_texture_info("beefsaulicon")
 TEX_MIK_SAUL_PIC = get_texture_info("saulkuicon")
 TEX_CAC_SAUL_PIC = get_texture_info("cactaulicon")
 TEX_OLD_SAUL_PIC = get_texture_info("saulpfpimg")
+TEX_EVIL_FUCKED_UP_ICO = get_texture_info("evilfuckedupicon")
+TEX_EVIL_FUCKED_UP_AR = get_texture_info("evilfuckedupar")
 TEX_BEEF_SAUL_METER = get_texture_info("saulmeter")
 TEX_BEEF_SAUL_METER_BACK = get_texture_info("saulmeterback")
 TEX_BEEF_SAUL_METER_BACK2 = get_texture_info("saulmeterbg2")
@@ -20,6 +23,8 @@ TEX_OLD_METER_BACK = get_texture_info("oldmeterbg")
 TEX_SAULTV = get_texture_info("saultv")
 TEX_HOLYSHIT = get_texture_info("healthred")
 TEX_SAUL_MENU_BG = get_texture_info("thebg")
+TEX_REACTION = get_texture_info("evilfuckedupreatcion")
+TEX_REACTIONBG = get_texture_info("evilfuckedupreatcionbg")
 TEX_THESHIT = get_texture_info("saulpicon")
 SAUL_EYES_SMILE = 9
 
@@ -177,7 +182,7 @@ PALETTE_MIK_SAUL =  {
     [EMBLEM] = { r = 0xE8, g = 0x22, b = 0x84 }, -- E82284
 }
 
-COURSE_BEEF_SAUL = {
+local COURSE_BEEF_SAUL = {
     top = get_texture_info("thetopcourse"),
     bottom = get_texture_info("thebottomcourse"),
 }
@@ -227,6 +232,21 @@ VOICETABLE_BEEF_SAUL = { -- Voices from the Islander from Lego Racers (1999)
     [CHAR_SOUND_PRESS_START_TO_PLAY] = nil,
     [CHAR_SOUND_OKEY_DOKEY] = 'bswoohoo.aiff'
 }
+theunlockvar = 0
+function unlockhokochara(m)
+    if _G.charSelectExists then
+ if m.numStars < 20 then
+    if theunlockvar == 0 then
+_G.charSelect.character_set_locked(CT_FUCKED_UP, true, false)
+end
+ elseif theunlockvar == 0 then
+    _G.charSelect.character_set_current_number(CT_FUCKED_UP)
+    djui_chat_message_create("you can now play as FUCKED UP EVIL")
+    theunlockvar = 1
+ end
+end
+end
+hook_event(HOOK_MARIO_UPDATE, unlockhokochara)
 
 if _G.charSelectExists then
     CT_BEEF_SAUL = _G.charSelect.character_add("Beef Saul", {"Saul has Finally been Beefified"}, "Saul (Player Icon By Chrrli On The Discord)", {r = 136, g = 213, b = 73}, E_MODEL_BEEF_SAUL, CT_TOAD, TEX_BEEF_SAUL_PIC, 1, 0)
@@ -234,6 +254,8 @@ if _G.charSelectExists then
     _G.charSelect.character_add_animations(E_MODEL_CAC_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_OLD_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_MIK_SAUL, ANIMTABLE_BEEF_SAUL)
+    CT_FUCKED_UP = _G.charSelect.character_add("Evil Fucked Up", {"Evil Fucked Up"}, "Evil Fucked Up", {r = 43, g = 76, b = 1}, E_MODEL_EVIL_FUCKED_UP, CT_LUIGI, TEX_EVIL_FUCKED_UP_ICO, 3, 0)
+    _G.charSelect.character_add_course_texture(CT_BEEF_SAUL, COURSE_BEEF_SAUL)
     _G.charSelect.character_add_voice(E_MODEL_BEEF_SAUL, VOICETABLE_BEEF_SAUL)
     _G.charSelect.character_add_voice(E_MODEL_CAC_SAUL, VOICETABLE_BEEF_SAUL)
     _G.charSelect.character_add_voice(E_MODEL_OLD_SAUL, VOICETABLE_BEEF_SAUL)

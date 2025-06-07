@@ -105,7 +105,7 @@ local function hud_render()
         end
     else
         theopacityvar = theopacityvar * 0.6
-    end
+end
 end
 
 local function menu_render()
@@ -133,5 +133,18 @@ local function menu_render()
     end
 end
 
-_G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_ON_HUD_RENDER_BEHIND, hud_render)
 hook_event(HOOK_ON_HUD_RENDER_BEHIND, menu_render)
+
+local function fucked_up_evil()
+    m = gMarioStates[0]
+    djui_hud_set_resolution(RESOLUTION_N64)
+    if CT_FUCKED_UP == _G.charSelect.character_get_current_number() then
+    djui_hud_render_texture(TEX_REACTIONBG, 0, 176, 0.25, 0.25)
+    djui_hud_render_texture(TEX_EVIL_FUCKED_UP_AR, 0 + (m.health / 100), 192 - (m.health / 350), 0.75, 0.75)
+    djui_hud_render_texture(TEX_REACTION, 0, 176, 0.125, 0.125)
+    end
+end
+
+hook_event(HOOK_ON_HUD_RENDER_BEHIND, fucked_up_evil)
+
+_G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_ON_HUD_RENDER_BEHIND, hud_render)
