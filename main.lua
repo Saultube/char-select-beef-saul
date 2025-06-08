@@ -6,11 +6,13 @@ E_MODEL_BEEF_SAUL = smlua_model_util_get_id("beef_saul_geo")
 E_MODEL_MIK_SAUL = smlua_model_util_get_id("mik_saul_geo")
 E_MODEL_CAC_SAUL = smlua_model_util_get_id("cactus_saul_geo")
 E_MODEL_OLD_SAUL = smlua_model_util_get_id("old_saul_geo")
+E_MODEL_CLASSIC_SAUL = smlua_model_util_get_id("classic_saul_geo")
 E_MODEL_EVIL_FUCKED_UP = smlua_model_util_get_id("evilfuckedup_geo")
 TEX_BEEF_SAUL_PIC = get_texture_info("beefsaulicon")
 TEX_MIK_SAUL_PIC = get_texture_info("saulkuicon")
 TEX_CAC_SAUL_PIC = get_texture_info("cactaulicon")
 TEX_OLD_SAUL_PIC = get_texture_info("saulpfpimg")
+TEX_CLASSIC_SAUL_PIC = get_texture_info("clasicon")
 TEX_EVIL_FUCKED_UP_ICO = get_texture_info("evilfuckedupicon")
 TEX_EVIL_FUCKED_UP_AR = get_texture_info("evilfuckedupar")
 TEX_BEEF_SAUL_METER = get_texture_info("saulmeter")
@@ -45,6 +47,11 @@ if _G.charSelectExists then
         [_G.charSelect.CS_ANIM_MENU] = "sauls_completely_new_menu_pose",
     }
 end
+
+local ANIMTABLE_CLASSIC_SAUL = {
+    [CHAR_ANIM_STAR_DANCE] = "MARIO_ANIM_CLUB_DANCE",
+    [CHAR_ANIM_DOUBLE_JUMP_FALL] = "SAUL_ANIM_4C",
+}
 
 HM_BSAL= {
     label = {
@@ -84,7 +91,9 @@ function saulthings(m)
         if m.pos.y ~= m.floorHeight then
         m.marioObj.header.gfx.scale.y = 1 + (math.abs(m.vel.y) / 100)
         else
+            if m.action ~= ACT_DEATH_EXIT and m.action ~= ACT_UNUSED_DEATH_EXIT and m.action ~= ACT_SPECIAL_DEATH_EXIT and m.action ~= ACT_FALLING_DEATH_EXIT and m.action ~= ACT_SPECIAL_EXIT_AIRBORNE and m.action ~= ACT_FALLING_EXIT_AIRBORNE then
         m.vel.y = m.vel.y * 0.92
+            end
         end
         if m.action == ACT_RIDING_HOOT then
         smlua_anim_util_set_animation(m.marioObj, "saul_hang")
@@ -105,6 +114,7 @@ function saulthings(m)
                 m.marioBodyState.eyeState = SAUL_EYES_SMILE
             end
         end
+        if _G.charSelect.character_get_current_costume() ~= 5 then
         if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_IDLE_HEAD_LEFT then
             m.marioBodyState.eyeState = MARIO_EYES_LOOK_RIGHT
         end
@@ -119,6 +129,7 @@ function saulthings(m)
         if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_FIRE_LAVA_BURN then
             m.marioBodyState.eyeState = MARIO_EYES_DEAD
         end
+        end
         if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_RUNNING then
             m.marioBodyState.torsoAngle.x = 0
             m.marioBodyState.torsoAngle.z = 0
@@ -129,7 +140,11 @@ function saulthings(m)
                     smlua_anim_util_set_animation(m.marioObj, "saul_cust_sprint")
                 end
             else
+            if _G.charSelect.character_get_current_costume() ~= 5 then
                 smlua_anim_util_set_animation(m.marioObj, "saulrun")
+            else
+                smlua_anim_util_set_animation(m.marioObj, "saul_anim_waklslowowo")
+            end
             end
         end
         if _G.charSelect.character_get_current_costume() == 2 then
@@ -180,6 +195,17 @@ PALETTE_MIK_SAUL =  {
     [SKIN]   = { r = 0xff, g = 0xd2, b = 0x94 }, -- FFD294
     [CAP]    = { r = 0x6D, g = 0xD4, b = 0xA3 }, -- 6DD4A3
     [EMBLEM] = { r = 0xE8, g = 0x22, b = 0x84 }, -- E82284
+}
+
+PALETTE_CLASSIC_SAUL =  {
+    [PANTS]  = { r = 0x2e, g = 0x14, b = 0x57 }, -- 2E1457
+    [SHIRT]  = { r = 0xb2, g = 0xcc, b = 0x66 }, -- b2cc66
+    [GLOVES] = { r = 0xff, g = 0xff, b = 0xff }, -- FFFFFF
+    [SHOES]  = { r = 0x64, g = 0x1c, b = 0x0e }, -- 641c0e
+    [HAIR]   = { r = 0x4b, g = 0x06, b = 0x00 }, -- 4b0600
+    [SKIN]   = { r = 0xfe, g = 0xc1, b = 0x79 }, -- fec179
+    [CAP]    = { r = 0xb2, g = 0xcc, b = 0x66 }, -- b2cc66
+    [EMBLEM] = { r = 0xb2, g = 0xcc, b = 0x66 }, -- b2cc66
 }
 
 local COURSE_BEEF_SAUL = {
@@ -240,7 +266,6 @@ function unlockhokochara(m)
 _G.charSelect.character_set_locked(CT_FUCKED_UP, true, false)
 end
  elseif theunlockvar == 0 then
-    _G.charSelect.character_set_current_number(CT_FUCKED_UP)
     djui_chat_message_create("you can now play as FUCKED UP EVIL")
     theunlockvar = 1
  end
@@ -254,6 +279,7 @@ if _G.charSelectExists then
     _G.charSelect.character_add_animations(E_MODEL_CAC_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_OLD_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_MIK_SAUL, ANIMTABLE_BEEF_SAUL)
+    _G.charSelect.character_add_animations(E_MODEL_CLASSIC_SAUL, ANIMTABLE_CLASSIC_SAUL)
     CT_FUCKED_UP = _G.charSelect.character_add("Evil Fucked Up", {"Evil Fucked Up"}, "Evil Fucked Up", {r = 43, g = 76, b = 1}, E_MODEL_EVIL_FUCKED_UP, CT_LUIGI, TEX_EVIL_FUCKED_UP_ICO, 3, 0)
     _G.charSelect.character_add_course_texture(CT_BEEF_SAUL, COURSE_BEEF_SAUL)
     _G.charSelect.character_add_voice(E_MODEL_BEEF_SAUL, VOICETABLE_BEEF_SAUL)
@@ -267,12 +293,14 @@ if _G.charSelectExists then
     _G.charSelect.character_add_palette_preset(E_MODEL_BEEF_SAUL, PALETTE_BEEF_SAUL)
     _G.charSelect.character_set_category(CT_BEEF_SAUL, "DXA")
     _G.charSelect.character_set_category(CT_BEEF_SAUL, "Squishy Workshop")
-    ALT_CACTUS_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Cactus Saul", {"ouch"}, "Saul", {r = 0, g = 178, b = 0}, E_MODEL_CAC_SAUL, CT_BEEF_SAUL, TEX_CAC_SAUL_PIC, 1, 0)
-    ALT_OLD_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Old Saul", {"hey uh the thigny"}, "Saul, icon by kaktus", {r = 178, g = 204, b = 102}, E_MODEL_OLD_SAUL, CT_BEEF_SAUL, TEX_OLD_SAUL_PIC, 1, 0)
-    ALT_MIKU_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Hatsaulne Miku", {"これはすごい"}, "Saul, Miku?!?", {r = 155, g = 213, b = 225}, E_MODEL_MIK_SAUL, CT_BEEF_SAUL, TEX_MIK_SAUL_PIC, 1, 0)
+    ALT_CACTUS_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Cactus Saul", {"ouch"}, "Saul", {r = 0, g = 178, b = 0}, E_MODEL_CAC_SAUL, CT_TOAD, TEX_CAC_SAUL_PIC, 1, 0)
+    ALT_OLD_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Old Saul", {"hey uh the thigny"}, "Saul, icon by kaktus", {r = 178, g = 204, b = 102}, E_MODEL_OLD_SAUL, CT_TOAD, TEX_OLD_SAUL_PIC, 1, 0)
+    ALT_MIKU_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Hatsaulne Miku", {"これはすごい"}, "Saul, Miku?!?", {r = 155, g = 213, b = 225}, E_MODEL_MIK_SAUL, CT_TOAD, TEX_MIK_SAUL_PIC, 1, 0)
+    ALT_CLASSIC_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Classic Saul", {"damn uh"}, "Saul", {r = 71, g = 39, b = 105}, E_MODEL_CLASSIC_SAUL, CT_MARIO, TEX_CLASSIC_SAUL_PIC, 1, 0)
     _G.charSelect.character_add_palette_preset(E_MODEL_CAC_SAUL, PALETTE_BEEF_SAUL)
     _G.charSelect.character_add_palette_preset(E_MODEL_OLD_SAUL, PALETTE_OLD_SAUL)
     _G.charSelect.character_add_palette_preset(E_MODEL_MIK_SAUL, PALETTE_MIK_SAUL)
+    _G.charSelect.character_add_palette_preset(E_MODEL_CLASSIC_SAUL, PALETTE_CLASSIC_SAUL)
 else
     djui_popup_create("\\#ffffdc\\\n"..TEXT_MOD_NAME.."\nRequires the Character Select Mod\nto use as a Library!\n\nPlease turn on the Character Select Mod\nand Restart the Room!", 6)
 end
