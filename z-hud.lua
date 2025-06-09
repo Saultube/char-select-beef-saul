@@ -61,7 +61,7 @@ local function hud_render()
                 end
             end
             if _G.charSelect.is_menu_open() == false then
-                if _G.charSelect.character_get_current_costume() == 3 then
+                if _G.charSelect.character_get_current_costume() == 3 or _G.charSelect.character_get_current_costume() == 5 then
                     djui_hud_render_texture(TEX_OLD_METER_BACK, 5, 176, 1, 1)
                     if m.health >> 8 > 0 then
                         djui_hud_render_texture_tile(TEX_OLD_METER, 22, 192, 1, 1, ((m.health >> 8) - 1) * 32, 0, 32, 32)
