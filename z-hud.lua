@@ -142,7 +142,7 @@ local function fucked_up_evil()
     djui_hud_set_resolution(RESOLUTION_N64)
     if CT_FUCKED_UP == _G.charSelect.character_get_current_number() then
     djui_hud_render_texture(TEX_REACTIONBG, 0, 176, 0.25, 0.25)
-    djui_hud_render_texture(TEX_EVIL_FUCKED_UP_AR, 0 + (m.health / 100), 192 - (m.health / 350), 0.75, 0.75)
+    djui_hud_render_texture(TEX_EVIL_FUCKED_UP_AR, 0 + (m.health / 100), 192 - (m.health / 450), 0.75, 0.75)
     djui_hud_render_texture(TEX_REACTION, 0, 176, 0.125, 0.125)
     end
 end

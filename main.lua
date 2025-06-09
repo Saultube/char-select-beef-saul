@@ -51,6 +51,7 @@ end
 local ANIMTABLE_CLASSIC_SAUL = {
     [CHAR_ANIM_STAR_DANCE] = "MARIO_ANIM_CLUB_DANCE",
     [CHAR_ANIM_DOUBLE_JUMP_FALL] = "SAUL_ANIM_4C",
+    [CHAR_ANIM_RUNNING] = "saul_anim_waklslowowo",
 }
 
 HM_BSAL= {
@@ -140,7 +141,7 @@ function saulthings(m)
                     smlua_anim_util_set_animation(m.marioObj, "saul_cust_sprint")
                 end
             else
-            if _G.charSelect.character_get_current_costume() ~= 5 then
+            if _G.charSelect.character_get_current_costume() < 5 then
                 smlua_anim_util_set_animation(m.marioObj, "saulrun")
             else
                 smlua_anim_util_set_animation(m.marioObj, "saul_anim_waklslowowo")
@@ -262,9 +263,7 @@ theunlockvar = 0
 function unlockhokochara(m)
     if _G.charSelectExists then
  if m.numStars < 20 then
-    if theunlockvar == 0 then
 _G.charSelect.character_set_locked(CT_FUCKED_UP, true, false)
-end
  elseif theunlockvar == 0 then
     djui_chat_message_create("you can now play as FUCKED UP EVIL")
     theunlockvar = 1
