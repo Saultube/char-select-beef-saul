@@ -51,7 +51,13 @@ end
 local ANIMTABLE_CLASSIC_SAUL = {
     [CHAR_ANIM_STAR_DANCE] = "MARIO_ANIM_CLUB_DANCE",
     [CHAR_ANIM_DOUBLE_JUMP_FALL] = "SAUL_ANIM_4C",
+    [CHAR_ANIM_TIPTOE] = "saul_anim_waklslowowo",
+    [CHAR_ANIM_WALKING] = "saul_anim_waklslowowo",
     [CHAR_ANIM_RUNNING] = "saul_anim_waklslowowo",
+    [CHAR_ANIM_IDLE_HEAD_LEFT] = "classic_idle",
+    [CHAR_ANIM_IDLE_HEAD_RIGHT] = "classic_idle",
+    [CHAR_ANIM_IDLE_HEAD_CENTER] = "classic_idle",
+    [CHAR_ANIM_FIRST_PERSON] = "classic_idle",
 }
 
 HM_BSAL= {
@@ -76,6 +82,11 @@ theopav = 0
 function saulthings(m)
     if _G.charSelectExists then
         set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
+        if m.action == ACT_TWIRLING then
+        if (m.controller.buttonDown & Z_TRIG) ~= 0 then
+        m.vel.y = m.vel.y - 20
+        end
+        end
         if m.action == ACT_SLEEPING then
         velroy = velroy + 1/30
         m.marioObj.header.gfx.pos.y = m.marioObj.header.gfx.pos.y + (velroy * 5) + (5 * (math.sin(velroy * 180)))
@@ -83,6 +94,12 @@ function saulthings(m)
         m.marioObj.header.gfx.angle.x = m.marioObj.header.gfx.angle.z + (0x0 + (velroy * (150000 * (velroy / 800))))
         else
         velroy = 0
+        end
+        if m.action == ACT_GROUND_POUND then
+            if m.pos.y > m.floorHeight then
+        m.pos.y = m.pos.y - (m.actionTimer * 3)
+        m.marioObj.header.gfx.pos.y = m.marioObj.header.gfx.pos.y - (m.actionTimer * 3)
+            end
         end
         if m.action == ACT_FLYING then
         m.marioBodyState.eyeState = SAUL_EYES_SMILE
@@ -203,7 +220,7 @@ PALETTE_CLASSIC_SAUL =  {
     [SHIRT]  = { r = 0xb2, g = 0xcc, b = 0x66 }, -- b2cc66
     [GLOVES] = { r = 0xff, g = 0xff, b = 0xff }, -- FFFFFF
     [SHOES]  = { r = 0x64, g = 0x1c, b = 0x0e }, -- 641c0e
-    [HAIR]   = { r = 0x4b, g = 0x06, b = 0x00 }, -- 4b0600
+    [HAIR]   = { r = 0x37, g = 0x1A, b = 0x01 }, -- 371A01
     [SKIN]   = { r = 0xfe, g = 0xc1, b = 0x79 }, -- fec179
     [CAP]    = { r = 0xb2, g = 0xcc, b = 0x66 }, -- b2cc66
     [EMBLEM] = { r = 0xb2, g = 0xcc, b = 0x66 }, -- b2cc66
