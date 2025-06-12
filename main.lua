@@ -34,7 +34,8 @@ TEXT_MOD_NAME = ("[CS] Beef Saul")
 
 if _G.charSelectExists then
     ANIMTABLE_BEEF_SAUL = {
-        [CHAR_ANIM_SINGLE_JUMP] = "saul_jum",
+        [CHAR_ANIM_SINGLE_JUMP] = "saul_jump",
+        [CHAR_ANIM_LAND_FROM_SINGLE_JUMP] = "saul_jump_land",
         [CHAR_ANIM_WALKING] = "saul_anim_waklslowowo",
         [CHAR_ANIM_START_CRAWLING] = "saul_crawl_start",
         [CHAR_ANIM_STOP_CRAWLING] = "saul_crawl_stop",
@@ -58,6 +59,8 @@ local ANIMTABLE_CLASSIC_SAUL = {
     [CHAR_ANIM_TIPTOE] = "saul_anim_waklslowowo",
     [CHAR_ANIM_WALKING] = "saul_anim_waklslowowo",
     [CHAR_ANIM_RUNNING] = "saul_anim_waklslowowo",
+    [CHAR_ANIM_SINGLE_JUMP] = "saul_jump",
+    [CHAR_ANIM_LAND_FROM_SINGLE_JUMP] = "saul_jump_land",
     [CHAR_ANIM_IDLE_HEAD_LEFT] = "classic_idle",
     [CHAR_ANIM_IDLE_HEAD_RIGHT] = "classic_idle",
     [CHAR_ANIM_IDLE_HEAD_CENTER] = "classic_idle",
@@ -106,11 +109,6 @@ function saulthings(m)
         m.marioObj.header.gfx.pos.y = m.marioObj.header.gfx.pos.y - (m.actionTimer * 3)
             end
         end
-        if m.action == ACT_FLYING then
-        m.marioBodyState.eyeState = SAUL_EYES_SMILE
-        m.marioObj.header.gfx.angle.x = math.floor(m.marioObj.header.gfx.angle.x / 1024) * 1024
-        m.marioObj.header.gfx.angle.z = math.floor(m.marioObj.header.gfx.angle.z / 1024) * 1024
-        else
         if m.pos.y ~= m.floorHeight then
         m.marioObj.header.gfx.scale.y = 1 + (math.abs(m.vel.y) / 100)
         else
@@ -122,7 +120,6 @@ function saulthings(m)
         smlua_anim_util_set_animation(m.marioObj, "saul_hang")
         m.marioObj.header.gfx.pos.y = m.pos.y + 85
         end
-    end
         m.marioObj.header.gfx.scale.x = 1 - (math.abs(m.vel.y) / 150)
         m.marioObj.header.gfx.scale.z = 1 - ((math.abs(m.vel.y) / 150) - math.abs(m.forwardVel) / 325)
         if (m.health >> 8) < 1 then
@@ -132,7 +129,7 @@ function saulthings(m)
         else
             theopav = 0
         end
-        if m.action == ACT_STAR_DANCE_EXIT or m.action == ACT_STAR_DANCE_NO_EXIT or m.action == ACT_STAR_DANCE_WATER then
+        if m.action == ACT_STAR_DANCE_EXIT or m.action == ACT_STAR_DANCE_NO_EXIT or m.action == ACT_STAR_DANCE_WATER or m.action == ACT_FLYING then
             if _G.charSelect.character_get_current_costume() == 1 then
                 m.marioBodyState.eyeState = SAUL_EYES_SMILE
             end
