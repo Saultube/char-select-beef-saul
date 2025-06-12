@@ -25,8 +25,6 @@ local function hud_render()
         if movingvar >= djui_hud_get_screen_width() / 64 then
             movingvar = 0
         end
-        djui_hud_set_color(255, 255, 255, 180 * theopacityvar)
-        djui_hud_render_texture(TEX_SAUL_MENU_BG, -5 + movingvar, -5 + movingvar, (djui_hud_get_screen_width() + 8) / 64, (djui_hud_get_screen_width() + 8) / 64)
         if (m.health >> 8) < 1 then
             djui_hud_set_color(255, 255, 255, theopav * 10.2)
             djui_hud_set_font(FONT_CUSTOM_HUD)
@@ -126,7 +124,9 @@ local function menu_render()
         if _G.charSelect.get_options_status(theoptionvar) == 1 then
         theopacityvar = theopacityvar * 0.6
         end
-        djui_hud_set_color(255, 255, 255, 235 * theopacityvar)
+        djui_hud_set_color(255, 255, 255, 180 * theopacityvar)
+        djui_hud_render_texture(TEX_SAUL_MENU_BG, -5 + movingvar, -5 + movingvar, (djui_hud_get_screen_width() + 8) / 64, (djui_hud_get_screen_width() + 8) / 64)
+        djui_hud_set_color(255, 255, 255, 245 * ((math.floor(theopacityvar * 20)) / 20))
         if saulMenuTextures[currCostume] then
             djui_hud_render_texture(saulMenuTextures[currCostume], (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
         end

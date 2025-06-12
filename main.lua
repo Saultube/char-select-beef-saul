@@ -1,4 +1,4 @@
--- name: [CS] \\#88D549\\Beef Saul
+-- name: [CS] \\#882A40\\Beef \\#88D549\\Saul
 -- description: Have you Ever Became Beefified
 
 velroy = 0
@@ -44,7 +44,11 @@ if _G.charSelectExists then
         [CHAR_ANIM_BACKWARD_AIR_KB] = "saul_flung",
         [CHAR_ANIM_RUNNING] = "saulrun",
         [CHAR_ANIM_HANG_ON_OWL] = "saul_hang",
-        [_G.charSelect.CS_ANIM_MENU] = "sauls_completely_new_menu_pose",
+        [CHAR_ANIM_RIDING_SHELL] = "car_driving",
+        [CHAR_ANIM_JUMP_RIDING_SHELL] = "car_driving",
+        [CHAR_ANIM_START_RIDING_SHELL] = "car_driving",
+        [CHAR_ANIM_BEND_KNESS_RIDING_SHELL] = "car_driving",
+        [_G.charSelect.CS_ANIM_MENU] = "classic_idle",
     }
 end
 
@@ -58,6 +62,7 @@ local ANIMTABLE_CLASSIC_SAUL = {
     [CHAR_ANIM_IDLE_HEAD_RIGHT] = "classic_idle",
     [CHAR_ANIM_IDLE_HEAD_CENTER] = "classic_idle",
     [CHAR_ANIM_FIRST_PERSON] = "classic_idle",
+    [_G.charSelect.CS_ANIM_MENU] = "classic_idle",
 }
 
 HM_BSAL= {
@@ -312,7 +317,7 @@ if _G.charSelectExists then
     ALT_CACTUS_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Cactus Saul", {"ouch"}, "Saul", {r = 0, g = 178, b = 0}, E_MODEL_CAC_SAUL, CT_TOAD, TEX_CAC_SAUL_PIC, 1, 0)
     ALT_OLD_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Old Saul", {"hey uh the thigny"}, "Saul, icon by kaktus", {r = 178, g = 204, b = 102}, E_MODEL_OLD_SAUL, CT_TOAD, TEX_OLD_SAUL_PIC, 1, 0)
     ALT_MIKU_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Hatsaulne Miku", {"これはすごい"}, "Saul, Miku?!?", {r = 155, g = 213, b = 225}, E_MODEL_MIK_SAUL, CT_TOAD, TEX_MIK_SAUL_PIC, 1, 0)
-    ALT_CLASSIC_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Classic Saul", {"damn uh"}, "Saul", {r = 71, g = 39, b = 105}, E_MODEL_CLASSIC_SAUL, CT_MARIO, TEX_CLASSIC_SAUL_PIC, 1, 0)
+    ALT_CLASSIC_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Classic Saul", {"Everybody's favorite private sm64 modder - Saul 2024, menu icon by Kaktus"}, "Saul", {r = 71, g = 39, b = 105}, E_MODEL_CLASSIC_SAUL, CT_MARIO, TEX_CLASSIC_SAUL_PIC, 1, 0)
     _G.charSelect.character_add_palette_preset(E_MODEL_CAC_SAUL, PALETTE_BEEF_SAUL)
     _G.charSelect.character_add_palette_preset(E_MODEL_OLD_SAUL, PALETTE_OLD_SAUL)
     _G.charSelect.character_add_palette_preset(E_MODEL_MIK_SAUL, PALETTE_MIK_SAUL)
