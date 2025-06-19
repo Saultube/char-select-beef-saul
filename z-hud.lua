@@ -25,13 +25,6 @@ local function hud_render()
         if movingvar >= djui_hud_get_screen_width() / 64 then
             movingvar = 0
         end
-        if (m.health >> 8) < 1 then
-            djui_hud_set_color(255, 255, 255, theopav * 10.2)
-            djui_hud_set_font(FONT_CUSTOM_HUD)
-            if _G.charSelect.is_menu_open() == false then
-                djui_hud_print_text("aw man, you died", djui_hud_get_screen_width()/2 - (djui_hud_measure_text("aw man, you died") * 1)/2, djui_hud_get_screen_height() / 2, 1)
-            end
-        end
         if CT_BEEF_SAUL == currNum then
             saultvtimer = saultvtimer + 1
             if saultvtimer == 15 then
@@ -136,6 +129,28 @@ local function menu_render()
 end
 
 hook_event(HOOK_ON_HUD_RENDER_BEHIND, menu_render)
+
+local function alt_meter_render()
+    m = gMarioStates[0]
+    djui_hud_set_resolution(RESOLUTION_N64)
+    if _G.charSelect.get_options_status(6) == 0 then
+      if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
+                if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_RUNNING then
+                 m.marioBodyState.torsoAngle.x = 0
+                 m.marioBodyState.torsoAngle.z = 0
+                 m.marioBodyState.torsoAngle.y = 0
+                end
+         if _G.charSelect.is_menu_open() == false then
+         djui_hud_render_texture(TEX_ALT_METER_BACK, 2, 176, 1, 1)
+          if m.health >> 8 > 0 then
+          djui_hud_render_texture_tile(TEX_ALT_METER, 2, 176, 1, 1, (8 - (m.health >> 8)) * 64, 0, 64, 64)
+          end
+        end
+    end
+    end
+end
+
+hook_event(HOOK_ON_HUD_RENDER_BEHIND, alt_meter_render)
 
 local function fucked_up_evil()
     m = gMarioStates[0]

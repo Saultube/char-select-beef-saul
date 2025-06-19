@@ -22,6 +22,8 @@ TEX_CACTUS_METER = get_texture_info("cactussaulmeter")
 TEX_MIKAUL_METER = get_texture_info("mikaulmeter")
 TEX_OLD_METER = get_texture_info("oldmeter")
 TEX_OLD_METER_BACK = get_texture_info("oldmeterbg")
+TEX_ALT_METER = get_texture_info("nonmovesetmeter")
+TEX_ALT_METER_BACK = get_texture_info("nonmovesetmeterback")
 TEX_SAULTV = get_texture_info("saultv")
 TEX_HOLYSHIT = get_texture_info("healthred")
 TEX_SAUL_MENU_BG = get_texture_info("thebg")
@@ -35,7 +37,6 @@ TEXT_MOD_NAME = ("[CS] Beef Saul")
 if _G.charSelectExists then
     ANIMTABLE_BEEF_SAUL = {
         [CHAR_ANIM_SINGLE_JUMP] = "saul_jump",
-        [CHAR_ANIM_LAND_FROM_SINGLE_JUMP] = "saul_jump_land",
         [CHAR_ANIM_WALKING] = "saul_anim_waklslowowo",
         [CHAR_ANIM_START_CRAWLING] = "saul_crawl_start",
         [CHAR_ANIM_STOP_CRAWLING] = "saul_crawl_stop",
@@ -112,7 +113,7 @@ function saulthings(m)
         if m.pos.y ~= m.floorHeight then
         m.marioObj.header.gfx.scale.y = 1 + (math.abs(m.vel.y) / 100)
         else
-            if m.action ~= ACT_DEATH_EXIT and m.action ~= ACT_UNUSED_DEATH_EXIT and m.action ~= ACT_SPECIAL_DEATH_EXIT and m.action ~= ACT_FALLING_DEATH_EXIT and m.action ~= ACT_SPECIAL_EXIT_AIRBORNE and m.action ~= ACT_FALLING_EXIT_AIRBORNE then
+            if m.action ~= ACT_DEATH_EXIT and m.action ~= ACT_UNUSED_DEATH_EXIT and m.action ~= ACT_SPECIAL_DEATH_EXIT and m.action ~= ACT_FALLING_DEATH_EXIT and m.action ~= ACT_SPECIAL_EXIT_AIRBORNE and m.action ~= ACT_FALLING_EXIT_AIRBORNE and m.action ~= ACT_EMERGE_FROM_PIPE then
         m.vel.y = m.vel.y * 0.92
             end
         end
