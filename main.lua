@@ -1,6 +1,14 @@
 -- name: [CS] \\#882A40\\Beef \\#88D549\\Saul
 -- description: Have you Ever Became Beefified
 
+local gStateExtras = {}
+for i = 0, MAX_PLAYERS - 1 do
+    gStateExtras[i] = {}
+    local m = gMarioStates[i]
+    local e = gStateExtras[i]
+    e.rotAngle = 0
+end
+
 velroy = 0
 E_MODEL_BEEF_SAUL = smlua_model_util_get_id("beef_saul_geo")
 E_MODEL_MIK_SAUL = smlua_model_util_get_id("mik_saul_geo")
@@ -31,6 +39,25 @@ TEX_REACTION = get_texture_info("evilfuckedupreatcion")
 TEX_REACTIONBG = get_texture_info("evilfuckedupreatcionbg")
 TEX_THESHIT = get_texture_info("saulpicon")
 SAUL_EYES_SMILE = 9
+
+-- CUSTOM ACTIONS!!!! HOORAY!!!
+
+ACT_SAUL_QUADRUPLE_JUMP = allocate_mario_action(ACT_GROUP_AIRBORNE | ACT_FLAG_AIR)
+
+function act_saul_quadruple_jump(m)
+    local e = gStateExtras[m.playerIndex]
+    local stepResult = common_air_action_step(m, ACT_TRIPLE_JUMP_LAND, CHAR_ANIM_FLY_FROM_CANNON, AIR_STEP_CHECK_LEDGE_GRAB)
+    if m.input & INPUT_Z_PRESSED ~= 0 then
+        set_mario_action(m, ACT_GROUND_POUND, 0)
+    end
+    if m.input & INPUT_B_PRESSED ~= 0 then
+        set_mario_action(m, ACT_DIVE, 0)
+    end
+    e.rotAngle = e.rotAngle + 5000 -- remove this and the line below this unless you want your custom anim to be spinning (assuming you're doing one)
+    m.marioObj.header.gfx.angle.x = e.rotAngle
+    m.actionTimer = m.actionTimer + 1
+end
+hook_mario_action(ACT_SAUL_QUADRUPLE_JUMP, act_saul_quadruple_jump)
 
 TEXT_MOD_NAME = ("[CS] Beef Saul")
 
@@ -334,3 +361,28 @@ if _G.charSelectExists then
 else
     djui_popup_create("\\#ffffdc\\\n"..TEXT_MOD_NAME.."\nRequires the Character Select Mod\nto use as a Library!\n\nPlease turn on the Character Select Mod\nand Restart the Room!", 6)
 end
+
+--ACTUAL MOVESET SHITS
+
+function bsaul_update(m)
+end
+
+function on_set_bsaul_action(m)
+    if m.action == ACT_SAUL_QUADRUPLE_JUMP then -- im using HOOK_ON_SET_MARIO_ACTION to define m.vel.y, but you can also just use the custom action's m.actionTimer for this! -kak
+        m.vel.y = 90
+        play_character_sound(m, CHAR_SOUND_WHOA)
+    end
+end
+
+function before_set_bsaul_action(m, inc)
+    if inc == ACT_TRIPLE_JUMP_LAND and m.action ~= ACT_SAUL_QUADRUPLE_JUMP then -- i had to do some shenagigans with ACT_TRIPLE_JUMP_LAND to change that to ACT_DOUBLE_JUMP_LAND since triple jump land restricts a presses.
+        return ACT_DOUBLE_JUMP_LAND
+    end
+    if inc == ACT_TRIPLE_JUMP and m.prevAction == ACT_TRIPLE_JUMP and m.action == ACT_DOUBLE_JUMP_LAND then
+        return ACT_SAUL_QUADRUPLE_JUMP
+    end
+end
+
+_G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_MARIO_UPDATE, bsaul_update)
+_G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_ON_SET_MARIO_ACTION, on_set_bsaul_action)
+_G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_BEFORE_SET_MARIO_ACTION, before_set_bsaul_action)
