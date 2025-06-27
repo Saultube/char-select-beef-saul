@@ -43,6 +43,7 @@ SAUL_EYES_SMILE = 9
 -- CUSTOM ACTIONS!!!! HOORAY!!!
 
 ACT_SAUL_QUADRUPLE_JUMP = allocate_mario_action(ACT_GROUP_AIRBORNE | ACT_FLAG_AIR)
+--ACT_SAUL_WALL_GRAB = allocate_mario_action(ACT_GROUP_STATIONARY | ACT_FLAG_AIR)
 
 function act_saul_quadruple_jump(m)
     local e = gStateExtras[m.playerIndex]
@@ -58,6 +59,25 @@ function act_saul_quadruple_jump(m)
     m.actionTimer = m.actionTimer + 1
 end
 hook_mario_action(ACT_SAUL_QUADRUPLE_JUMP, act_saul_quadruple_jump)
+
+-- I actually tried my hardest to get this to work. it just would not
+-- function act_saul_wall_grab(m)
+--     local stepResult = common_air_action_step(m, ACT_FREEFALL_LAND, CHAR_ANIM_START_WALLKICK, AIR_STEP_HIT_WALL)
+--     if m.input & INPUT_A_PRESSED ~= 0 then
+--         set_mario_action(m, ACT_WALL_KICK_AIR, 0)
+--     end
+--     --if m.wall ~= nil then m.forwardVel = 0 end
+--     if m.wall == nil then
+--         set_mario_action(m, ACT_FREEFALL, 0)
+--     end
+--     if m.actionTimer > 70 then
+--         set_mario_action(m, ACT_FREEFALL, 0)
+--     end
+--     m.forwardVel = -1
+--     m.vel.y = 0
+--     m.actionTimer = m.actionTimer + 1
+-- end
+-- hook_mario_action(ACT_SAUL_WALL_GRAB, act_saul_wall_grab)
 
 TEXT_MOD_NAME = ("[CS] Beef Saul")
 
@@ -372,6 +392,7 @@ function on_set_bsaul_action(m)
         m.vel.y = 90
         play_character_sound(m, CHAR_SOUND_WHOA)
     end
+    if m.action == ACT_WALL_KICK_AIR then m.forwardVel = -30 end
 end
 
 function before_set_bsaul_action(m, inc)
