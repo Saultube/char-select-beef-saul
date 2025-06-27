@@ -90,7 +90,6 @@ theopav = 0
 
 function saulthings(m)
     if _G.charSelectExists then
-        set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
         if m.action == ACT_TWIRLING then
         if (m.controller.buttonDown & Z_TRIG) ~= 0 then
         m.vel.y = m.vel.y - 20
@@ -184,6 +183,18 @@ function saulthings(m)
     end
 end
 end
+
+prevch = _G.charSelect.character_get_current_number()
+function sauldialog(m)
+prevch = _G.charSelect.character_get_current_number()
+if _G.charSelectExists then
+if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
+set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
+end
+end
+end
+
+hook_event(HOOK_MARIO_UPDATE, sauldialog)
 
 PALETTE_OLD_SAUL =  {
     [PANTS]  = { r = 0x47, g = 0x27, b = 0x69 }, -- 472769
