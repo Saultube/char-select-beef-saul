@@ -215,13 +215,6 @@ function saulthings(m)
             end
         end
     end
-    if _G.charSelect.character_get_current_costume() == 2 then
-    if m.pos.y < m.waterLevel then
-        m.vel.y = 100
-        m.forwardVel = -85
-        m.action = ACT_THROWN_BACKWARD
-    end
-end
 end
 
 prevch = _G.charSelect.character_get_current_number()
