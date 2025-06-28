@@ -355,7 +355,6 @@ function on_set_bsaul_action(m)
         m.vel.y = 90
         play_character_sound(m, CHAR_SOUND_WHOA)
     end
-    if m.action == ACT_WALL_KICK_AIR then m.forwardVel = -30 end
 end
 
 function before_set_bsaul_action(m, inc)
