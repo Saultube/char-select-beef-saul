@@ -54,7 +54,7 @@ function act_saul_quadruple_jump(m)
     if m.input & INPUT_B_PRESSED ~= 0 then
         set_mario_action(m, ACT_DIVE, 0)
     end
-    e.rotAngle = e.rotAngle + 5000 -- remove this and the line below this unless you want your custom anim to be spinning (assuming you're doing one)
+    e.rotAngle = e.rotAngle + 7500 -- remove this and the line below this unless you want your custom anim to be spinning (assuming you're doing one)
     m.marioObj.header.gfx.angle.x = e.rotAngle
     m.actionTimer = m.actionTimer + 1
 end
@@ -350,43 +350,6 @@ end
 end
 hook_event(HOOK_MARIO_UPDATE, unlockhokochara)
 
-if _G.charSelectExists then
-    CT_BEEF_SAUL = _G.charSelect.character_add("Beef Saul", {"Saul has Finally been Beefified"}, "Saul (Player Icon By Chrrli On The Discord)", {r = 136, g = 213, b = 73}, E_MODEL_BEEF_SAUL, CT_TOAD, TEX_BEEF_SAUL_PIC, 1, 0)
-    _G.charSelect.character_add_animations(E_MODEL_BEEF_SAUL, ANIMTABLE_BEEF_SAUL)
-    _G.charSelect.character_add_animations(E_MODEL_CAC_SAUL, ANIMTABLE_BEEF_SAUL)
-    _G.charSelect.character_add_animations(E_MODEL_OLD_SAUL, ANIMTABLE_BEEF_SAUL)
-    _G.charSelect.character_add_animations(E_MODEL_MIK_SAUL, ANIMTABLE_BEEF_SAUL)
-    _G.charSelect.character_add_animations(E_MODEL_CLASSIC_SAUL, ANIMTABLE_CLASSIC_SAUL)
-    CT_FUCKED_UP = _G.charSelect.character_add("Evil Fucked Up", {"Evil Fucked Up"}, "Evil Fucked Up", {r = 43, g = 76, b = 1}, E_MODEL_EVIL_FUCKED_UP, CT_LUIGI, TEX_EVIL_FUCKED_UP_ICO, 3, 0)
-    _G.charSelect.character_add_course_texture(CT_BEEF_SAUL, COURSE_BEEF_SAUL)
-    _G.charSelect.character_add_voice(E_MODEL_BEEF_SAUL, VOICETABLE_BEEF_SAUL)
-    _G.charSelect.character_add_voice(E_MODEL_CAC_SAUL, VOICETABLE_BEEF_SAUL)
-    _G.charSelect.character_add_voice(E_MODEL_OLD_SAUL, VOICETABLE_BEEF_SAUL)
-    _G.charSelect.character_add_voice(E_MODEL_MIK_SAUL, VOICETABLE_BEEF_SAUL)
-    theoptionvar = _G.charSelect.add_option("Hide Menu Art", 0, 1, {"Off", "On"}, {"This toggle hides Saul's Menu Art."}, true)
-    _G.charSelect.config_character_sounds()
-    _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_MARIO_UPDATE, saulthings)
-    _G.charSelect.character_add_health_meter(CT_BEEF_SAUL, HM_BSAL)
-    _G.charSelect.character_add_palette_preset(E_MODEL_BEEF_SAUL, PALETTE_BEEF_SAUL)
-    _G.charSelect.character_set_category(CT_BEEF_SAUL, "DXA")
-    _G.charSelect.character_set_category(CT_BEEF_SAUL, "Squishy Workshop")
-    ALT_CACTUS_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Cactus Saul", {"ouch"}, "Saul", {r = 0, g = 178, b = 0}, E_MODEL_CAC_SAUL, CT_TOAD, TEX_CAC_SAUL_PIC, 1, 0)
-    ALT_OLD_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Old Saul", {"hey uh the thigny"}, "Saul, icon by kaktus", {r = 178, g = 204, b = 102}, E_MODEL_OLD_SAUL, CT_TOAD, TEX_OLD_SAUL_PIC, 1, 0)
-    ALT_MIKU_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Hatsaulne Miku", {"これはすごい"}, "Saul, Miku?!?", {r = 155, g = 213, b = 225}, E_MODEL_MIK_SAUL, CT_TOAD, TEX_MIK_SAUL_PIC, 1, 0)
-    ALT_CLASSIC_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Classic Saul", {"Everybody's favorite private sm64 modder - Saul 2024, menu icon by Kaktus"}, "Saul", {r = 71, g = 39, b = 105}, E_MODEL_CLASSIC_SAUL, CT_MARIO, TEX_CLASSIC_SAUL_PIC, 1, 0)
-    _G.charSelect.character_add_palette_preset(E_MODEL_CAC_SAUL, PALETTE_BEEF_SAUL)
-    _G.charSelect.character_add_palette_preset(E_MODEL_OLD_SAUL, PALETTE_OLD_SAUL)
-    _G.charSelect.character_add_palette_preset(E_MODEL_MIK_SAUL, PALETTE_MIK_SAUL)
-    _G.charSelect.character_add_palette_preset(E_MODEL_CLASSIC_SAUL, PALETTE_CLASSIC_SAUL)
-else
-    djui_popup_create("\\#ffffdc\\\n"..TEXT_MOD_NAME.."\nRequires the Character Select Mod\nto use as a Library!\n\nPlease turn on the Character Select Mod\nand Restart the Room!", 6)
-end
-
---ACTUAL MOVESET SHITS
-
-function bsaul_update(m)
-end
-
 function on_set_bsaul_action(m)
     if m.action == ACT_SAUL_QUADRUPLE_JUMP then -- im using HOOK_ON_SET_MARIO_ACTION to define m.vel.y, but you can also just use the custom action's m.actionTimer for this! -kak
         m.vel.y = 90
@@ -404,6 +367,36 @@ function before_set_bsaul_action(m, inc)
     end
 end
 
-_G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_MARIO_UPDATE, bsaul_update)
-_G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_ON_SET_MARIO_ACTION, on_set_bsaul_action)
-_G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_BEFORE_SET_MARIO_ACTION, before_set_bsaul_action)
+if _G.charSelectExists then
+    CT_BEEF_SAUL = _G.charSelect.character_add("Beef Saul", {"Saul has Finally been Beefified"}, "Saul (Player Icon By Chrrli On The Discord)", {r = 136, g = 213, b = 73}, E_MODEL_BEEF_SAUL, CT_TOAD, TEX_BEEF_SAUL_PIC, 1, 0)
+    _G.charSelect.character_add_animations(E_MODEL_BEEF_SAUL, ANIMTABLE_BEEF_SAUL)
+    _G.charSelect.character_add_animations(E_MODEL_CAC_SAUL, ANIMTABLE_BEEF_SAUL)
+    _G.charSelect.character_add_animations(E_MODEL_OLD_SAUL, ANIMTABLE_BEEF_SAUL)
+    _G.charSelect.character_add_animations(E_MODEL_MIK_SAUL, ANIMTABLE_BEEF_SAUL)
+    _G.charSelect.character_add_animations(E_MODEL_CLASSIC_SAUL, ANIMTABLE_CLASSIC_SAUL)
+    CT_FUCKED_UP = _G.charSelect.character_add("Evil Fucked Up", {"Evil Fucked Up"}, "Evil Fucked Up", {r = 43, g = 76, b = 1}, E_MODEL_EVIL_FUCKED_UP, CT_LUIGI, TEX_EVIL_FUCKED_UP_ICO, 3, 0)
+    _G.charSelect.character_add_course_texture(CT_BEEF_SAUL, COURSE_BEEF_SAUL)
+    _G.charSelect.character_add_voice(E_MODEL_BEEF_SAUL, VOICETABLE_BEEF_SAUL)
+    _G.charSelect.character_add_voice(E_MODEL_CAC_SAUL, VOICETABLE_BEEF_SAUL)
+    _G.charSelect.character_add_voice(E_MODEL_OLD_SAUL, VOICETABLE_BEEF_SAUL)
+    _G.charSelect.character_add_voice(E_MODEL_MIK_SAUL, VOICETABLE_BEEF_SAUL)
+    theoptionvar = _G.charSelect.add_option("Hide Menu Art", 0, 1, {"Off", "On"}, {"This toggle hides Saul's Menu Art."}, true)
+    _G.charSelect.config_character_sounds()
+    _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_MARIO_UPDATE, saulthings)
+    _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_ON_SET_MARIO_ACTION, on_set_bsaul_action)
+    _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_BEFORE_SET_MARIO_ACTION, before_set_bsaul_action)
+    _G.charSelect.character_add_health_meter(CT_BEEF_SAUL, HM_BSAL)
+    _G.charSelect.character_add_palette_preset(E_MODEL_BEEF_SAUL, PALETTE_BEEF_SAUL)
+    _G.charSelect.character_set_category(CT_BEEF_SAUL, "DXA")
+    _G.charSelect.character_set_category(CT_BEEF_SAUL, "Squishy Workshop")
+    ALT_CACTUS_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Cactus Saul", {"ouch"}, "Saul", {r = 0, g = 178, b = 0}, E_MODEL_CAC_SAUL, CT_TOAD, TEX_CAC_SAUL_PIC, 1, 0)
+    ALT_OLD_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Old Saul", {"hey uh the thigny"}, "Saul, icon by kaktus", {r = 178, g = 204, b = 102}, E_MODEL_OLD_SAUL, CT_TOAD, TEX_OLD_SAUL_PIC, 1, 0)
+    ALT_MIKU_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Hatsaulne Miku", {"これはすごい"}, "Saul, Miku?!?", {r = 155, g = 213, b = 225}, E_MODEL_MIK_SAUL, CT_TOAD, TEX_MIK_SAUL_PIC, 1, 0)
+    ALT_CLASSIC_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Classic Saul", {"Everybody's favorite private sm64 modder - Saul 2024, menu icon by Kaktus"}, "Saul", {r = 71, g = 39, b = 105}, E_MODEL_CLASSIC_SAUL, CT_MARIO, TEX_CLASSIC_SAUL_PIC, 1, 0)
+    _G.charSelect.character_add_palette_preset(E_MODEL_CAC_SAUL, PALETTE_BEEF_SAUL)
+    _G.charSelect.character_add_palette_preset(E_MODEL_OLD_SAUL, PALETTE_OLD_SAUL)
+    _G.charSelect.character_add_palette_preset(E_MODEL_MIK_SAUL, PALETTE_MIK_SAUL)
+    _G.charSelect.character_add_palette_preset(E_MODEL_CLASSIC_SAUL, PALETTE_CLASSIC_SAUL)
+else
+    djui_popup_create("\\#ffffdc\\\n"..TEXT_MOD_NAME.."\nRequires the Character Select Mod\nto use as a Library!\n\nPlease turn on the Character Select Mod\nand Restart the Room!", 6)
+end
