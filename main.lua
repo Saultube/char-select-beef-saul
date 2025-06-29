@@ -323,18 +323,6 @@ VOICETABLE_BEEF_SAUL = { -- Voices from the Islander from Lego Racers (1999)
     [CHAR_SOUND_PRESS_START_TO_PLAY] = nil,
     [CHAR_SOUND_OKEY_DOKEY] = 'bswoohoo.aiff'
 }
-theunlockvar = 0
-function unlockhokochara(m)
-    if _G.charSelectExists then
- if m.numStars < 20 then
-_G.charSelect.character_set_locked(CT_FUCKED_UP, true, false)
- elseif theunlockvar == 0 then
-    djui_chat_message_create("you can now play as FUCKED UP EVIL")
-    theunlockvar = 1
- end
-end
-end
-hook_event(HOOK_MARIO_UPDATE, unlockhokochara)
 
 function on_set_bsaul_action(m)
     if m.action == ACT_SAUL_QUADRUPLE_JUMP then -- im using HOOK_ON_SET_MARIO_ACTION to define m.vel.y, but you can also just use the custom action's m.actionTimer for this! -kak
