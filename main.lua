@@ -39,6 +39,7 @@ TEX_REACTION = get_texture_info("evilfuckedupreatcion")
 TEX_REACTIONBG = get_texture_info("evilfuckedupreatcionbg")
 TEX_THESHIT = get_texture_info("saulpicon")
 SAUL_EYES_SMILE = 9
+twirltimer = 60
 
 -- CUSTOM ACTIONS!!!! HOORAY!!!
 
@@ -59,6 +60,23 @@ function act_saul_quadruple_jump(m)
     m.actionTimer = m.actionTimer + 1
 end
 hook_mario_action(ACT_SAUL_QUADRUPLE_JUMP, act_saul_quadruple_jump)
+
+ACT_SAUL_TWIRL = allocate_mario_action(ACT_GROUP_AIRBORNE | ACT_FLAG_AIR)
+
+function act_saul_twirl(m)
+    local e = gStateExtras[m.playerIndex]
+    common_air_action_step(m, ACT_TRIPLE_JUMP_LAND, CHAR_ANIM_TWIRL, AIR_STEP_CHECK_LEDGE_GRAB)
+    set_character_animation(m, CHAR_ANIM_TWIRL)
+    e.rotAngle = e.rotAngle + 6500
+    m.marioObj.header.gfx.angle.y = e.rotAngle
+    m.actionTimer = m.actionTimer + 1
+    m.vel.y = m.vel.y / 1.8
+    if m.actionTimer > 5 then
+    twirltimer = 0
+    m.action = ACT_FREEFALL
+    end
+end
+hook_mario_action(ACT_SAUL_TWIRL, act_saul_twirl)
 
 -- I actually tried my hardest to get this to work. it just would not
 -- function act_saul_wall_grab(m)
@@ -135,8 +153,17 @@ HM_BSAL= {
 
 theopav = 0
 
+saultwirltable = {
+    [ACT_JUMP] = true,
+    [ACT_DOUBLE_JUMP] = true,
+    [ACT_TRIPLE_JUMP] = true,
+    [ACT_SAUL_QUADRUPLE_JUMP] = true,
+    [ACT_FREEFALL] = true,
+}
+
 function saulthings(m)
     if _G.charSelectExists then
+        twirltimer = twirltimer + 1
         if m.action == ACT_TWIRLING then
         if (m.controller.buttonDown & Z_TRIG) ~= 0 then
         m.vel.y = m.vel.y - 20
@@ -149,6 +176,17 @@ function saulthings(m)
         m.marioObj.header.gfx.angle.x = m.marioObj.header.gfx.angle.z + (0x0 + (velroy * (150000 * (velroy / 800))))
         else
         velroy = 0
+        end
+        if saultwirltable[m.action] ~= nil then -- checking a table to see if mario's action can twirl
+            if m.vel.y < 20 then -- checking if mario's Y Vel is under 20
+                if (m.controller.buttonPressed & A_BUTTON) ~= 0 then -- A Button check
+                if twirltimer > 12 then
+                    twirltimer = 0
+                    m.vel.y = m.vel.y / 4
+        set_mario_action(m, ACT_SAUL_TWIRL, 0) -- setting twirl act
+                end
+            end
+            end
         end
         if m.action == ACT_GROUND_POUND then
             if m.pos.y > m.floorHeight then
