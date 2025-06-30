@@ -39,7 +39,7 @@ TEX_REACTION = get_texture_info("evilfuckedupreatcion")
 TEX_REACTIONBG = get_texture_info("evilfuckedupreatcionbg")
 TEX_THESHIT = get_texture_info("saulpicon")
 SAUL_EYES_SMILE = 9
-twirltimer = 60
+twirltimer = 12
 
 -- CUSTOM ACTIONS!!!! HOORAY!!!
 
@@ -153,12 +153,14 @@ HM_BSAL= {
 
 theopav = 0
 
-saultwirltable = {
+saultwirltable = { -- saul twirl table
     [ACT_JUMP] = true,
     [ACT_DOUBLE_JUMP] = true,
     [ACT_TRIPLE_JUMP] = true,
     [ACT_SAUL_QUADRUPLE_JUMP] = true,
     [ACT_FREEFALL] = true,
+    [ACT_SIDE_FLIP] = true,
+    [ACT_BACKFLIP] = true,
 }
 
 function saulthings(m)

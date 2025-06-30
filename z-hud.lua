@@ -103,6 +103,7 @@ end
 
 local function menu_render()
     djui_hud_set_resolution(RESOLUTION_N64)
+    if _G.charSelectExists then
     local currNum = _G.charSelect.character_get_current_number()
     local currCostume = _G.charSelect.character_get_current_costume()
     if CT_BEEF_SAUL == currNum then
@@ -127,12 +128,14 @@ local function menu_render()
         theopacityvar = theopacityvar * 0.6
     end
 end
+end
 
 hook_event(HOOK_ON_HUD_RENDER_BEHIND, menu_render)
 
 local function alt_meter_render()
     m = gMarioStates[0]
     djui_hud_set_resolution(RESOLUTION_N64)
+    if _G.charSelectExists then
     if _G.charSelect.get_options_status(6) == 0 or _G.charSelect.are_movesets_restricted() == true then
       if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
                 if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_RUNNING then
@@ -149,17 +152,20 @@ local function alt_meter_render()
     end
     end
 end
+end
 
 hook_event(HOOK_ON_HUD_RENDER_BEHIND, alt_meter_render)
 
 local function fucked_up_evil()
     m = gMarioStates[0]
     djui_hud_set_resolution(RESOLUTION_N64)
+    if _G.charSelectExists then
     if CT_FUCKED_UP == _G.charSelect.character_get_current_number() then
     djui_hud_render_texture(TEX_REACTIONBG, 0, 176, 0.25, 0.25)
     djui_hud_render_texture(TEX_EVIL_FUCKED_UP_AR, 0 + (m.health / 100), 192 - (m.health / 450), 0.75, 0.75)
     djui_hud_render_texture(TEX_REACTION, 0, 176, 0.125, 0.125)
     end
+end
 end
 
 hook_event(HOOK_ON_HUD_RENDER_BEHIND, fucked_up_evil)
