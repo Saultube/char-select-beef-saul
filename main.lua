@@ -10,6 +10,7 @@ for i = 0, MAX_PLAYERS - 1 do
 end
 
 velroy = 0
+SAUL_TWIRL = audio_sample_load("saulsfucklintworl.mp3")
 E_MODEL_BEEF_SAUL = smlua_model_util_get_id("beef_saul_geo")
 E_MODEL_MIK_SAUL = smlua_model_util_get_id("mik_saul_geo")
 E_MODEL_DOC_SAUL = smlua_model_util_get_id("doc_saul_geo")
@@ -197,6 +198,7 @@ function saulthings(m)
                 if twirltimer > 12 then
                     twirltimer = 0
                     m.vel.y = m.vel.y / 4
+                    audio_sample_play(SAUL_TWIRL, m.pos, get_volume_sfx() / 76)
         set_mario_action(m, ACT_SAUL_TWIRL, 0) -- setting twirl act
                 end
             end
