@@ -40,6 +40,7 @@ TEX_REACTIONBG = get_texture_info("evilfuckedupreatcionbg")
 TEX_THESHIT = get_texture_info("saulpicon")
 SAUL_EYES_SMILE = 9
 twirltimer = 12
+crouchj = 0
 
 -- CUSTOM ACTIONS!!!! HOORAY!!!
 
@@ -163,9 +164,20 @@ saultwirltable = { -- saul twirl table
     [ACT_BACKFLIP] = true,
 }
 
+sctimer = 0.5
 function saulthings(m)
     if _G.charSelectExists then
         twirltimer = twirltimer + 1
+        if m.action == ACT_CROUCHING then
+        crouchj = crouchj + 1
+        if crouchj > 30 then
+        m.marioObj.header.gfx.scale.y = 0.5 + sctimer
+        sctimer = sctimer * 0.9
+        end
+        else
+        crouchj = 0
+        sctimer = 0.5
+        end
         if m.action == ACT_TWIRLING then
         if (m.controller.buttonDown & Z_TRIG) ~= 0 then
         m.vel.y = m.vel.y - 20
@@ -374,6 +386,11 @@ end
 function before_set_bsaul_action(m, inc)
     if inc == ACT_TRIPLE_JUMP_LAND and m.action ~= ACT_SAUL_QUADRUPLE_JUMP then -- i had to do some shenagigans with ACT_TRIPLE_JUMP_LAND to change that to ACT_DOUBLE_JUMP_LAND since triple jump land restricts a presses.
         return ACT_DOUBLE_JUMP_LAND
+    end
+    if inc == ACT_BACKFLIP then
+        if crouchj > 30 then
+    return ACT_SAUL_QUADRUPLE_JUMP
+        end
     end
     if inc == ACT_TRIPLE_JUMP and m.prevAction == ACT_TRIPLE_JUMP and m.action == ACT_DOUBLE_JUMP_LAND then
         return ACT_SAUL_QUADRUPLE_JUMP
