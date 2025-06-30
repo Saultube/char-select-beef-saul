@@ -133,7 +133,7 @@ hook_event(HOOK_ON_HUD_RENDER_BEHIND, menu_render)
 local function alt_meter_render()
     m = gMarioStates[0]
     djui_hud_set_resolution(RESOLUTION_N64)
-    if _G.charSelect.get_options_status(6) == 0 or _G.charSelect.get_options_status(12) == 1 then
+    if _G.charSelect.get_options_status(6) == 0 or _G.charSelect.are_movesets_restricted() == true then
       if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
                 if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_RUNNING then
                  m.marioBodyState.torsoAngle.x = 0

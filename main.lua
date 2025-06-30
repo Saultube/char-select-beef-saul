@@ -347,7 +347,7 @@ if _G.charSelectExists then
     _G.charSelect.character_add_animations(E_MODEL_OLD_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_MIK_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_CLASSIC_SAUL, ANIMTABLE_CLASSIC_SAUL)
-    CT_FUCKED_UP = _G.charSelect.character_add("Evil Fucked Up", {"Evil Fucked Up"}, "Evil Fucked Up", {r = 43, g = 76, b = 1}, E_MODEL_EVIL_FUCKED_UP, CT_LUIGI, TEX_EVIL_FUCKED_UP_ICO, 3, 0)
+    CT_FUCKED_UP = _G.charSelect.character_add("Evil Fucked Up", {"Evil Fucked Up"}, "Evil Fucked Up", {r = 43, g = 76, b = 1}, E_MODEL_EVIL_FUCKED_UP, CT_LUIGI, TEX_EVIL_FUCKED_UP_ICO, 8, 0)
     _G.charSelect.character_add_course_texture(CT_BEEF_SAUL, COURSE_BEEF_SAUL)
     _G.charSelect.character_add_voice(E_MODEL_BEEF_SAUL, VOICETABLE_BEEF_SAUL)
     _G.charSelect.character_add_voice(E_MODEL_DOC_SAUL, VOICETABLE_BEEF_SAUL)
