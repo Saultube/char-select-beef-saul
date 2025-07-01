@@ -138,9 +138,8 @@ hook_mario_action(ACT_SAUL_DASH, act_saul_dash)
 ACT_SAUL_ROLL = allocate_mario_action(ACT_GROUP_AIRBORNE | ACT_FLAG_AIR)
 
 function act_saul_roll(m)
-    common_air_action_step(m, ACT_BUTT_SLIDE, CHAR_ANIM_TWIRL, AIR_STEP_CHECK_LEDGE_GRAB)
+    common_air_action_step(m, ACT_FORWARD_ROLLOUT, CHAR_ANIM_TWIRL, AIR_STEP_CHECK_LEDGE_GRAB)
     if m.actionTimer == 0 then
-        m.forwardVel = m.forwardVel * 1.5
     play_character_sound(m, CHAR_SOUND_YAHOO_WAHA_YIPPEE)
     set_character_animation(m, CHAR_ANIM_SLEEP_IDLE)
     end
@@ -233,6 +232,7 @@ saultwirltable = { -- saul twirl table
     [ACT_SIDE_FLIP] = true,
     [ACT_BACKFLIP] = true,
     [ACT_WALL_KICK_AIR] = true,
+    [ACT_LONG_JUMP] = true,
 }
 
 sauldashtable = { -- saul dash table
@@ -478,8 +478,9 @@ function before_set_bsaul_action(m, inc)
         end
     end
     if inc == ACT_DIVE then
-    if m.pos.y < m.floorHeight + 10 then
+    if m.pos.y < m.floorHeight + 2 then
         m.vel.y = 30
+        m.forwardVel = m.forwardVel * 1.5
     return ACT_SAUL_ROLL
     end
     end
