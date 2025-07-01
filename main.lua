@@ -246,6 +246,7 @@ sctimer = 0.5
 function saulthings(m)
     if _G.charSelectExists then
         twirltimer = twirltimer + 1
+        if m.playerIndex == 0 then
         if m.action == ACT_CROUCHING then
         crouchj = crouchj + 1
         if crouchj > 30 then
@@ -255,6 +256,7 @@ function saulthings(m)
         else
         crouchj = 0
         sctimer = 0.5
+        end
         end
         if m.action == ACT_TWIRLING then
         if (m.controller.buttonDown & Z_TRIG) ~= 0 then
