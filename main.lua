@@ -43,6 +43,38 @@ SAUL_EYES_SMILE = 9
 twirltimer = 12
 crouchj = 0
 
+-- Saul Clone Behaviour
+
+local function scloninit(o)
+    o.oFlags = OBJ_FLAG_UPDATE_GFX_POS_AND_ANGLE
+    cur_obj_update_floor_and_walls();
+    o.oFaceAngleYaw = m.faceAngle.y
+    o.oFaceAngleRoll = 0
+    o.oVelY = 0
+    o.oGraphYOffset = 32
+end
+
+local function sclonloop(o)
+m = gMarioStates[0]
+o.header.gfx.animInfo.curAnim = get_mario_vanilla_animation(m.marioObj.header.gfx.animInfo.animID)
+if o.oVelY > -24 then
+o.oVelY = o.oVelY - 1.5
+else
+o.oVelY = -24
+end
+o.oPosY = o.oPosY + o.oVelY
+o.oTimer = o.oTimer + 1
+if o.oTimer > 12 then
+spawn_triangle_break_particles(1, E_MODEL_BUBBA, 0.5, 1)
+obj_mark_for_deletion(o)
+end
+if o.oPosY < o.oFloorHeight then
+o.oPosY = o.oFloorHeight
+end
+end
+
+id_bhvSclon = hook_behavior(id_bhvSclon, OBJ_LIST_GENACTOR, true, scloninit, sclonloop)
+
 -- CUSTOM ACTIONS!!!! HOORAY!!!
 
 ACT_SAUL_QUADRUPLE_JUMP = allocate_mario_action(ACT_GROUP_AIRBORNE | ACT_FLAG_AIR)
@@ -90,11 +122,15 @@ function act_saul_dash(m)
     end
     m.faceAngle.y = m.intendedYaw
     m.actionTimer = m.actionTimer + 1
-    m.forwardVel = 20 / ((m.actionTimer + 1) / 8)
+    m.forwardVel = m.forwardVel / ((m.actionTimer + 1) / 8)
     m.vel.y = m.vel.y * 0.84
     if m.actionTimer > 10 then
     m.action = ACT_FREEFALL
     end
+    spawn_sync_object(id_bhvSclon, E_MODEL_BEEF_SAUL, m.pos.x, m.pos.y, m.pos.z,
+	--- @param o Object
+	function(o)
+	end)
 end
 hook_mario_action(ACT_SAUL_DASH, act_saul_dash)
 
@@ -184,6 +220,13 @@ saultwirltable = { -- saul twirl table
     [ACT_WALL_KICK_AIR] = true,
 }
 
+sauldashtable = { -- saul dash table
+    [ACT_JUMP] = true,
+    [ACT_DOUBLE_JUMP] = true,
+    [ACT_SIDE_FLIP] = true,
+    [ACT_BACKFLIP] = true,
+}
+
 sctimer = 0.5
 function saulthings(m)
     if _G.charSelectExists then
@@ -222,6 +265,12 @@ function saulthings(m)
                 end
             end
             end
+        end
+        if sauldashtable[m.action] ~= nil then
+        if (m.controller.buttonPressed & X_BUTTON) ~= 0 then
+            m.vel.y = 50
+        set_mario_action(m, ACT_SAUL_DASH, 0)
+        end
         end
         if m.action == ACT_GROUND_POUND then
             if m.pos.y > m.floorHeight then
@@ -407,12 +456,6 @@ end
 function before_set_bsaul_action(m, inc)
     if inc == ACT_TRIPLE_JUMP_LAND and m.action ~= ACT_SAUL_QUADRUPLE_JUMP then -- i had to do some shenagigans with ACT_TRIPLE_JUMP_LAND to change that to ACT_DOUBLE_JUMP_LAND since triple jump land restricts a presses.
         return ACT_DOUBLE_JUMP_LAND
-    end
-    if inc == ACT_JUMP_KICK then
-    if m.pos.y > (m.floorHeight + 15) then
-    m.vel.y = 49
-    return ACT_SAUL_DASH
-    end
     end
     if inc == ACT_BACKFLIP then
         if crouchj > 30 then
