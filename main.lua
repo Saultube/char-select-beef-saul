@@ -122,7 +122,7 @@ function act_saul_dash(m)
     end
     m.faceAngle.y = m.intendedYaw
     m.actionTimer = m.actionTimer + 1
-    m.forwardVel = m.forwardVel / ((m.actionTimer + 1) / 8)
+    m.forwardVel = 46 / ((m.actionTimer + 1) / 8)
     m.vel.y = m.vel.y * 0.84
     if m.actionTimer > 10 then
     m.action = ACT_FREEFALL
@@ -130,9 +130,24 @@ function act_saul_dash(m)
     spawn_sync_object(id_bhvSclon, E_MODEL_BEEF_SAUL, m.pos.x, m.pos.y, m.pos.z,
 	--- @param o Object
 	function(o)
+    obj_scale(o, 0.5)
 	end)
 end
 hook_mario_action(ACT_SAUL_DASH, act_saul_dash)
+
+ACT_SAUL_ROLL = allocate_mario_action(ACT_GROUP_AIRBORNE | ACT_FLAG_AIR)
+
+function act_saul_roll(m)
+    common_air_action_step(m, ACT_BUTT_SLIDE, CHAR_ANIM_TWIRL, AIR_STEP_CHECK_LEDGE_GRAB)
+    if m.actionTimer == 0 then
+        m.forwardVel = m.forwardVel * 1.5
+    play_character_sound(m, CHAR_SOUND_YAHOO_WAHA_YIPPEE)
+    set_character_animation(m, CHAR_ANIM_SLEEP_IDLE)
+    end
+    m.actionTimer = m.actionTimer + 1
+    smlua_anim_util_set_animation(m.marioObj, "saul_rollinrollinrollinrollinrollin")
+end
+hook_mario_action(ACT_SAUL_ROLL, act_saul_roll)
 
 -- I actually tried my hardest to get this to work. it just would not
 -- function act_saul_wall_grab(m)
@@ -461,6 +476,12 @@ function before_set_bsaul_action(m, inc)
         if crouchj > 30 then
     return ACT_SAUL_QUADRUPLE_JUMP
         end
+    end
+    if inc == ACT_DIVE then
+    if m.pos.y < m.floorHeight + 10 then
+        m.vel.y = 30
+    return ACT_SAUL_ROLL
+    end
     end
     if inc == ACT_TRIPLE_JUMP and m.prevAction == ACT_TRIPLE_JUMP and m.action == ACT_DOUBLE_JUMP_LAND then
         return ACT_SAUL_QUADRUPLE_JUMP
