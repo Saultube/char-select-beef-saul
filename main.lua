@@ -67,7 +67,7 @@ ACT_SAUL_TWIRL = allocate_mario_action(ACT_GROUP_AIRBORNE | ACT_FLAG_AIR)
 
 function act_saul_twirl(m)
     local e = gStateExtras[m.playerIndex]
-    common_air_action_step(m, ACT_TRIPLE_JUMP_LAND, CHAR_ANIM_TWIRL, AIR_STEP_CHECK_LEDGE_GRAB)
+    common_air_action_step(m, ACT_JUMP_LAND, CHAR_ANIM_TWIRL, AIR_STEP_CHECK_LEDGE_GRAB)
     set_character_animation(m, CHAR_ANIM_TWIRL)
     e.rotAngle = e.rotAngle + 6500
     m.marioObj.header.gfx.angle.y = e.rotAngle
@@ -79,6 +79,24 @@ function act_saul_twirl(m)
     end
 end
 hook_mario_action(ACT_SAUL_TWIRL, act_saul_twirl)
+
+ACT_SAUL_DASH = allocate_mario_action(ACT_GROUP_AIRBORNE | ACT_FLAG_AIR)
+
+function act_saul_dash(m)
+    common_air_action_step(m, ACT_TRIPLE_JUMP_LAND, CHAR_ANIM_TWIRL, AIR_STEP_CHECK_LEDGE_GRAB)
+    set_character_animation(m, CHAR_ANIM_TWIRL)
+    if m.actionTimer == 0 then
+    play_character_sound(m, CHAR_SOUND_YAHOO_WAHA_YIPPEE)
+    end
+    m.faceAngle.y = m.intendedYaw
+    m.actionTimer = m.actionTimer + 1
+    m.forwardVel = 20 / ((m.actionTimer + 1) / 8)
+    m.vel.y = m.vel.y * 0.84
+    if m.actionTimer > 10 then
+    m.action = ACT_FREEFALL
+    end
+end
+hook_mario_action(ACT_SAUL_DASH, act_saul_dash)
 
 -- I actually tried my hardest to get this to work. it just would not
 -- function act_saul_wall_grab(m)
@@ -163,6 +181,7 @@ saultwirltable = { -- saul twirl table
     [ACT_FREEFALL] = true,
     [ACT_SIDE_FLIP] = true,
     [ACT_BACKFLIP] = true,
+    [ACT_WALL_KICK_AIR] = true,
 }
 
 sctimer = 0.5
@@ -388,6 +407,12 @@ end
 function before_set_bsaul_action(m, inc)
     if inc == ACT_TRIPLE_JUMP_LAND and m.action ~= ACT_SAUL_QUADRUPLE_JUMP then -- i had to do some shenagigans with ACT_TRIPLE_JUMP_LAND to change that to ACT_DOUBLE_JUMP_LAND since triple jump land restricts a presses.
         return ACT_DOUBLE_JUMP_LAND
+    end
+    if inc == ACT_JUMP_KICK then
+    if m.pos.y > (m.floorHeight + 15) then
+    m.vel.y = 49
+    return ACT_SAUL_DASH
+    end
     end
     if inc == ACT_BACKFLIP then
         if crouchj > 30 then
