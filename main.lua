@@ -17,6 +17,7 @@ E_MODEL_DOC_SAUL = smlua_model_util_get_id("doc_saul_geo")
 E_MODEL_OLD_SAUL = smlua_model_util_get_id("old_saul_geo")
 E_MODEL_CLASSIC_SAUL = smlua_model_util_get_id("classic_saul_geo")
 E_MODEL_EVIL_FUCKED_UP = smlua_model_util_get_id("evilfuckedup_geo")
+E_MODEL_SAUL_STAR = smlua_model_util_get_id("saulstar_geo")
 TEX_BEEF_SAUL_PIC = get_texture_info("beefsaulicon")
 TEX_MIK_SAUL_PIC = get_texture_info("saulkuicon")
 TEX_CAC_SAUL_PIC = get_texture_info("cactaulicon")
@@ -491,6 +492,7 @@ function before_set_bsaul_action(m, inc)
     end
 end
 
+local TEX_VANILLA_STAR = get_texture_info("texture_hud_char_star")
 if _G.charSelectExists then
     CT_BEEF_SAUL = _G.charSelect.character_add("Beef Saul", {"Saul has Finally been Beefified"}, "Saul (Player Icon By Chrrli On The Discord)", {r = 136, g = 213, b = 73}, E_MODEL_BEEF_SAUL, CT_TOAD, TEX_BEEF_SAUL_PIC, 1, 0)
     _G.charSelect.character_add_animations(E_MODEL_BEEF_SAUL, ANIMTABLE_BEEF_SAUL)
@@ -513,6 +515,7 @@ if _G.charSelectExists then
     _G.charSelect.character_add_palette_preset(E_MODEL_BEEF_SAUL, PALETTE_BEEF_SAUL)
     _G.charSelect.character_set_category(CT_BEEF_SAUL, "DXA")
     _G.charSelect.character_set_category(CT_BEEF_SAUL, "Squishy Workshop")
+    _G.charSelect.character_add_celebration_star(E_MODEL_BEEF_SAUL, E_MODEL_SAUL_STAR, TEX_VANILLA_STAR)
     ALT_CACTUS_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Doctor Saul", {"ouch"}, "Saul", {r = 0, g = 178, b = 0}, E_MODEL_DOC_SAUL, CT_TOAD, TEX_CAC_SAUL_PIC, 1, 0)
     ALT_OLD_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Old Saul", {"hey uh the thigny"}, "Saul, icon by kaktus", {r = 178, g = 204, b = 102}, E_MODEL_OLD_SAUL, CT_TOAD, TEX_OLD_SAUL_PIC, 1, 0)
     ALT_MIKU_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Hatsaulne Miku", {"これはすごい"}, "Saul, Miku?!?", {r = 155, g = 213, b = 225}, E_MODEL_MIK_SAUL, CT_TOAD, TEX_MIK_SAUL_PIC, 1, 0)
