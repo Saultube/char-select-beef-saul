@@ -127,7 +127,7 @@ function act_saul_dash(m)
     if m.actionTimer > 10 then
     m.action = ACT_FREEFALL
     end
-    spawn_sync_object(id_bhvSclon, E_MODEL_BEEF_SAUL, m.pos.x, m.pos.y, m.pos.z,
+    spawn_sync_object(id_bhvSclon, E_MODEL_BLUE_COIN_NO_SHADOW, m.pos.x, m.pos.y, m.pos.z,
 	--- @param o Object
 	function(o)
     obj_scale(o, 0.5)
