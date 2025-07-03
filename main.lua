@@ -136,19 +136,6 @@ function act_saul_dash(m)
 end
 hook_mario_action(ACT_SAUL_DASH, act_saul_dash)
 
-ACT_SAUL_ROLL = allocate_mario_action(ACT_GROUP_AIRBORNE | ACT_FLAG_AIR)
-
-function act_saul_roll(m)
-    common_air_action_step(m, ACT_FORWARD_ROLLOUT, CHAR_ANIM_TWIRL, AIR_STEP_CHECK_LEDGE_GRAB)
-    if m.actionTimer == 0 then
-    play_character_sound(m, CHAR_SOUND_YAHOO_WAHA_YIPPEE)
-    set_character_animation(m, CHAR_ANIM_SLEEP_IDLE)
-    end
-    m.actionTimer = m.actionTimer + 1
-    smlua_anim_util_set_animation(m.marioObj, "saul_rollinrollinrollinrollinrollin")
-end
-hook_mario_action(ACT_SAUL_ROLL, act_saul_roll)
-
 -- I actually tried my hardest to get this to work. it just would not
 -- function act_saul_wall_grab(m)
 --     local stepResult = common_air_action_step(m, ACT_FREEFALL_LAND, CHAR_ANIM_START_WALLKICK, AIR_STEP_HIT_WALL)
@@ -479,13 +466,6 @@ function before_set_bsaul_action(m, inc)
         if crouchj > 30 then
     return ACT_SAUL_QUADRUPLE_JUMP
         end
-    end
-    if inc == ACT_DIVE then
-    if m.pos.y < m.floorHeight + 2 then
-        m.vel.y = 30
-        m.forwardVel = m.forwardVel * 1.5
-    return ACT_SAUL_ROLL
-    end
     end
     if inc == ACT_TRIPLE_JUMP and m.prevAction == ACT_TRIPLE_JUMP and m.action == ACT_DOUBLE_JUMP_LAND then
         return ACT_SAUL_QUADRUPLE_JUMP
