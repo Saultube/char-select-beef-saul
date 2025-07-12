@@ -10,39 +10,39 @@ for i = 0, MAX_PLAYERS - 1 do
 end
 
 velroy = 0
-SAUL_TWIRL = audio_sample_load("saulsfucklintworl.mp3")
-E_MODEL_BEEF_SAUL = smlua_model_util_get_id("beef_saul_geo")
-E_MODEL_MIK_SAUL = smlua_model_util_get_id("mik_saul_geo")
-E_MODEL_DOC_SAUL = smlua_model_util_get_id("doc_saul_geo")
-E_MODEL_OLD_SAUL = smlua_model_util_get_id("old_saul_geo")
-E_MODEL_CLASSIC_SAUL = smlua_model_util_get_id("classic_saul_geo")
-E_MODEL_EVIL_FUCKED_UP = smlua_model_util_get_id("evilfuckedup_geo")
-E_MODEL_SAUL_STAR = smlua_model_util_get_id("saulstar_geo")
-TEX_BEEF_SAUL_PIC = get_texture_info("beefsaulicon")
-TEX_MIK_SAUL_PIC = get_texture_info("saulkuicon")
-TEX_CAC_SAUL_PIC = get_texture_info("cactaulicon")
-TEX_OLD_SAUL_PIC = get_texture_info("saulpfpimg")
-TEX_CLASSIC_SAUL_PIC = get_texture_info("clasicon")
-TEX_EVIL_FUCKED_UP_ICO = get_texture_info("evilfuckedupicon")
-TEX_EVIL_FUCKED_UP_AR = get_texture_info("evilfuckedupar")
-TEX_BEEF_SAUL_METER = get_texture_info("saulmeter")
-TEX_BEEF_SAUL_METER_BACK = get_texture_info("saulmeterback")
-TEX_BEEF_SAUL_METER_BACK2 = get_texture_info("saulmeterbg2")
-TEX_CACTUS_METER = get_texture_info("cactussaulmeter")
-TEX_MIKAUL_METER = get_texture_info("mikaulmeter")
-TEX_OLD_METER = get_texture_info("oldmeter")
-TEX_OLD_METER_BACK = get_texture_info("oldmeterbg")
-TEX_ALT_METER = get_texture_info("nonmovesetmeter")
-TEX_ALT_METER_BACK = get_texture_info("nonmovesetmeterback")
-TEX_SAULTV = get_texture_info("saultv")
-TEX_HOLYSHIT = get_texture_info("healthred")
-TEX_SAUL_MENU_BG = get_texture_info("thebg")
-TEX_REACTION = get_texture_info("evilfuckedupreatcion")
-TEX_REACTIONBG = get_texture_info("evilfuckedupreatcionbg")
-TEX_THESHIT = get_texture_info("saulpicon")
-SAUL_EYES_SMILE = 9
-twirltimer = 12
-crouchj = 0
+SAUL_TWIRL = audio_sample_load("saulsfucklintworl.mp3") -- saul twirl sfx
+E_MODEL_BEEF_SAUL = smlua_model_util_get_id("beef_saul_geo") -- main saul model
+E_MODEL_MIK_SAUL = smlua_model_util_get_id("mik_saul_geo") -- saul alt 1 (miku)
+E_MODEL_DOC_SAUL = smlua_model_util_get_id("doc_saul_geo") -- saul alt 1 (doctor)
+E_MODEL_OLD_SAUL = smlua_model_util_get_id("old_saul_geo") -- saul alt 1 (old)
+E_MODEL_CLASSIC_SAUL = smlua_model_util_get_id("classic_saul_geo") -- saul alt 1 (classic)
+E_MODEL_EVIL_FUCKED_UP = smlua_model_util_get_id("evilfuckedup_geo") -- evil fucked up (evil fucked up)
+E_MODEL_SAUL_STAR = smlua_model_util_get_id("saulstar_geo") -- saul's star thingy majig
+TEX_BEEF_SAUL_PIC = get_texture_info("beefsaulicon") -- main saul icon
+TEX_MIK_SAUL_PIC = get_texture_info("saulkuicon") -- miku saul icon
+TEX_CAC_SAUL_PIC = get_texture_info("cactaulicon") -- outdated icon
+TEX_OLD_SAUL_PIC = get_texture_info("saulpfpimg") -- old saul icon
+TEX_CLASSIC_SAUL_PIC = get_texture_info("clasicon") -- classic saul icon
+TEX_EVIL_FUCKED_UP_ICO = get_texture_info("evilfuckedupicon") -- evil fucked up icon
+TEX_EVIL_FUCKED_UP_AR = get_texture_info("evilfuckedupar") -- evil fucked up reaction him
+TEX_BEEF_SAUL_METER = get_texture_info("saulmeter") -- saul meter shape
+TEX_BEEF_SAUL_METER_BACK = get_texture_info("saulmeterback") -- saul meter gradient
+TEX_BEEF_SAUL_METER_BACK2 = get_texture_info("saulmeterbg2") -- saul meter "red"
+TEX_CACTUS_METER = get_texture_info("cactussaulmeter") -- outdated health meter for Doc saul
+TEX_MIKAUL_METER = get_texture_info("mikaulmeter") -- unfinished meter for miku
+TEX_OLD_METER = get_texture_info("oldmeter") -- archival meter from old saul and used on classic saul
+TEX_OLD_METER_BACK = get_texture_info("oldmeterbg") -- same thing as above but for the death sprites
+TEX_ALT_METER = get_texture_info("nonmovesetmeter") -- moveset for when movesets are disabled
+TEX_ALT_METER_BACK = get_texture_info("nonmovesetmeterback") -- same thing as above but for the death sprites
+TEX_SAULTV = get_texture_info("saultv") -- saul tv haha funny pizza tower no it isn't shut the fuck up
+TEX_HOLYSHIT = get_texture_info("healthred") -- saul low health meter probably will remove later
+TEX_SAUL_MENU_BG = get_texture_info("thebg") -- saul menu background thingys
+TEX_REACTION = get_texture_info("evilfuckedupreatcion") -- "Evil Fucked Up Live Reaction"
+TEX_REACTIONBG = get_texture_info("evilfuckedupreatcionbg") -- bob render for the BG of 'evil fucked up live reaction'
+TEX_THESHIT = get_texture_info("saulpicon") -- saul power up icon thingys thank you kaktus
+SAUL_EYES_SMILE = 9 -- saul custom smile eye state thank you chrrli
+twirltimer = 12 -- saul twirl move timer setting up
+crouchj = 0 -- saul crouch jump timer setting up
 
 -- Saul Clone Behaviour
 
@@ -233,34 +233,40 @@ sauldashtable = { -- saul dash table
 sctimer = 0.5
 function saulthings(m)
     if _G.charSelectExists then
+        pyramido = obj_get_first_with_behavior_id(id_bhvPyramidTop)
+        if pyramido ~= nil then
+        if pyramido.oPyramidTopPillarsTouched == 4 then
+        cutscene_object(CUTSCENE_SSL_PYRAMID_EXPLODE, pyramido)
+        end
+        end
         twirltimer = twirltimer + 1
         if m.playerIndex == 0 then
-        if m.action == ACT_CROUCHING then
-        crouchj = crouchj + 1
-        if crouchj > 30 then
-        m.marioObj.header.gfx.scale.y = 0.5 + sctimer
-        sctimer = sctimer * 0.9
-        end
-        else
+            if m.action == ACT_CROUCHING then
+            crouchj = crouchj + 1
+               if crouchj > 30 then
+               m.marioObj.header.gfx.scale.y = 0.5 + sctimer
+               sctimer = sctimer * 0.9
+               end
+            else
         crouchj = 0
         sctimer = 0.5
         end
         end
         if m.action == ACT_TWIRLING then
-        if (m.controller.buttonDown & Z_TRIG) ~= 0 then
-        m.vel.y = m.vel.y - 20
-        end
+            if (m.controller.buttonDown & Z_TRIG) ~= 0 then
+            m.vel.y = m.vel.y - 20
+            end
         end
         if m.action == ACT_SLEEPING then
-        velroy = velroy + 1/30
-        m.marioObj.header.gfx.pos.y = m.marioObj.header.gfx.pos.y + (velroy * 5) + (5 * (math.sin(velroy * 180)))
-        m.marioObj.header.gfx.angle.z = m.marioObj.header.gfx.angle.z + (0x0 + (velroy * (300000 * (velroy / 800))))
-        m.marioObj.header.gfx.angle.x = m.marioObj.header.gfx.angle.z + (0x0 + (velroy * (150000 * (velroy / 800))))
+            velroy = velroy + 1/30
+            m.marioObj.header.gfx.pos.y = m.marioObj.header.gfx.pos.y + (velroy * 5) + (5 * (math.sin(velroy * 180)))
+            m.marioObj.header.gfx.angle.z = m.marioObj.header.gfx.angle.z + (0x0 + (velroy * (300000 * (velroy / 800))))
+            m.marioObj.header.gfx.angle.x = m.marioObj.header.gfx.angle.z + (0x0 + (velroy * (150000 * (velroy / 800))))
         else
         velroy = 0
         end
         if saultwirltable[m.action] ~= nil then -- checking a table to see if mario's action can twirl
-            if m.vel.y < 20 then -- checking if mario's Y Vel is under 20
+            if m.vel.y < 5 then -- checking if mario's Y Vel is under 20
                 if (m.controller.buttonPressed & A_BUTTON) ~= 0 then -- A Button check
                 if twirltimer > 12 then
                     twirltimer = 0
@@ -272,30 +278,30 @@ function saulthings(m)
             end
         end
         if sauldashtable[m.action] ~= nil then
-        if (m.controller.buttonPressed & X_BUTTON) ~= 0 then
+            if (m.controller.buttonPressed & X_BUTTON) ~= 0 then
             m.vel.y = 50
-        set_mario_action(m, ACT_SAUL_DASH, 0)
-        end
+            set_mario_action(m, ACT_SAUL_DASH, 0)
+            end
         end
         if m.action == ACT_GROUND_POUND then
             if m.pos.y > m.floorHeight then
-        m.pos.y = m.pos.y - (m.actionTimer * 3)
-        m.marioObj.header.gfx.pos.y = m.marioObj.header.gfx.pos.y - (m.actionTimer * 3)
+            m.pos.y = m.pos.y - (m.actionTimer * 3)
+            m.marioObj.header.gfx.pos.y = m.marioObj.header.gfx.pos.y - (m.actionTimer * 3)
             end
         end
         if m.pos.y ~= m.floorHeight then
-        m.marioObj.header.gfx.scale.y = 1 + (math.abs(m.vel.y) / 100)
+        m.marioObj.header.gfx.scale.y = m.marioObj.header.gfx.scale.y + (math.abs(m.vel.y) / 100)
         else
             if m.action ~= ACT_DEATH_EXIT and m.action ~= ACT_UNUSED_DEATH_EXIT and m.action ~= ACT_SPECIAL_DEATH_EXIT and m.action ~= ACT_FALLING_DEATH_EXIT and m.action ~= ACT_SPECIAL_EXIT_AIRBORNE and m.action ~= ACT_FALLING_EXIT_AIRBORNE and m.action ~= ACT_EMERGE_FROM_PIPE then
-        m.vel.y = m.vel.y * 0.92
+            m.vel.y = m.vel.y * 0.92
             end
         end
         if m.action == ACT_RIDING_HOOT then
         smlua_anim_util_set_animation(m.marioObj, "saul_hang")
         m.marioObj.header.gfx.pos.y = m.pos.y + 85
         end
-        m.marioObj.header.gfx.scale.x = 1 - (math.abs(m.vel.y) / 150)
-        m.marioObj.header.gfx.scale.z = 1 - ((math.abs(m.vel.y) / 150) - math.abs(m.forwardVel) / 325)
+        m.marioObj.header.gfx.scale.x = m.marioObj.header.gfx.scale.x - (math.abs(m.vel.y) / 150)
+        m.marioObj.header.gfx.scale.z = m.marioObj.header.gfx.scale.z - ((math.abs(m.vel.y) / 150) - math.abs(m.forwardVel) / 325)
         if (m.health >> 8) < 1 then
             if theopav < 25 then
                 theopav = theopav + 1
@@ -305,7 +311,7 @@ function saulthings(m)
         end
         if m.action == ACT_STAR_DANCE_EXIT or m.action == ACT_STAR_DANCE_NO_EXIT or m.action == ACT_STAR_DANCE_WATER or m.action == ACT_FLYING then
             if _G.charSelect.character_get_current_costume() == 1 then
-                m.marioBodyState.eyeState = SAUL_EYES_SMILE
+            m.marioBodyState.eyeState = SAUL_EYES_SMILE
             end
         end
         if _G.charSelect.character_get_current_costume() ~= 5 then
