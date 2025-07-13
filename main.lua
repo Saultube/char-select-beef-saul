@@ -36,6 +36,7 @@ TEX_ALT_METER = get_texture_info("nonmovesetmeter") -- moveset for when movesets
 TEX_ALT_METER_BACK = get_texture_info("nonmovesetmeterback") -- same thing as above but for the death sprites
 TEX_SAULTV = get_texture_info("saultv") -- saul tv haha funny pizza tower no it isn't shut the fuck up
 TEX_HOLYSHIT = get_texture_info("healthred") -- saul low health meter probably will remove later
+E_MODEL_UNUSED_THINGY = smlua_model_util_get_id("jerraltevil_geo") -- unusedthingy
 TEX_SAUL_MENU_BG = get_texture_info("thebg") -- saul menu background thingys
 TEX_REACTION = get_texture_info("evilfuckedupreatcion") -- "Evil Fucked Up Live Reaction"
 TEX_REACTIONBG = get_texture_info("evilfuckedupreatcionbg") -- bob render for the BG of 'evil fucked up live reaction'
@@ -478,7 +479,7 @@ function before_set_bsaul_action(m, inc)
     end
 end
 
-local TEX_VANILLA_STAR = get_texture_info("texture_hud_char_star")
+TEX_VANILLA_STAR = get_texture_info("texture_hud_char_star")
 if _G.charSelectExists then
     CT_BEEF_SAUL = _G.charSelect.character_add("Beef Saul", {"Saul has Finally been Beefified"}, "Saul (Player Icon By Chrrli On The Discord)", {r = 136, g = 213, b = 73}, E_MODEL_BEEF_SAUL, CT_TOAD, TEX_BEEF_SAUL_PIC, 1, 0)
     _G.charSelect.character_add_animations(E_MODEL_BEEF_SAUL, ANIMTABLE_BEEF_SAUL)

@@ -1874,6 +1874,29 @@ smlua_anim_util_register_animation('saul_hang', 0, 0, 0, 0, 39, {
 
 });
 
+local jeralt = 0
+function jerselect(m)
+if CT_JER ~= nil then
+	if CT_JER == _G.charSelect.character_get_current_number() then
+		if ALT_EFUJ == _G.charSelect.character_get_current_costume() then
+			if _G.charSelect.get_options_status(6) == 1 and  _G.charSelect.are_movesets_restricted() == false then
+	if math.sqrt(m.controller.rawStickX ^ 2 + m.controller.rawStickY ^ 2) > 80 then
+	m.forwardVel = 200
+	else
+	m.forwardVel = 0
+	end
+	end
+end
+end
+	if jeralt == 0 then
+	ALT_EFUJ = _G.charSelect.character_add_costume(CT_JER, "Evil Jer'd Up", {"evil"}, "Jer", {r = 255, g = 0, b = 0}, E_MODEL_UNUSED_THINGY, CT_LUIGI, TEX_VANILLA_STAR, 1, 0)
+	jeralt = 1
+	end
+end
+end
+
+hook_event(HOOK_MARIO_UPDATE, jerselect)
+
 smlua_anim_util_register_animation('MARIO_ANIM_CLUB_DANCE',0, 0, 0, 0, 185, { 
 	0x0000, 0x00AC, 0x00AC, 0x00AC, 0x00AC, 0x00AC, 0x00AC, 0x00AC, 0x00AC, 
 	0x00AC, 0x00AC, 0x00AC, 0x00AC, 0x00AC, 0x00AC, 0x00AC, 0x00AC, 0x00AC, 
