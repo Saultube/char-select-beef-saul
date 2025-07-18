@@ -236,16 +236,16 @@ sctimer = 0.5
 function saulthings(m)
     if _G.charSelectExists then
         if m.action == ACT_JUMP then
-        if jumpanim == 1 then
-        smlua_anim_util_set_animation(m.marioObj, "saul_jump")
+            if jumpanim == 1 then
+                smlua_anim_util_set_animation(m.marioObj, "saul_jump")
+            else
+                smlua_anim_util_set_animation(m.marioObj, "saul_jump_2")
+            end
         else
-        smlua_anim_util_set_animation(m.marioObj, "saul_jump_2")
-        end
-    else
         if m.playerIndex == 0 then
-        jumpanim = jumpanim + 1
+            jumpanim = jumpanim + 1
         if jumpanim > 2 then
-        jumpanim = 0
+            jumpanim = 0
         end
         end
     end
