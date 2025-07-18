@@ -360,24 +360,27 @@ function saulthings(m)
     end
 end
 
+-- Saul Cursor
 local TEX_SAUL_HAND_OPEN = get_texture_info("saulhandopen")
 local TEX_SAUL_HAND_CLOSED = get_texture_info("saulhandclosed")
 local pastchar = _G.charSelect.character_get_current_number()
 function sauldialog(m)
-if _G.charSelectExists then
-if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
-set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
-texture_override_set("gd_texture_hand_open", TEX_SAUL_HAND_OPEN)
-texture_override_set("gd_texture_hand_closed", TEX_SAUL_HAND_CLOSED)
-end
-if _G.charSelect.character_get_current_number() ~= CT_BEEF_SAUL then
-    if _G.charSelect.character_get_current_number() ~= pastchar then
-    reset_dialog_override_color()
-    texture_override_reset("gd_texture_hand_open")
-    texture_override_reset("gd_texture_hand_closed")
+if m.playerIndex == 0 then
+    if _G.charSelectExists then
+        if CT_BEEF_SAUL == _G.charSelect.character_get_current_number() then
+            set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
+            texture_override_set("gd_texture_hand_open", TEX_SAUL_HAND_OPEN)
+            texture_override_set("gd_texture_hand_closed", TEX_SAUL_HAND_CLOSED)
+        end
+    if _G.charSelect.character_get_current_number() ~= CT_BEEF_SAUL then
+        if _G.charSelect.character_get_current_number() ~= pastchar then
+            reset_dialog_override_color()
+            texture_override_reset("gd_texture_hand_open")
+            texture_override_reset("gd_texture_hand_closed")
+        end
     end
-end
 pastchar = _G.charSelect.character_get_current_number()
+end
 end
 end
 
