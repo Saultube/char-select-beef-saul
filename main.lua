@@ -231,17 +231,26 @@ sauldashtable = { -- saul dash table
     [ACT_BACKFLIP] = true,
 }
 
+local jumpanim = 1
 sctimer = 0.5
 function saulthings(m)
     if _G.charSelectExists then
-        pyramido = obj_get_first_with_behavior_id(id_bhvPyramidTop)
-        if pyramido ~= nil then
-        if pyramido.oPyramidTopPillarsTouched == 4 then
-        cutscene_object(CUTSCENE_SSL_PYRAMID_EXPLODE, pyramido)
+        if m.action == ACT_JUMP then
+        if jumpanim == 1 then
+        smlua_anim_util_set_animation(m.marioObj, "saul_jump")
+        else
+        smlua_anim_util_set_animation(m.marioObj, "saul_jump_2")
         end
-        end
-        twirltimer = twirltimer + 1
+    else
         if m.playerIndex == 0 then
+        jumpanim = jumpanim + 1
+        if jumpanim > 2 then
+        jumpanim = 0
+        end
+        end
+    end
+        if m.playerIndex == 0 then
+            twirltimer = twirltimer + 1
             if m.action == ACT_CROUCHING then
             crouchj = crouchj + 1
                if crouchj > 30 then
