@@ -122,7 +122,7 @@ local function menu_render()
         djui_hud_render_texture(TEX_SAUL_MENU_BG, -5 + movingvar, -5 + movingvar, (djui_hud_get_screen_width() + 8) / 64, (djui_hud_get_screen_width() + 8) / 64)
         djui_hud_set_color(255, 255, 255, 245 * ((math.floor(theopacityvar * 20)) / 20))
         if saulMenuTextures[currCostume] then
-            djui_hud_render_texture(saulMenuTextures[currCostume], (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
+            djui_hud_render_texture(saulMenuTextures[currCostume], (djui_hud_get_screen_width()) - 118, (djui_hud_get_screen_height() / 2) - 42, 0.5, 0.5)
         end
     else
         theopacityvar = theopacityvar * 0.6
@@ -131,38 +131,6 @@ end
 end
 
 hook_event(HOOK_ON_HUD_RENDER_BEHIND, menu_render)
-
-local function charmenu_render()
-    djui_hud_set_resolution(RESOLUTION_N64)
-    movingvar = movingvar + 0.1
-    local m = gMarioStates[0]
-    if m.playerIndex == 0 then
-    if movingvar >= djui_hud_get_screen_width() / 64 then
-    movingvar = 0
-    end
-    end
-    if _G.charSelectExists then
-    local currNum = _G.charSelect.character_get_current_number()
-    if CT_CHARLIEORWHATEVER == currNum then
-        if _G.charSelect.is_menu_open() == true then
-            theopacityvar = theopacityvar * 1.4
-            if theopacityvar > 1 then
-                theopacityvar = 1
-            end
-        else
-            theopacityvar = theopacityvar * 0.6
-        end
-        djui_hud_set_color(255, 255, 255, 180 * theopacityvar)
-        djui_hud_render_texture(TEX_SAUL_MENU_BG, -5 + movingvar, -5 + movingvar, (djui_hud_get_screen_width() + 8) / 64, (djui_hud_get_screen_width() + 8) / 64)
-        djui_hud_set_color(255, 255, 255, 245 * ((math.floor(theopacityvar * 20)) / 20))
-        djui_hud_render_texture(TEX_MENUTHINGYRAHAHHRA, (djui_hud_get_screen_width() / 2) - 64, (djui_hud_get_screen_height() / 2) - 32, 0.5, 0.5)
-    else
-        theopacityvar = theopacityvar * 0.6
-    end
-end
-end
-
-hook_event(HOOK_ON_HUD_RENDER_BEHIND, charmenu_render)
 
 local function alt_meter_render()
     m = gMarioStates[0]
