@@ -1,14 +1,14 @@
 E_MODEL_SAUL_MOBILE = smlua_model_util_get_id("saul_mobile_geo")
 
 function carhoko(m)
--- if (m.controller.buttonPressed & X_BUTTON) ~= 0 then
+if (m.controller.buttonPressed & X_BUTTON) ~= 0 then
 if 1 == 0 then
     m.pos.y = m.pos.y + 20
 spawn_sync_object(id_bhvKoopaShell, E_MODEL_SAUL_MOBILE, m.pos.x, m.pos.y - 20, m.pos.z,
 --- @param o Object
 function(o)
-smlua_anim_util_set_animation(o, "car_drive")
 end)
+end
 end
 end
 
