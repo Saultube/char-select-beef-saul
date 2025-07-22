@@ -174,7 +174,7 @@ if _G.charSelectExists then
         [CHAR_ANIM_JUMP_RIDING_SHELL] = "car_driving",
         [CHAR_ANIM_START_RIDING_SHELL] = "car_driving",
         [CHAR_ANIM_BEND_KNESS_RIDING_SHELL] = "car_driving",
-        [_G.charSelect.CS_ANIM_MENU] = "classic_idle",
+        [_G.charSelect.CS_ANIM_MENU] = "saul_menu",
     }
 end
 
@@ -504,7 +504,7 @@ end
 
 TEX_VANILLA_STAR = get_texture_info("texture_hud_char_star")
 if _G.charSelectExists then
-    CT_BEEF_SAUL = _G.charSelect.character_add("Beef Saul", {"Saul has Finally been Beefified"}, "Saul (Player Icon By Chrrli On The Discord)", {r = 136, g = 213, b = 73}, E_MODEL_BEEF_SAUL, CT_TOAD, TEX_BEEF_SAUL_PIC, 1, 0)
+    CT_BEEF_SAUL = _G.charSelect.character_add("Beef Saul", {"Saul has Finally been Beefified"}, "Saul", {r = 136, g = 213, b = 73}, E_MODEL_BEEF_SAUL, CT_TOAD, TEX_BEEF_SAUL_PIC, 1, 0)
     _G.charSelect.character_add_animations(E_MODEL_BEEF_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_DOC_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_OLD_SAUL, ANIMTABLE_BEEF_SAUL)
@@ -527,9 +527,9 @@ if _G.charSelectExists then
     _G.charSelect.character_set_category(CT_BEEF_SAUL, "Squishy Workshop")
     _G.charSelect.character_add_celebration_star(E_MODEL_BEEF_SAUL, E_MODEL_SAUL_STAR, TEX_VANILLA_STAR)
     ALT_CACTUS_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Doctor Saul", {"ouch"}, "Saul", {r = 0, g = 178, b = 0}, E_MODEL_DOC_SAUL, CT_TOAD, TEX_CAC_SAUL_PIC, 1, 0)
-    ALT_OLD_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Old Saul", {"hey uh the thigny"}, "Saul, icon by kaktus", {r = 178, g = 204, b = 102}, E_MODEL_OLD_SAUL, CT_TOAD, TEX_OLD_SAUL_PIC, 1, 0)
-    ALT_MIKU_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Hatsaulne Miku", {"これはすごい"}, "Saul, Miku?!?", {r = 155, g = 213, b = 225}, E_MODEL_MIK_SAUL, CT_TOAD, TEX_MIK_SAUL_PIC, 1, 0)
-    ALT_CLASSIC_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Classic Saul", {"Everybody's favorite private sm64 modder - Saul 2024, menu icon by Kaktus"}, "Saul", {r = 71, g = 39, b = 105}, E_MODEL_CLASSIC_SAUL, CT_MARIO, TEX_CLASSIC_SAUL_PIC, 1, 0)
+    ALT_OLD_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Old Saul", {"hey uh the thigny"}, "Saul", {r = 178, g = 204, b = 102}, E_MODEL_OLD_SAUL, CT_TOAD, TEX_OLD_SAUL_PIC, 1, 0)
+    ALT_MIKU_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Hatsaulne Miku", {"これはすごい"}, "Saul", {r = 155, g = 213, b = 225}, E_MODEL_MIK_SAUL, CT_TOAD, TEX_MIK_SAUL_PIC, 1, 0)
+    ALT_CLASSIC_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Classic Saul", {"Everybody's favorite private sm64 modder - Saul 2024"}, "Saul", {r = 71, g = 39, b = 105}, E_MODEL_CLASSIC_SAUL, CT_MARIO, TEX_CLASSIC_SAUL_PIC, 1, 0)
     _G.charSelect.character_add_palette_preset(E_MODEL_DOC_SAUL, PALETTE_BEEF_SAUL)
     _G.charSelect.character_add_palette_preset(E_MODEL_OLD_SAUL, PALETTE_OLD_SAUL)
     _G.charSelect.character_add_palette_preset(E_MODEL_MIK_SAUL, PALETTE_MIK_SAUL)
