@@ -193,23 +193,6 @@ local ANIMTABLE_CLASSIC_SAUL = {
     [_G.charSelect.CS_ANIM_MENU] = "classic_idle",
 }
 
-HM_BSAL= {
-    label = {
-        left = get_texture_info("transparentfulll"),
-        right = get_texture_info("transparentfulll"),
-    },
-    pie = {
-        [1] = get_texture_info("transparentfulll"),
-        [2] = get_texture_info("transparentfulll"),
-        [3] = get_texture_info("transparentfulll"),
-        [4] = get_texture_info("transparentfulll"),
-        [5] = get_texture_info("transparentfulll"),
-        [6] = get_texture_info("transparentfulll"),
-        [7] = get_texture_info("transparentfulll"),
-        [8] = get_texture_info("transparentfulll"),
-    }
-}
-
 theopav = 0
 
 saultwirltable = { -- saul twirl table
@@ -235,6 +218,7 @@ local jumpanim = 1
 sctimer = 0.5
 function saulthings(m)
     if _G.charSelectExists then
+        _G.charSelect.hud_hide_element(HUD_DISPLAY_FLAGS_POWER)
         if m.action == ACT_JUMP then
             if jumpanim == 1 then
                 smlua_anim_util_set_animation(m.marioObj, "saul_jump")
@@ -529,7 +513,6 @@ if _G.charSelectExists then
     _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_MARIO_UPDATE, saulthings)
     _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_ON_SET_MARIO_ACTION, on_set_bsaul_action)
     _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_BEFORE_SET_MARIO_ACTION, before_set_bsaul_action)
-    _G.charSelect.character_add_health_meter(CT_BEEF_SAUL, HM_BSAL)
     _G.charSelect.character_add_palette_preset(E_MODEL_BEEF_SAUL, PALETTE_BEEF_SAUL)
     _G.charSelect.character_set_category(CT_BEEF_SAUL, "DXA")
     _G.charSelect.character_set_category(CT_BEEF_SAUL, "Squishy Workshop")
