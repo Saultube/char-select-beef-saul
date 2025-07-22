@@ -272,6 +272,11 @@ function saulthings(m)
             m.marioObj.header.gfx.pos.y = m.marioObj.header.gfx.pos.y + (velroy * 5) + (5 * (math.sin(velroy * 180)))
             m.marioObj.header.gfx.angle.z = m.marioObj.header.gfx.angle.z + (0x0 + (velroy * (300000 * (velroy / 800))))
             m.marioObj.header.gfx.angle.x = m.marioObj.header.gfx.angle.z + (0x0 + (velroy * (150000 * (velroy / 800))))
+        elseif m.action == ACT_WAKING_UP then
+            velroy = velroy * 0.8
+            m.marioObj.header.gfx.pos.y = m.marioObj.header.gfx.pos.y + (velroy * 5) + (5 * (math.sin(velroy * 180)))
+            m.marioObj.header.gfx.angle.z = m.marioObj.header.gfx.angle.z + (0x0 + (velroy * (300000 * (velroy / 800))))
+            m.marioObj.header.gfx.angle.x = m.marioObj.header.gfx.angle.z + (0x0 + (velroy * (150000 * (velroy / 800))))
         else
         velroy = 0
         end
@@ -323,6 +328,9 @@ function saulthings(m)
             if _G.charSelect.character_get_current_costume() == 1 then
             m.marioBodyState.eyeState = SAUL_EYES_SMILE
             end
+        end
+        if _G.charSelect.is_menu_open() then
+        m.marioBodyState.eyeState = MARIO_EYES_LOOK_RIGHT
         end
         if _G.charSelect.character_get_current_costume() ~= 5 then
         if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_IDLE_HEAD_LEFT then
@@ -510,7 +518,7 @@ if _G.charSelectExists then
     _G.charSelect.character_add_animations(E_MODEL_OLD_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_MIK_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_CLASSIC_SAUL, ANIMTABLE_CLASSIC_SAUL)
-    CT_FUCKED_UP = _G.charSelect.character_add("Evil Fucked Up", {"Evil Fucked Up"}, "Evil Fucked Up", {r = 43, g = 76, b = 1}, E_MODEL_EVIL_FUCKED_UP, CT_LUIGI, TEX_EVIL_FUCKED_UP_ICO, 8, 0)
+    CT_FUCKED_UP = _G.charSelect.character_add("Evil Fucked Up", {"Evil Fucked Up"}, "Evil Fucked Up", {r = 43, g = 76, b = 1}, E_MODEL_EVIL_FUCKED_UP, CT_LUIGI, TEX_EVIL_FUCKED_UP_ICO, 3, 0)
     _G.charSelect.character_add_course_texture(CT_BEEF_SAUL, COURSE_BEEF_SAUL)
     _G.charSelect.character_add_voice(E_MODEL_BEEF_SAUL, VOICETABLE_BEEF_SAUL)
     _G.charSelect.character_add_voice(E_MODEL_DOC_SAUL, VOICETABLE_BEEF_SAUL)

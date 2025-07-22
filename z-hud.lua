@@ -11,12 +11,20 @@ local saulMenuTextures = {
     [ALT_CLASSIC_SAUL] = get_texture_info("classicmenu"),
 }
 
+local healthmovevar = -48
 local function hud_render()
     local currNum = _G.charSelect.character_get_current_number()
     local currCostume = _G.charSelect.character_get_current_costume()
     djui_hud_set_resolution(RESOLUTION_N64)
     uses = djui_hud_get_screen_width() / 64
-    m = gMarioStates[0]
+    local m = gMarioStates[0]
+    if m.playerIndex == 0 then
+    if (m.health >> 8) < 8 or (m.action & ACT_FLAG_SWIMMING ~= 0) or m.action == ACT_WATER_JUMP then
+        healthmovevar = healthmovevar + (1 - (healthmovevar / 7)) -- health meter move stuff
+    elseif (m.action & ACT_FLAG_SWIMMING ~= 1) and m.action ~= ACT_WATER_JUMP then
+        healthmovevar = healthmovevar - (4 + (healthmovevar / 12)) -- more health meter move stuff
+    end
+    end
     movingvar = movingvar + 0.1
     if theopacityvar < 0.01 then
         theopacityvar = 0.01
@@ -34,9 +42,9 @@ local function hud_render()
             djui_hud_set_font(FONT_HUD)
             if currCostume == 1 then
                 if _G.charSelect.is_menu_open() == false then
-                    djui_hud_render_texture(TEX_BEEF_SAUL_METER_BACK, 29, 202, 3.5, 0.5)
-                    djui_hud_render_texture(TEX_BEEF_SAUL_METER_BACK2, 146 - ((2326 - (m.health)) / 17.45), 202, ((2176 - m.health)) / 535, 0.5)
-                    djui_hud_render_texture(TEX_BEEF_SAUL_METER, 19, 192, 1, 1)
+                    djui_hud_render_texture(TEX_BEEF_SAUL_METER_BACK, 29, 202 - healthmovevar, 3.5, 0.5)
+                    djui_hud_render_texture(TEX_BEEF_SAUL_METER_BACK2, 146 - ((2326 - (m.health)) / 17.45), 202 - healthmovevar, ((2176 - m.health)) / 535, 0.5)
+                    djui_hud_render_texture(TEX_BEEF_SAUL_METER, 19, 192 - healthmovevar, 1, 1)
                 end
             end
             thecactustimer = (math.floor(saultvtimer / 8)) * 64
@@ -53,9 +61,9 @@ local function hud_render()
             end
             if _G.charSelect.is_menu_open() == false then
                 if _G.charSelect.character_get_current_costume() == 3 or _G.charSelect.character_get_current_costume() == 5 then
-                    djui_hud_render_texture(TEX_OLD_METER_BACK, 5, 176, 1, 1)
+                    djui_hud_render_texture(TEX_OLD_METER_BACK, 5 + (healthmovevar * 1.5), 176, 1, 1)
                     if m.health >> 8 > 0 then
-                        djui_hud_render_texture_tile(TEX_OLD_METER, 22, 192, 1, 1, ((m.health >> 8) - 1) * 32, 0, 32, 32)
+                        djui_hud_render_texture_tile(TEX_OLD_METER, 22 + (healthmovevar * 1.5), 192, 1, 1, ((m.health >> 8) - 1) * 32, 0, 32, 32)
                     end
                 end
             end
@@ -68,10 +76,10 @@ local function hud_render()
                 if _G.charSelect.is_menu_open() == false then
                     djui_hud_set_color(255, 255, 255, 255 - (theopav * 10.2))
                     if saultvtimer <= 7 then
-                        djui_hud_render_texture_tile(TEX_SAULTV, 25, 128, 1, 1, 0, 0, 64, 64)
+                        djui_hud_render_texture_tile(TEX_SAULTV, 25, 128 - healthmovevar, 1, 1, 0, 0, 64, 64)
                     end
                     if saultvtimer > 7 then
-                        djui_hud_render_texture_tile(TEX_SAULTV, 25, 128, 1, 1, 64, 0, 64, 64)
+                        djui_hud_render_texture_tile(TEX_SAULTV, 25, 128 - healthmovevar, 1, 1, 64, 0, 64, 64)
                     end
                     djui_hud_set_color(255, 255, 255, 255)
                 end
