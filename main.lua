@@ -218,7 +218,9 @@ local jumpanim = 1
 sctimer = 0.5
 function saulthings(m)
     if _G.charSelectExists then
+        if m.playerIndex == 0 then
         _G.charSelect.hud_hide_element(HUD_DISPLAY_FLAGS_POWER)
+        end
         if m.action == ACT_JUMP then
             if jumpanim == 1 then
                 smlua_anim_util_set_animation(m.marioObj, "saul_jump")
