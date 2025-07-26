@@ -40,6 +40,7 @@ TEX_SAUL_MENU_BG = get_texture_info("thebg") -- saul menu background thingys
 TEX_REACTION = get_texture_info("evilfuckedupreatcion") -- "Evil Fucked Up Live Reaction"
 TEX_REACTIONBG = get_texture_info("evilfuckedupreatcionbg") -- bob render for the BG of 'evil fucked up live reaction'
 TEX_THESHIT = get_texture_info("saulpicon") -- saul power up icon thingys thank you kaktus
+TEX_SAUL_GRAFFITI = get_texture_info("graffitisaul") -- saul graffiti for CS 1.16
 SAUL_EYES_SMILE = 9 -- saul custom smile eye state thank you chrrli
 twirltimer = 12 -- saul twirl move timer setting up
 crouchj = 0 -- saul crouch jump timer setting up
@@ -498,9 +499,10 @@ function before_set_bsaul_action(m, inc)
     end
 end
 
-TEX_VANILLA_STAR = get_texture_info("texture_hud_char_star")
 if _G.charSelectExists then
+    _G.charSelect.hud_show_element(HUD_DISPLAY_FLAGS_POWER)
     CT_BEEF_SAUL = _G.charSelect.character_add("Beef Saul", {"Saul has Finally been Beefified"}, "Saul", {r = 136, g = 213, b = 73}, E_MODEL_BEEF_SAUL, CT_TOAD, TEX_BEEF_SAUL_PIC, 1, 0)
+    _G.charSelect.character_add_graffiti(CT_BEEF_SAUL, TEX_SAUL_GRAFFITI)
     _G.charSelect.character_add_animations(E_MODEL_BEEF_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_DOC_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_OLD_SAUL, ANIMTABLE_BEEF_SAUL)
