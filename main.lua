@@ -36,7 +36,6 @@ TEX_ALT_METER = get_texture_info("nonmovesetmeter") -- moveset for when movesets
 TEX_ALT_METER_BACK = get_texture_info("nonmovesetmeterback") -- same thing as above but for the death sprites
 TEX_SAULTV = get_texture_info("saultv") -- saul tv haha funny pizza tower no it isn't shut the fuck up
 TEX_HOLYSHIT = get_texture_info("healthred") -- saul low health meter probably will remove later
-E_MODEL_UNUSED_THINGY = smlua_model_util_get_id("jerraltevil_geo") -- unusedthingy
 TEX_SAUL_MENU_BG = get_texture_info("thebg") -- saul menu background thingys
 TEX_REACTION = get_texture_info("evilfuckedupreatcion") -- "Evil Fucked Up Live Reaction"
 TEX_REACTIONBG = get_texture_info("evilfuckedupreatcionbg") -- bob render for the BG of 'evil fucked up live reaction'
@@ -218,9 +217,6 @@ local jumpanim = 1
 sctimer = 0.5
 function saulthings(m)
     if _G.charSelectExists then
-        if m.playerIndex == 0 then
-        _G.charSelect.hud_hide_element(HUD_DISPLAY_FLAGS_POWER)
-        end
         if m.action == ACT_JUMP then
             if jumpanim == 1 then
                 smlua_anim_util_set_animation(m.marioObj, "saul_jump")
@@ -365,12 +361,18 @@ if m.playerIndex == 0 then
             set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
             texture_override_set("gd_texture_hand_open", TEX_SAUL_HAND_OPEN)
             texture_override_set("gd_texture_hand_closed", TEX_SAUL_HAND_CLOSED)
+            if m.playerIndex == 0 then
+                _G.charSelect.hud_hide_element(HUD_DISPLAY_FLAGS_POWER)
+            end
         end
     if _G.charSelect.character_get_current_number() ~= CT_BEEF_SAUL then
         if _G.charSelect.character_get_current_number() ~= pastchar then
             reset_dialog_override_color()
             texture_override_reset("gd_texture_hand_open")
             texture_override_reset("gd_texture_hand_closed")
+            if m.playerIndex == 0 then
+            _G.charSelect.hud_show_element(HUD_DISPLAY_FLAGS_POWER)
+            end
         end
     end
 pastchar = _G.charSelect.character_get_current_number()
@@ -504,6 +506,10 @@ if _G.charSelectExists then
     _G.charSelect.character_add_animations(E_MODEL_OLD_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_MIK_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_CLASSIC_SAUL, ANIMTABLE_CLASSIC_SAUL)
+    _G.charSelect.credit_add("Beef Saul", "Chrrli", "Main Saul Icon")
+    _G.charSelect.credit_add("Beef Saul", "Kaktus", "Old Saul Icon, Quadruple Jump Code")
+    _G.charSelect.credit_add("Beef Saul", "Squishy", "Redoing a TON of Code")
+    _G.charSelect.credit_add("Beef Saul", "Jer", "Voicetable Stuff")
     CT_FUCKED_UP = _G.charSelect.character_add("Evil Fucked Up", {"Evil Fucked Up"}, "Evil Fucked Up", {r = 43, g = 76, b = 1}, E_MODEL_EVIL_FUCKED_UP, CT_LUIGI, TEX_EVIL_FUCKED_UP_ICO, 3, 0)
     _G.charSelect.character_add_course_texture(CT_BEEF_SAUL, COURSE_BEEF_SAUL)
     _G.charSelect.character_add_voice(E_MODEL_BEEF_SAUL, VOICETABLE_BEEF_SAUL)
