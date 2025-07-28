@@ -362,18 +362,14 @@ if m.playerIndex == 0 then
             set_dialog_override_color(178, 204, 102, 175, 255, 255, 255, 255)
             texture_override_set("gd_texture_hand_open", TEX_SAUL_HAND_OPEN)
             texture_override_set("gd_texture_hand_closed", TEX_SAUL_HAND_CLOSED)
-            if m.playerIndex == 0 then
-                hud_set_value(HUD_DISPLAY_FLAGS, hud_get_value(HUD_DISPLAY_FLAGS) & ~HUD_DISPLAY_FLAGS_POWER)
-            end
+            hud_set_value(HUD_DISPLAY_FLAGS, hud_get_value(HUD_DISPLAY_FLAGS) & ~HUD_DISPLAY_FLAGS_POWER)
         end
     if _G.charSelect.character_get_current_number() ~= CT_BEEF_SAUL then
         if _G.charSelect.character_get_current_number() ~= pastchar then
             reset_dialog_override_color()
             texture_override_reset("gd_texture_hand_open")
             texture_override_reset("gd_texture_hand_closed")
-            if m.playerIndex == 0 then
             hud_set_value(HUD_DISPLAY_FLAGS, hud_get_value(HUD_DISPLAY_FLAGS) |HUD_DISPLAY_FLAGS_POWER)
-            end
         end
     end
 pastchar = _G.charSelect.character_get_current_number()
