@@ -363,7 +363,7 @@ if m.playerIndex == 0 then
             texture_override_set("gd_texture_hand_open", TEX_SAUL_HAND_OPEN)
             texture_override_set("gd_texture_hand_closed", TEX_SAUL_HAND_CLOSED)
             if m.playerIndex == 0 then
-                _G.charSelect.hud_hide_element(HUD_DISPLAY_FLAGS_POWER)
+                hud_set_value(HUD_DISPLAY_FLAGS, hud_get_value(HUD_DISPLAY_FLAGS) & ~HUD_DISPLAY_FLAGS_POWER)
             end
         end
     if _G.charSelect.character_get_current_number() ~= CT_BEEF_SAUL then
@@ -372,7 +372,7 @@ if m.playerIndex == 0 then
             texture_override_reset("gd_texture_hand_open")
             texture_override_reset("gd_texture_hand_closed")
             if m.playerIndex == 0 then
-            _G.charSelect.hud_show_element(HUD_DISPLAY_FLAGS_POWER)
+            hud_set_value(HUD_DISPLAY_FLAGS, hud_get_value(HUD_DISPLAY_FLAGS) |HUD_DISPLAY_FLAGS_POWER)
             end
         end
     end
@@ -500,7 +500,7 @@ function before_set_bsaul_action(m, inc)
 end
 
 if _G.charSelectExists then
-    _G.charSelect.hud_show_element(HUD_DISPLAY_FLAGS_POWER)
+    hud_set_value(HUD_DISPLAY_FLAGS, hud_get_value(HUD_DISPLAY_FLAGS) |HUD_DISPLAY_FLAGS_POWER)
     CT_BEEF_SAUL = _G.charSelect.character_add("Beef Saul", {"Saul has Finally been Beefified"}, "Saul", {r = 136, g = 213, b = 73}, E_MODEL_BEEF_SAUL, CT_TOAD, TEX_BEEF_SAUL_PIC, 1, 0)
     _G.charSelect.character_add_graffiti(CT_BEEF_SAUL, TEX_SAUL_GRAFFITI)
     _G.charSelect.character_add_animations(E_MODEL_BEEF_SAUL, ANIMTABLE_BEEF_SAUL)
