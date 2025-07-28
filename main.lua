@@ -178,7 +178,7 @@ if _G.charSelectExists then
     }
 end
 
-local ANIMTABLE_CLASSIC_SAUL = {
+ANIMTABLE_CLASSIC_SAUL = {
     [CHAR_ANIM_STAR_DANCE] = "MARIO_ANIM_CLUB_DANCE",
     [CHAR_ANIM_DOUBLE_JUMP_FALL] = "SAUL_ANIM_4C",
     [CHAR_ANIM_TIPTOE] = "saul_anim_waklslowowo",
@@ -215,7 +215,7 @@ sauldashtable = { -- saul dash table
 }
 
 local jumpanim = 1
-sctimer = 0.5
+local sctimer = 0.5
 function saulthings(m)
     if _G.charSelectExists then
         if m.action == ACT_JUMP then
@@ -315,7 +315,7 @@ function saulthings(m)
         if _G.charSelect.is_menu_open() then
         m.marioBodyState.eyeState = MARIO_EYES_LOOK_RIGHT
         end
-        if _G.charSelect.character_get_current_costume() ~= 5 then
+        if _G.charSelect.character_get_current_costume() ~= ALT_CLASSIC_SAUL then
         if m.marioObj.header.gfx.animInfo.animID == MARIO_ANIM_IDLE_HEAD_LEFT then
             m.marioBodyState.eyeState = MARIO_EYES_LOOK_RIGHT
         end
@@ -341,7 +341,7 @@ function saulthings(m)
                     smlua_anim_util_set_animation(m.marioObj, "saul_cust_sprint")
                 end
             else
-            if _G.charSelect.character_get_current_costume() < 5 then
+            if _G.charSelect.character_get_current_costume() ~= ALT_CLASSIC_SAUL then
                 smlua_anim_util_set_animation(m.marioObj, "saulrun")
             else
                 smlua_anim_util_set_animation(m.marioObj, "saul_anim_waklslowowo")
