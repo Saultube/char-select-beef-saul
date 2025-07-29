@@ -495,6 +495,7 @@ function before_set_bsaul_action(m, inc)
     end
 end
 
+TEX_VANILLA_STAR = get_texture_info("texture_hud_char_star")
 if _G.charSelectExists then
     hud_set_value(HUD_DISPLAY_FLAGS, hud_get_value(HUD_DISPLAY_FLAGS) |HUD_DISPLAY_FLAGS_POWER)
     CT_BEEF_SAUL = _G.charSelect.character_add("Beef Saul", {"Saul has Finally been Beefified"}, "Saul", {r = 136, g = 213, b = 73}, E_MODEL_BEEF_SAUL, CT_TOAD, TEX_BEEF_SAUL_PIC, 1, 0)
