@@ -58,6 +58,7 @@ end
 
 local function sclonloop(o)
 m = gMarioStates[0]
+obj_set_billboard(o)
 o.header.gfx.animInfo.curAnim = get_mario_vanilla_animation(m.marioObj.header.gfx.animInfo.animID)
 if o.oVelY > -24 then
 o.oVelY = o.oVelY - 1.5
@@ -217,6 +218,7 @@ sauldashtable = { -- saul dash table
 local jumpanim = 1
 local sctimer = 0.5
 function saulthings(m)
+    if (_G.charSelect.get_options_status(altmovesetenabled) == 1 and _G.charSelect.character_get_current_costume() ~= (ALT_OLD_SAUL or ALT_CLASSIC_SAUL)) or (_G.charSelect.get_options_status(altmovesetenabled) == 0) then
     if _G.charSelectExists then
         if m.action == ACT_JUMP then
             if jumpanim == 1 then
@@ -276,10 +278,12 @@ function saulthings(m)
             end
         end
         if sauldashtable[m.action] ~= nil then
+        if _G.charSelect.character_get_current_costume() ~= (ALT_OLD_SAUL or ALT_CLASSIC_SAUL) then
             if (m.controller.buttonPressed & X_BUTTON) ~= 0 then
             m.vel.y = 50
             set_mario_action(m, ACT_SAUL_DASH, 0)
             end
+        end
         end
         if m.action == ACT_GROUND_POUND then
             if m.pos.y > m.floorHeight then
@@ -348,6 +352,7 @@ function saulthings(m)
             end
             end
         end
+    end
     end
 end
 
@@ -475,13 +480,16 @@ VOICETABLE_BEEF_SAUL = { -- Voices from the Islander from Lego Racers (1999)
 }
 
 function on_set_bsaul_action(m)
+    if (_G.charSelect.get_options_status(altmovesetenabled) == 1 and _G.charSelect.character_get_current_costume() ~= (ALT_OLD_SAUL or ALT_CLASSIC_SAUL)) or (_G.charSelect.get_options_status(altmovesetenabled) == 0) then
     if m.action == ACT_SAUL_QUADRUPLE_JUMP then -- im using HOOK_ON_SET_MARIO_ACTION to define m.vel.y, but you can also just use the custom action's m.actionTimer for this! -kak
         m.vel.y = 90
         play_character_sound(m, CHAR_SOUND_WHOA)
     end
 end
+end
 
 function before_set_bsaul_action(m, inc)
+    if (_G.charSelect.get_options_status(altmovesetenabled) == 1 and _G.charSelect.character_get_current_costume() ~= (ALT_OLD_SAUL or ALT_CLASSIC_SAUL)) or (_G.charSelect.get_options_status(altmovesetenabled) == 0) then
     if inc == ACT_TRIPLE_JUMP_LAND and m.action ~= ACT_SAUL_QUADRUPLE_JUMP then -- i had to do some shenagigans with ACT_TRIPLE_JUMP_LAND to change that to ACT_DOUBLE_JUMP_LAND since triple jump land restricts a presses.
         return ACT_DOUBLE_JUMP_LAND
     end
@@ -494,6 +502,144 @@ function before_set_bsaul_action(m, inc)
         return ACT_SAUL_QUADRUPLE_JUMP
     end
 end
+end
+
+local SJTarget = {
+    [id_bhvGoomba] = spinbounce,
+    [id_bhvBobomb] = spinbounce,
+    [id_bhvKoopa] = spinbounce,
+    [id_bhvFlyGuy] = spinbounce,
+    [id_bhvMontyMole] = spinbounce,
+    [id_bhvSpindrift] = spinbounce,
+    [id_bhvPokey] = spinbounce,
+    [id_bhvSkeeter] = spinbounce,
+    [id_bhvMoneybag] = spinbounce,
+    [id_bhvSnufit] = spinbounce,
+    [id_bhvSwoop] = spinbounce,
+    [id_bhvFirePiranhaPlant] = spinbounce,
+    [id_bhvEnemyLakitu] = spinbounce,
+    [id_bhvSmallBully] = spinbounce,
+    [id_bhvBigBully] = spinbounce,
+    [id_bhvSmallChillBully] = spinbounce,
+    [id_bhvBigChillBully] = spinbounce,
+}
+
+local function spinbounce(o, target)
+    local m = gMarioStates[0]
+    m.vel.y = (m.vel.y * -0.5) + 50
+    m.particleFlags = m.particleFlags | PARTICLE_MIST_CIRCLE | PARTICLE_HORIZONTAL_STAR
+    spawn_mist_particles()
+    obj_mark_for_deletion(target)
+end
+
+angle = 0
+gStateExtras = {}
+for i = 0, (MAX_PLAYERS - 1) do
+    gStateExtras[i] = {}
+    local m = gMarioStates[i]
+    local e = gStateExtras[i]
+    e.rotAngle = 0
+end
+ACT_SPIN_JUMP = allocate_mario_action(ACT_GROUP_AIRBORNE | ACT_FLAG_ATTACKING | ACT_FLAG_AIR | ACT_FLAG_ALLOW_VERTICAL_WIND_ACTION | ACT_FLAG_SHORT_HITBOX)
+function act_spin_jump(m)
+    local e = gStateExtras[m.playerIndex]
+    local angle = m.faceAngle.y - e.rotAngle*(0x3000 - e.rotAngle*0x0000)
+    m.marioObj.header.gfx.angle.y = angle
+     e.rotAngle = e.rotAngle + 1
+	local mo = m.marioObj
+    local targetObj
+    local targetDist = 900
+    local attackDist = 200
+	for key, hit_effect in pairs(SJTarget) do
+        local otherObj = cur_obj_nearest_object_with_behavior(get_behavior_from_id(key))
+        if otherObj ~= nil and not (key == id_bhvMario and otherObj.globalPlayerIndex == obj.globalPlayerIndex) then
+            if obj_check_hitbox_overlap(mo, otherObj) and dist_between_objects(mo, otherObj) < attackDist then
+                hit_effect(mo, otherObj)
+            end
+        end
+    end
+    common_air_action_step(m, ACT_FREEFALL, MARIO_ANIM_START_TWIRL, AIR_STEP_CHECK_LEDGE_GRAB)
+    smlua_anim_util_set_animation(m.marioObj, "saul_spin_jom")
+    m.marioObj.header.gfx.scale.y = 1.10 + (m.vel.y * -0.0035)
+    m.actionTimer = m.actionTimer + 1
+end
+
+local function altsaulmovesets(m)
+if m.playerIndex ~= 0 then return end
+
+if _G.charSelect.get_options_status(altmovesetenabled) == 1 then
+    if _G.charSelect.character_get_current_costume() == ALT_CLASSIC_SAUL then
+    if (m.action & ACT_FLAG_AIR) ~= 0 and (m.controller.buttonPressed & B_BUTTON) ~= 0 and (m.action == ACT_LONG_JUMP or m.action == ACT_DIVE) then
+        m.faceAngle.y = m.faceAngle.y + 0x0
+        set_mario_action(m, ACT_JUMP_KICK, 0)
+    end
+    if (m.action & ACT_FLAG_AIR) ~= 0 and (m.controller.buttonPressed & B_BUTTON) ~= 0 and (m.action == ACT_SHOT_FROM_CANNON) then
+        m.faceAngle.y = m.faceAngle.y + 0x0
+        set_mario_action(m, ACT_SOFT_BONK, 0)
+    end
+    if (m.action & ACT_FLAG_AIR) ~= 0 and (m.controller.buttonPressed & A_BUTTON) ~= 0 and (m.action == ACT_FLYING) then
+        m.faceAngle.y = m.faceAngle.y + 0x0
+        set_mario_action(m, ACT_SHOT_FROM_CANNON, 0)
+    end
+    if (m.action & ACT_FLAG_AIR) ~= 0 and (m.controller.buttonPressed & A_BUTTON) ~= 0 and (m.action == ACT_JUMP  or m.action == ACT_DOUBLE_JUMP  or m.action == ACT_TRIPLE_JUMP) then
+        m.faceAngle.y = m.faceAngle.y + 0x0
+        set_mario_action(m, ACT_LONG_JUMP, 0)
+    end
+    if (m.action & ACT_FLAG_AIR) ~= 0 and (m.controller.buttonPressed & B_BUTTON) ~= 0 and (m.action == ACT_GROUND_POUND) then
+        m.faceAngle.y = m.intendedYaw
+        set_mario_action(m, ACT_JUMP, 0)
+        set_mario_action(m, ACT_DIVE, 0)
+    end
+    if (m.action & ACT_FLAG_AIR) ~= 0 and (m.controller.buttonPressed & A_BUTTON) ~= 0 and (m.action == ACT_WALL_JUMP_AIR) then
+        m.faceAngle.y = m.faceAngle.y + 0x0
+        set_mario_action(m, ACT_WALL_KICK_AIR, 0)
+    end
+    if (m.action & ACT_FLAG_AIR) ~= 0 and (m.controller.buttonPressed & Z_TRIG) ~= 0 and (m.action == ACT_JUMP_KICK) then
+        m.faceAngle.y = m.faceAngle.y + 0x0
+        set_mario_action(m, ACT_TRIPLE_JUMP, 0)
+        set_mario_action(m, ACT_SLIDE_KICK, 0)
+        end
+    end
+if _G.charSelect.character_get_current_costume() == ALT_OLD_SAUL then
+if (m.controller.buttonDown & Z_TRIG) ~= 0 then
+    m.vel.y = m.vel.y - 15
+end
+if m.action == ACT_SLIDE_KICK then
+    m.action = ACT_SPECIAL_TRIPLE_JUMP
+    m.forwardVel = m.forwardVel * 1.5
+    m.faceAngle.y = m.intendedYaw
+end
+if m.action == ACT_GROUND_POUND then
+    if (m.controller.buttonDown & B_BUTTON) ~= 0 then
+    m.action = ACT_VERTICAL_WIND
+    m.vel.y = 40
+    m.faceAngle.y = m.intendedYaw
+    m.forwardVel = 30
+    end
+end
+if m.action == ACT_IDLE or m.action == ACT_WALKING or m.action == ACT_FREEFALL_LAND or m.action == ACT_FREEFALL_LAND_STOP then
+if (m.controller.buttonPressed & Y_BUTTON) ~= 0 then
+    m.pos.y = m.pos.y + 1
+    m.vel.y = 35 + (m.forwardVel / 4)
+    return set_mario_action(m, ACT_SPIN_JUMP, 0)
+    end
+end
+end
+    end
+end
+
+local ANIMTABLE_OLD_SAUL = {
+    [CHAR_ANIM_WING_CAP_FLY] = "saul_anim_flying",
+    [CHAR_ANIM_STAR_DANCE] = "saul_anim_adce",
+    [CHAR_ANIM_IDLE_HEAD_CENTER] = "saul_idle_wow",
+    [CHAR_ANIM_IDLE_HEAD_LEFT] = "saul_idle_wow",
+    [CHAR_ANIM_IDLE_HEAD_RIGHT] = "saul_idle_wow",
+    [CHAR_ANIM_DOUBLE_JUMP_FALL] = "saul_dj_fall",
+    [CHAR_ANIM_DOUBLE_JUMP_RISE] = "saul_dj_rise",
+    [CHAR_ANIM_TRIPLE_JUMP] = "saul_tripleh",
+    [CHAR_ANIM_WALKING] = "saul_anim_waklslowowo",
+    [CHAR_ANIM_DYING_ON_BACK] = "saul_disolve",
+}
 
 TEX_VANILLA_STAR = get_texture_info("texture_hud_char_star")
 if _G.charSelectExists then
@@ -502,13 +648,14 @@ if _G.charSelectExists then
     _G.charSelect.character_add_graffiti(CT_BEEF_SAUL, TEX_SAUL_GRAFFITI)
     _G.charSelect.character_add_animations(E_MODEL_BEEF_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_DOC_SAUL, ANIMTABLE_BEEF_SAUL)
-    _G.charSelect.character_add_animations(E_MODEL_OLD_SAUL, ANIMTABLE_BEEF_SAUL)
+    _G.charSelect.character_add_animations(E_MODEL_OLD_SAUL, ANIMTABLE_OLD_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_MIK_SAUL, ANIMTABLE_BEEF_SAUL)
     _G.charSelect.character_add_animations(E_MODEL_CLASSIC_SAUL, ANIMTABLE_CLASSIC_SAUL)
     _G.charSelect.credit_add("Beef Saul", "Chrrli", "Main Saul Icon")
     _G.charSelect.credit_add("Beef Saul", "Kaktus", "Old Saul Icon, Quadruple Jump Code")
     _G.charSelect.credit_add("Beef Saul", "Squishy", "Redoing a TON of Code")
     _G.charSelect.credit_add("Beef Saul", "Jer", "Voicetable Stuff")
+    _G.charSelect.credit_add("Beef Saul", "Dark Starkly", "Pretty Much All of the Old Saul Moveset")
     CT_FUCKED_UP = _G.charSelect.character_add("Evil Fucked Up", {"Evil Fucked Up"}, "Evil Fucked Up", {r = 43, g = 76, b = 1}, E_MODEL_EVIL_FUCKED_UP, CT_LUIGI, TEX_EVIL_FUCKED_UP_ICO, 3, 0)
     _G.charSelect.character_add_course_texture(CT_BEEF_SAUL, COURSE_BEEF_SAUL)
     _G.charSelect.character_add_voice(E_MODEL_BEEF_SAUL, VOICETABLE_BEEF_SAUL)
@@ -516,16 +663,18 @@ if _G.charSelectExists then
     _G.charSelect.character_add_voice(E_MODEL_OLD_SAUL, VOICETABLE_BEEF_SAUL)
     _G.charSelect.character_add_voice(E_MODEL_MIK_SAUL, VOICETABLE_BEEF_SAUL)
     theoptionvar = _G.charSelect.add_option("Hide Menu Art", 0, 1, {"Off", "On"}, {"This toggle hides Saul's Menu Art."}, true)
+    altmovesetenabled = _G.charSelect.add_option("Costume Movesets", 0, 1, {"Off", "On"}, {"Enables the Alternate Saul Movesets for his Alts"}, false)
     _G.charSelect.config_character_sounds()
     _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_MARIO_UPDATE, saulthings)
     _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_ON_SET_MARIO_ACTION, on_set_bsaul_action)
     _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_BEFORE_SET_MARIO_ACTION, before_set_bsaul_action)
+    _G.charSelect.character_hook_moveset(CT_BEEF_SAUL, HOOK_BEFORE_MARIO_UPDATE, altsaulmovesets)
     _G.charSelect.character_add_palette_preset(E_MODEL_BEEF_SAUL, PALETTE_BEEF_SAUL)
     _G.charSelect.character_set_category(CT_BEEF_SAUL, "DXA")
     _G.charSelect.character_set_category(CT_BEEF_SAUL, "Squishy Workshop")
-    _G.charSelect.character_add_celebration_star(E_MODEL_BEEF_SAUL, E_MODEL_SAUL_STAR, TEX_VANILLA_STAR)
+    _G.charSelect.character_add_celebration_star(E_MODEL_BEEF_SAUL, E_MODEL_SAUL_STAR, nil)
     ALT_CACTUS_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Doctor Saul", {"ouch"}, "Saul", {r = 0, g = 178, b = 0}, E_MODEL_DOC_SAUL, CT_TOAD, TEX_CAC_SAUL_PIC, 1, 0)
-    ALT_OLD_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Old Saul", {"hey uh the thigny"}, "Saul", {r = 178, g = 204, b = 102}, E_MODEL_OLD_SAUL, CT_TOAD, TEX_OLD_SAUL_PIC, 1, 0)
+    ALT_OLD_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Old Saul", {"hey uh the thigny"}, "Saul (Player Icon By Kaktus On The Discord)", {r = 178, g = 204, b = 102}, E_MODEL_OLD_SAUL, CT_TOAD, TEX_OLD_SAUL_PIC, 1, 0)
     ALT_MIKU_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Hatsaulne Miku", {"これはすごい"}, "Saul", {r = 155, g = 213, b = 225}, E_MODEL_MIK_SAUL, CT_TOAD, TEX_MIK_SAUL_PIC, 1, 0)
     ALT_CLASSIC_SAUL = _G.charSelect.character_add_costume(CT_BEEF_SAUL, "Classic Saul", {"Everybody's favorite private sm64 modder - Saul 2024"}, "Saul", {r = 71, g = 39, b = 105}, E_MODEL_CLASSIC_SAUL, CT_MARIO, TEX_CLASSIC_SAUL_PIC, 1, 0)
     _G.charSelect.character_add_palette_preset(E_MODEL_DOC_SAUL, PALETTE_BEEF_SAUL)
